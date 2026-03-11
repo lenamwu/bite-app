@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "798690757442",
+    "project_id": "bite-lla03t",
+    "storage_bucket": "bite-lla03t.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:798690757442:android:17368d245db34b27c7d6db",
+        "android_client_info": {
+          "package_name": "com.mycompany.bite"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDG14pD9yg3KpDSqDL6oXwfkXw61wDz-Lg"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
