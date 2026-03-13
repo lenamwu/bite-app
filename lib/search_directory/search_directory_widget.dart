@@ -244,18 +244,21 @@ class _SearchDirectoryWidgetState extends State<SearchDirectoryWidget>
                                                           _model.recipeoutput =
                                                               await RecipeCall
                                                                   .call(
-                                                            q: _model
-                                                                .searchKeyword,
+                                                            q: '${_model.searchKeyword} recipe',
                                                           );
 
                                                           _model.searchResults =
-                                                              getJsonField(
+                                                              (getJsonField(
                                                             (_model.recipeoutput
                                                                     ?.jsonBody ??
                                                                 ''),
                                                             r'''$.items''',
                                                             true,
-                                                          )!
+                                                          ) as List? ?? [])
+                                                                  .where((item) {
+                                                                    final image = getJsonField(item, r'''$.pagemap.cse_image[0].src''');
+                                                                    return image != null && image.toString().isNotEmpty;
+                                                                  })
                                                                   .toList()
                                                                   .cast<
                                                                       dynamic>();

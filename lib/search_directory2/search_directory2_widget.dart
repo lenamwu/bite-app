@@ -55,7 +55,12 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
       vsync: this,
       length: 2,
       initialIndex: 0,
-    )..addListener(() => safeSetState(() {}));
+    )..addListener(() {
+        if (_model.tabBarController!.index == 1) {
+          FFAppState().searchisactive = false;
+        }
+        safeSetState(() {});
+      });
 
     _model.textController1 ??= TextEditingController();
     _model.textFieldFocusNode1 ??= FocusNode();
@@ -98,7 +103,13 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
             ),
           );
         }
-        List<UsersRecord> searchDirectory2UsersRecordList = snapshot.data!;
+        List<UsersRecord> searchDirectory2UsersRecordList = snapshot.data!
+            .where((u) =>
+                u.hasDisplayName() &&
+                u.displayName.isNotEmpty &&
+                u.hasPhotoUrl() &&
+                u.photoUrl.isNotEmpty)
+            .toList();
 
         return GestureDetector(
           onTap: () {
@@ -239,18 +250,21 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                         _model.recipegoogleoutput =
                                                             await RecipeCall
                                                                 .call(
-                                                          q: _model
-                                                              .searchKeyword,
+                                                          q: '${_model.searchKeyword} recipe',
                                                         );
 
                                                         _model.searchResults =
-                                                            getJsonField(
+                                                            (getJsonField(
                                                           (_model.recipegoogleoutput
                                                                   ?.jsonBody ??
                                                               ''),
                                                           r'''$.items''',
                                                           true,
-                                                        )!
+                                                        ) as List? ?? [])
+                                                                .where((item) {
+                                                                  final image = getJsonField(item, r'''$.pagemap.cse_image[0].src''');
+                                                                  return image != null && image.toString().isNotEmpty;
+                                                                })
                                                                 .toList()
                                                                 .cast<
                                                                     dynamic>();
@@ -465,6 +479,8 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                     childAspectRatio: 0.8,
                                                   ),
                                                   shrinkWrap: true,
+                                                  physics:
+                                                      NeverScrollableScrollPhysics(),
                                                   scrollDirection:
                                                       Axis.vertical,
                                                   itemCount:
@@ -484,6 +500,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                       highlightColor:
                                                           Colors.transparent,
                                                       onTap: () async {
+                                                        final nav = GoRouter.of(context);
                                                         if (loggedIn == true) {
                                                           _model.weblinkoutput =
                                                               await TestCall
@@ -514,7 +531,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                   .alrsavedrecipe
                                                                   ?.reference !=
                                                               null) {
-                                                            context.pushNamed(
+                                                            nav.pushNamed(
                                                               PublicRecipeWidget
                                                                   .routeName,
                                                               queryParameters: {
@@ -701,7 +718,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                               ),
                                                             }, recipesRecordReference);
 
-                                                            context.pushNamed(
+                                                            nav.pushNamed(
                                                               PublicRecipeWidget
                                                                   .routeName,
                                                               queryParameters: {
@@ -723,7 +740,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                             );
                                                           }
                                                         } else {
-                                                          context.pushNamed(
+                                                          nav.pushNamed(
                                                               OnboardingWidget
                                                                   .routeName);
                                                         }
@@ -1457,7 +1474,11 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                 listViewUsersRecordList =
                                                 snapshot.data!
                                                     .where((u) =>
-                                                        u.uid != currentUserUid)
+                                                        u.uid != currentUserUid &&
+                                                        u.hasDisplayName() &&
+                                                        u.displayName.isNotEmpty &&
+                                                        u.hasPhotoUrl() &&
+                                                        u.photoUrl.isNotEmpty)
                                                     .toList();
 
                                             return ListView.builder(
