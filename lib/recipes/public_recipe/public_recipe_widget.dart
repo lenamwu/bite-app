@@ -237,23 +237,9 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                           alignment: AlignmentDirectional(0.0, 0.0),
                           child: ToggleIcon(
                             onPressed: () async {
-                              final recipeSavedByElement = currentUserReference;
-                              final recipeSavedByUpdate =
-                                  publicRecipeRecipesRecord.recipeSavedBy
-                                          .contains(recipeSavedByElement)
-                                      ? FieldValue.arrayRemove(
-                                          [recipeSavedByElement])
-                                      : FieldValue.arrayUnion(
-                                          [recipeSavedByElement]);
-                              await publicRecipeRecipesRecord.reference.update({
-                                ...mapToFirestore(
-                                  {
-                                    'recipe_saved_by': recipeSavedByUpdate,
-                                  },
-                                ),
-                              });
                               if (loggedIn != true) {
                                 context.pushNamed(OnboardingWidget.routeName);
+                                return;
                               }
                               if (publicRecipeRecipesRecord.recipeSavedBy
                                       .contains(currentUserReference) ==
