@@ -47,12 +47,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
     super.initState();
     _model = createModel(context, () => SearchedProfilePageModel());
 
-    // On page load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      if (loggedIn == false) {
-        context.pushNamed(OnboardingWidget.routeName);
-      }
-    });
+    // Auth check moved to build method.
 
     _model.tabBarController1 = TabController(
       vsync: this,
@@ -78,6 +73,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
 
   @override
   Widget build(BuildContext context) {
+
     return StreamBuilder<UsersRecord>(
       stream: UsersRecord.getDocument(widget!.profileparameters!),
       builder: (context, snapshot) {

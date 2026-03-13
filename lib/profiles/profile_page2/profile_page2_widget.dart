@@ -1,4 +1,3 @@
-import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/components/notificationcomp_widget.dart';
@@ -50,9 +49,6 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
       FFAppState().cookingtime = '';
       FFAppState().servings = '';
       FFAppState().editedRecipe = false;
-      if (loggedIn == false) {
-        context.pushNamed(OnboardingWidget.routeName);
-      }
     });
 
     _model.tabBarController = TabController(
@@ -74,6 +70,16 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
   @override
   Widget build(BuildContext context) {
     context.watch<FFAppState>();
+
+    if (!loggedIn) {
+      SchedulerBinding.instance.addPostFrameCallback((_) {
+        if (context.mounted) {
+          context.pop();
+          context.pushNamed(OnboardingWidget.routeName);
+        }
+      });
+      return const Scaffold(body: SizedBox.shrink());
+    }
 
     return GestureDetector(
       onTap: () {

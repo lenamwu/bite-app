@@ -232,10 +232,16 @@ class _NavBarPageState extends State<NavBarPage> {
       extendBody: true,
       bottomNavigationBar: FloatingNavbar(
         currentIndex: currentIndex,
-        onTap: (i) => safeSetState(() {
-          _currentPage = null;
-          _currentPageName = tabs.keys.toList()[i];
-        }),
+        onTap: (i) {
+          if (i == 3 && !loggedIn) {
+            context.pushNamed(OnboardingWidget.routeName);
+            return;
+          }
+          safeSetState(() {
+            _currentPage = null;
+            _currentPageName = tabs.keys.toList()[i];
+          });
+        },
         backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
         selectedItemColor: FlutterFlowTheme.of(context).primary,
         unselectedItemColor: FlutterFlowTheme.of(context).secondaryText,

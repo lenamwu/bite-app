@@ -1511,6 +1511,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                             context.pushNamed(
                                                                 OnboardingWidget
                                                                     .routeName);
+                                                            return;
                                                           }
                                                           if (listViewUsersRecord
                                                                   .reference ==
@@ -1741,6 +1742,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                             context.pushNamed(
                                                                 OnboardingWidget
                                                                     .routeName);
+                                                            return;
                                                           }
 
                                                           context.pushNamed(
