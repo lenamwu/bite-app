@@ -476,7 +476,8 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                   gridDelegate:
                                                       SliverGridDelegateWithFixedCrossAxisCount(
                                                     crossAxisCount: 2,
-                                                    childAspectRatio: 0.8,
+                                                    mainAxisSpacing: 4.0,
+                                                    childAspectRatio: 0.82,
                                                   ),
                                                   shrinkWrap: true,
                                                   physics:
@@ -754,41 +755,32 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                             CrossAxisAlignment
                                                                 .start,
                                                         children: [
-                                                          Expanded(
-                                                            child: Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      0.0, 0.0),
-                                                              child: Padding(
-                                                                padding: EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        12.0,
-                                                                        5.0,
-                                                                        12.0,
-                                                                        8.0),
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              0.0),
-                                                                  child: Image
-                                                                      .network(
-                                                                    'https://recipe-image-proxy.lena-m-wu.workers.dev/?url=${getJsonField(
-                                                                      recipesearchresItem,
-                                                                      r'''$.pagemap.cse_thumbnail[0].src''',
-                                                                    ).toString()}',
-                                                                    width: double
-                                                                        .infinity,
-                                                                    height: double
-                                                                        .infinity,
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                    alignment:
-                                                                        Alignment(
-                                                                            0.0,
+                                                          Padding(
+                                                            padding: EdgeInsetsDirectional
+                                                                .fromSTEB(
+                                                                    12.0,
+                                                                    5.0,
+                                                                    12.0,
+                                                                    0.0),
+                                                            child: AspectRatio(
+                                                              aspectRatio: 1.0,
+                                                              child: ClipRRect(
+                                                                borderRadius:
+                                                                    BorderRadius
+                                                                        .circular(
                                                                             0.0),
-                                                                  ),
+                                                                child: Image
+                                                                    .network(
+                                                                  'https://recipe-image-proxy.lena-m-wu.workers.dev/?url=${getJsonField(
+                                                                    recipesearchresItem,
+                                                                    r'''$.pagemap.cse_thumbnail[0].src''',
+                                                                  ).toString()}',
+                                                                  width: double
+                                                                      .infinity,
+                                                                  height: double
+                                                                      .infinity,
+                                                                  fit: BoxFit
+                                                                      .cover,
                                                                 ),
                                                               ),
                                                             ),
@@ -802,9 +794,9 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                   EdgeInsetsDirectional
                                                                       .fromSTEB(
                                                                           12.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          12.0),
+                                                                          4.0,
+                                                                          12.0,
+                                                                          0.0),
                                                               child: Text(
                                                                 getJsonField(
                                                                   recipesearchresItem,

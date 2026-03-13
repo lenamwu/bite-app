@@ -584,6 +584,12 @@ Future<FFFirestorePage<NotificationsRecord>> queryNotificationsRecordPage({
               controller.itemList = {
                 for (var item in items) item.reference: item
               }.values.toList();
+            } else {
+              // Add new notifications to the beginning of the list.
+              controller.itemList = [
+                item,
+                ...controller.itemList!
+              ];
             }
           });
         });
