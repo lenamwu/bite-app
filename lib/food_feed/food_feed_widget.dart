@@ -185,51 +185,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 190.0, 0.0, 0.0),
                               child: AuthUserStreamWidget(
-                                builder: (context) =>
-                                    StreamBuilder<List<PostsRecord>>(
-                                  stream: queryPostsRecord(
-                                    queryBuilder: (postsRecord) => postsRecord
-                                        .where(Filter.or(
-                                          filterIn(
-                                              'postUser',
-                                              (currentUserDocument
-                                                      ?.followingUsers
-                                                      ?.toList() ??
-                                                  [])),
-                                          filterIn(
-                                              'postUser',
-                                              (currentUserDocument
-                                                      ?.followingUsers
-                                                      ?.toList() ??
-                                                  [])),
-                                        ))
-                                        .orderBy('created_time',
-                                            descending: true),
-                                  ),
-                                  builder: (context, snapshot) {
-                                    // Customize what your widget looks like when it's loading.
-                                    if (!snapshot.hasData) {
-                                      return Center(
-                                        child: SizedBox(
-                                          width: 30.0,
-                                          height: 30.0,
-                                          child: SpinKitFadingGrid(
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiary,
-                                            size: 30.0,
-                                          ),
-                                        ),
-                                      );
-                                    }
-                                    List<PostsRecord> containerPostsRecordList =
-                                        snapshot.data!;
-
-                                    return Container(
-                                      decoration: BoxDecoration(),
-                                      child: Visibility(
-                                        visible:
-                                            containerPostsRecordList.isNotEmpty,
-                                        child: Padding(
+                                builder: (context) => Padding(
                                           padding:
                                               EdgeInsetsDirectional.fromSTEB(
                                                   0.0, 0.0, 0.0, 100.0),
@@ -239,20 +195,13 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                             pagingController:
                                                 _model.setListViewController(
                                               PostsRecord.collection
-                                                  .where(Filter.or(
-                                                    filterIn(
-                                                        'postUser',
-                                                        (currentUserDocument
-                                                                ?.followingUsers
-                                                                ?.toList() ??
-                                                            [])),
-                                                    filterIn(
-                                                        'postUser',
-                                                        (currentUserDocument
-                                                                ?.followingUsers
-                                                                ?.toList() ??
-                                                            [])),
-                                                  ))
+                                                  .where(
+                                                    'postUser',
+                                                    whereIn: (currentUserDocument
+                                                            ?.followingUsers
+                                                            ?.toList() ??
+                                                        []),
+                                                  )
                                                   .orderBy('created_time',
                                                       descending: true),
                                             ),
@@ -345,10 +294,10 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                 children: [
                                                                   Stack(
                                                                     children: [
-                                                                      StreamBuilder<
+                                                                      FutureBuilder<
                                                                           UsersRecord>(
-                                                                        stream:
-                                                                            UsersRecord.getDocument(listViewPostsRecord.postUser!),
+                                                                        future:
+                                                                            _model.getCachedUser(listViewPostsRecord.postUser!),
                                                                         builder:
                                                                             (context,
                                                                                 snapshot) {
@@ -558,13 +507,13 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                         borderRadius: BorderRadius.circular(0.0),
                                                                                         child: Image.network(
                                                                                           imagesItem,
-                                                                                          width: 175.0,
-                                                                                          height: 175.0,
+                                                                                          width: 350.0,
+                                                                                          height: 350.0,
                                                                                           fit: BoxFit.cover,
                                                                                           errorBuilder: (context, error, stackTrace) => Image.asset(
                                                                                             'assets/images/error_image.png',
-                                                                                            width: 175.0,
-                                                                                            height: 175.0,
+                                                                                            width: 350.0,
+                                                                                            height: 350.0,
                                                                                             fit: BoxFit.cover,
                                                                                           ),
                                                                                         ),
@@ -983,10 +932,6 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    );
-                                  },
-                                ),
                               ),
                             ),
                           if ((_model.hasPosts == false) || !loggedIn)

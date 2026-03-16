@@ -32,6 +32,15 @@ class FoodFeedModel extends FlutterFlowModel<FoodFeedWidget> {
   Query? listViewPagingQuery;
   List<StreamSubscription?> listViewStreamSubscriptions = [];
 
+  // Cache for user documents to avoid redundant Firestore reads per post.
+  final Map<String, Future<UsersRecord>> _userCache = {};
+
+  Future<UsersRecord> getCachedUser(DocumentReference userRef) {
+    final key = userRef.path;
+    return _userCache.putIfAbsent(
+        key, () => UsersRecord.getDocumentOnce(userRef));
+  }
+
   // Stores action output result for [Firestore Query - Query a collection] action in ToggleIcon widget.
   NotificationsRecord? likeddoc;
   // Stores action output result for [Backend Call - Create Document] action in ToggleIcon widget.
