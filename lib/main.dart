@@ -17,6 +17,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:floating_bottom_navigation_bar/floating_bottom_navigation_bar.dart';
 import 'flutter_flow/nav/nav.dart';
 import 'index.dart';
+import 'backend/push_notifications.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
@@ -104,6 +105,9 @@ class _MyAppState extends State<MyApp> {
     userStream = biteFirebaseUserStream()
       ..listen((user) {
         _appStateNotifier.update(user);
+        if (user.loggedIn) {
+          initPushNotifications();
+        }
       });
     jwtTokenStream.listen((_) {});
     Future.delayed(

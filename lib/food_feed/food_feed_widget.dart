@@ -51,9 +51,20 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
       FFAppState().cookingtime = '';
       FFAppState().servings = '';
       FFAppState().editedRecipe = false;
-      if ((loggedIn == true) &&
-          !valueOrDefault<bool>(currentUserDocument?.profileComplete, false)) {
-        context.pushNamed(CreateProfileWidget.routeName);
+      if (loggedIn == true) {
+        // Wait for the user document to load from Firestore before checking
+        // profileComplete, otherwise it defaults to false and incorrectly
+        // redirects to the create profile page.
+        if (currentUserDocument == null) {
+          await authenticatedUserStream
+              .firstWhere((user) => user != null)
+              .timeout(const Duration(seconds: 5), onTimeout: () => null);
+        }
+        if (mounted &&
+            !valueOrDefault<bool>(
+                currentUserDocument?.profileComplete, false)) {
+          context.pushNamed(CreateProfileWidget.routeName);
+        }
       }
     });
 

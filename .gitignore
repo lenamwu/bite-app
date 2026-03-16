@@ -24,6 +24,9 @@ macos/Pods/
 **/android/captures/
 **/android/local.properties
 
+# Node
+node_modules/
+
 # Misc
 *.swp
 .DS_Store

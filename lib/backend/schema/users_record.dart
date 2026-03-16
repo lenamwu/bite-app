@@ -106,6 +106,11 @@ class UsersRecord extends FirestoreRecord {
   bool get profileComplete => _profileComplete ?? false;
   bool hasProfileComplete() => _profileComplete != null;
 
+  // "fcmToken" field.
+  String? _fcmToken;
+  String get fcmToken => _fcmToken ?? '';
+  bool hasFcmToken() => _fcmToken != null;
+
   void _initializeFields() {
     _email = snapshotData['email'] as String?;
     _displayName = snapshotData['display_name'] as String?;
@@ -125,6 +130,7 @@ class UsersRecord extends FirestoreRecord {
     _followRequests = getDataList(snapshotData['followRequests']);
     _unseenNotifications = castToType<int>(snapshotData['unseenNotifications']);
     _profileComplete = snapshotData['profileComplete'] as bool?;
+    _fcmToken = snapshotData['fcmToken'] as String?;
   }
 
   static CollectionReference get collection =>
@@ -176,6 +182,7 @@ Map<String, dynamic> createUsersRecordData({
   bool? isPrivate,
   int? unseenNotifications,
   bool? profileComplete,
+  String? fcmToken,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -194,6 +201,7 @@ Map<String, dynamic> createUsersRecordData({
       'isPrivate': isPrivate,
       'unseenNotifications': unseenNotifications,
       'profileComplete': profileComplete,
+      'fcmToken': fcmToken,
     }.withoutNulls,
   );
 
@@ -223,7 +231,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e1?.isPrivate == e2?.isPrivate &&
         listEquality.equals(e1?.followRequests, e2?.followRequests) &&
         e1?.unseenNotifications == e2?.unseenNotifications &&
-        e1?.profileComplete == e2?.profileComplete;
+        e1?.profileComplete == e2?.profileComplete &&
+        e1?.fcmToken == e2?.fcmToken;
   }
 
   @override
@@ -245,7 +254,8 @@ class UsersRecordDocumentEquality implements Equality<UsersRecord> {
         e?.isPrivate,
         e?.followRequests,
         e?.unseenNotifications,
-        e?.profileComplete
+        e?.profileComplete,
+        e?.fcmToken
       ]);
 
   @override
