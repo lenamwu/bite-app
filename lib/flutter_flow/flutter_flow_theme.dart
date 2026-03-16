@@ -171,22 +171,22 @@ class LightModeTheme extends FlutterFlowTheme {
   @Deprecated('Use tertiary instead')
   Color get tertiaryColor => tertiary;
 
-  late Color primary = const Color.fromARGB(255, 133, 171, 132);
-  late Color secondary = const Color(0xFF336600);
-  late Color tertiary = const Color.fromARGB(255, 244, 175, 244);
-  late Color alternate = const Color.fromARGB(255, 179, 150, 201);
-  late Color primaryText = const Color.fromRGBO(142, 200, 255, 1);
-  late Color secondaryText = const Color.fromARGB(255, 179, 150, 201);
+  late Color primary = const Color.fromARGB(255, 147, 202, 255);
+  late Color secondary = const Color.fromARGB(255, 255, 185, 243);
+  late Color tertiary = const Color.fromARGB(255, 209, 158, 255);
+  late Color alternate = const Color.fromARGB(255, 209, 158, 255);
+  late Color primaryText = const Color.fromARGB(255, 147, 202, 255);
+  late Color secondaryText = const Color.fromARGB(255, 255, 185, 243);
   late Color primaryBackground = const Color(0xFFFFFFFF);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
-  late Color accent1 = const Color.fromARGB(255, 110, 130, 184);
-  late Color accent2 = const Color(0x4D39D2C0);
-  late Color accent3 = const Color.fromARGB(255, 110, 130, 184);
-  late Color accent4 = const Color(0xCCFFFFFF);
-  late Color success = const Color(0xFF249689);
-  late Color warning = const Color(0x7F363636);
+  late Color accent1 = const Color.fromARGB(255, 141, 182, 102);
+  late Color accent2 = const Color.fromARGB(255, 141, 182, 102);
+  late Color accent3 = const Color.fromARGB(255, 141, 182, 102);
+  late Color accent4 = const Color.fromARGB(255, 141, 182, 102);
+  late Color success = const Color.fromARGB(255, 141, 182, 102);
+  late Color warning = const Color.fromARGB(255, 141, 182, 102);
   late Color error = const Color(0xFFFF5963);
-  late Color info = const Color(0xFFFFFFFF);
+  late Color info = const Color.fromARGB(255, 141, 182, 102);
 
   late Color customColor1 = const Color(0xFF9C175F);
   late Color customColor2 = const Color(0xFF660000);

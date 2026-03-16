@@ -1260,28 +1260,29 @@ class _CommentWidgetState extends State<CommentWidget>
                                                             ),
                                                           ),
                                                         ),
-                                                        Column(
-                                                          mainAxisSize:
-                                                              MainAxisSize.max,
-                                                          crossAxisAlignment:
-                                                              CrossAxisAlignment
-                                                                  .start,
-                                                          children: [
-                                                            Padding(
-                                                              padding:
-                                                                  EdgeInsetsDirectional
-                                                                      .fromSTEB(
-                                                                          10.0,
-                                                                          0.0,
-                                                                          0.0,
-                                                                          0.0),
-                                                              child: Container(
-                                                                constraints:
-                                                                    BoxConstraints(
-                                                                  maxWidth:
-                                                                      MediaQuery.sizeOf(context)
-                                                                              .width *
-                                                                          0.75,
+                                                        Expanded(
+                                                          child: Column(
+                                                            mainAxisSize:
+                                                                MainAxisSize.max,
+                                                            crossAxisAlignment:
+                                                                CrossAxisAlignment
+                                                                    .start,
+                                                            children: [
+                                                              Padding(
+                                                                padding:
+                                                                    EdgeInsetsDirectional
+                                                                        .fromSTEB(
+                                                                            10.0,
+                                                                            0.0,
+                                                                            0.0,
+                                                                            0.0),
+                                                                child: Container(
+                                                                  constraints:
+                                                                      BoxConstraints(
+                                                                    maxWidth:
+                                                                        MediaQuery.sizeOf(context)
+                                                                                .width *
+                                                                            0.75,
                                                                 ),
                                                                 decoration:
                                                                     BoxDecoration(
@@ -1390,8 +1391,30 @@ class _CommentWidgetState extends State<CommentWidget>
                                                                 ),
                                                               ),
                                                             ),
-                                                          ],
+                                                            ],
+                                                          ),
                                                         ),
+                                                        if (listViewCommentsRecord.userref == currentUserReference)
+                                                          Align(
+                                                            alignment: AlignmentDirectional(0.0, 0.0),
+                                                            child: InkWell(
+                                                              splashColor: Colors.transparent,
+                                                              focusColor: Colors.transparent,
+                                                              hoverColor: Colors.transparent,
+                                                              highlightColor: Colors.transparent,
+                                                              onTap: () async {
+                                                                await listViewCommentsRecord.reference.delete();
+                                                              },
+                                                              child: Padding(
+                                                                padding: EdgeInsetsDirectional.fromSTEB(8.0, 10.0, 0.0, 0.0),
+                                                                child: Icon(
+                                                                  Icons.close_rounded,
+                                                                  color: FlutterFlowTheme.of(context).secondaryText,
+                                                                  size: 20.0,
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
                                                       ],
                                                     ),
                                                   );

@@ -475,7 +475,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             EdgeInsetsDirectional.fromSTEB(
                                                 0.0, 0.0, 0.0, 0.0),
                                         color: FlutterFlowTheme.of(context)
-                                            .secondary,
+                                            .accent1,
                                         textStyle: FlutterFlowTheme.of(context)
                                             .labelLarge
                                             .override(
@@ -491,7 +491,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   !FlutterFlowTheme.of(context)
                                                       .labelLargeIsCustom,
                                             ),
-                                        elevation: 3.0,
+                                        elevation: 0.0,
                                         borderSide: BorderSide(
                                           color: Colors.transparent,
                                           width: 1.0,

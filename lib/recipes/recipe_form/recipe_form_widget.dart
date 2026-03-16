@@ -699,7 +699,7 @@ class _RecipeFormWidgetState extends State<RecipeFormWidget> {
                                     16.0, 0.0, 16.0, 0.0),
                                 iconPadding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 0.0),
-                                color: Color(0x1A336600),
+                                color: FlutterFlowTheme.of(context).primary.withOpacity(0.1),
                                 textStyle: FlutterFlowTheme.of(context)
                                     .titleSmall
                                     .override(
@@ -816,7 +816,7 @@ class _RecipeFormWidgetState extends State<RecipeFormWidget> {
                                       16.0, 0.0, 16.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(
                                       0.0, 0.0, 0.0, 0.0),
-                                  color: Color(0x1A336600),
+                                  color: FlutterFlowTheme.of(context).primary.withOpacity(0.1),
                                   textStyle: FlutterFlowTheme.of(context)
                                       .titleSmall
                                       .override(

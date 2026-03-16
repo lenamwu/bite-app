@@ -366,7 +366,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                       width: 146.3,
                                       height: 112.1,
                                       decoration: BoxDecoration(
-                                        color: Color(0x19336600),
+                                        color: FlutterFlowTheme.of(context).primary.withOpacity(0.1),
                                         borderRadius: BorderRadius.only(
                                           bottomLeft: Radius.circular(12.0),
                                           bottomRight: Radius.circular(12.0),
