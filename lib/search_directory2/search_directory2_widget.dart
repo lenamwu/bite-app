@@ -1,3 +1,4 @@
+import 'package:url_launcher/url_launcher.dart';
 import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
@@ -512,6 +513,20 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                             ).toString(),
                                                           );
 
+                                                          // If scrape failed, open URL in browser
+                                                          final status = getJsonField(
+                                                            (_model.weblinkoutput?.jsonBody ?? ''),
+                                                            r'''$.status''',
+                                                          )?.toString();
+                                                          if (status == 'failed') {
+                                                            final recipeUrl = getJsonField(
+                                                              recipesearchresItem,
+                                                              r'''$.link''',
+                                                            ).toString();
+                                                            await launchUrl(Uri.parse(recipeUrl), mode: LaunchMode.externalApplication);
+                                                            return;
+                                                          }
+
                                                           _model.alrsavedrecipe =
                                                               await queryRecipesRecordOnce(
                                                             queryBuilder:
@@ -602,6 +617,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                 ).toString()}',
                                                                 usercreated:
                                                                     false,
+                                                                rating: castToType<double>(getJsonField((_model.weblinkoutput?.jsonBody ?? ''), r'''$.rating''')),
                                                               ),
                                                               ...mapToFirestore(
                                                                 {
@@ -683,6 +699,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                 ).toString()}',
                                                                 usercreated:
                                                                     false,
+                                                                rating: castToType<double>(getJsonField((_model.weblinkoutput?.jsonBody ?? ''), r'''$.rating''')),
                                                               ),
                                                               ...mapToFirestore(
                                                                 {

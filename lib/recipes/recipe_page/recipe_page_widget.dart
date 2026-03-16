@@ -125,10 +125,45 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                     onTap: () async {
                       context.pushNamed(GrocerylistWidget.routeName);
                     },
-                    child: Icon(
-                      Icons.local_grocery_store_outlined,
-                      color: FlutterFlowTheme.of(context).primaryText,
-                      size: 28.0,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Icon(
+                          Icons.local_grocery_store_outlined,
+                          color: FlutterFlowTheme.of(context).primaryText,
+                          size: 28.0,
+                        ),
+                        if (loggedIn)
+                          StreamBuilder<List<GroceryListRecord>>(
+                            stream: queryGroceryListRecord(
+                              parent: currentUserReference,
+                            ),
+                            builder: (context, snapshot) {
+                              final count = snapshot.data?.length ?? 0;
+                              if (count == 0) return SizedBox.shrink();
+                              return Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    4.0, 0.0, 0.0, 0.0),
+                                child: Text(
+                                  count.toString(),
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily: FlutterFlowTheme.of(context)
+                                            .bodyMediumFamily,
+                                        color:
+                                            FlutterFlowTheme.of(context).accent3,
+                                        letterSpacing: 0.0,
+                                        fontWeight: FontWeight.w600,
+                                        useGoogleFonts:
+                                            !FlutterFlowTheme.of(context)
+                                                .bodyMediumIsCustom,
+                                      ),
+                                ),
+                              );
+                            },
+                          ),
+                      ],
                     ),
                   ),
                 ),
@@ -185,55 +220,28 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 90.0),
-                      child: StreamBuilder<List<RecipesRecord>>(
-                        stream: queryRecipesRecord(
-                          queryBuilder: (recipesRecord) => recipesRecord.where(
-                            'recipe_saved_by',
-                            arrayContains: currentUserReference,
-                          ),
-                          limit: 100,
-                        ),
-                        builder: (context, snapshot) {
-                          // Customize what your widget looks like when it's loading.
-                          if (!snapshot.hasData) {
-                            return Center(
-                              child: SizedBox(
-                                width: 30.0,
-                                height: 30.0,
-                                child: SpinKitFadingGrid(
-                                  color: FlutterFlowTheme.of(context).tertiary,
-                                  size: 30.0,
-                                ),
-                              ),
-                            );
-                          }
-                          List<RecipesRecord> gridViewRecipesRecordList =
-                              snapshot.data!;
-
-                          return GridView.builder(
+                      child: GridView.builder(
                             padding: EdgeInsets.zero,
                             gridDelegate:
                                 SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 3,
-                              childAspectRatio: 0.9,
+                              crossAxisCount: 2,
+                              childAspectRatio: 0.8,
                             ),
                             scrollDirection: Axis.vertical,
-                            itemCount: gridViewRecipesRecordList.length,
+                            itemCount: recipePageRecipesRecordList.length,
                             itemBuilder: (context, gridViewIndex) {
                               final gridViewRecipesRecord =
-                                  gridViewRecipesRecordList[gridViewIndex];
+                                  recipePageRecipesRecordList[gridViewIndex];
                               return Column(
-                                mainAxisSize: MainAxisSize.max,
+                                mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  Expanded(
-                                    child: Align(
-                                      alignment:
-                                          AlignmentDirectional(0.0, -1.0),
-                                      child: Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            5.0, 5.0, 5.0, 2.0),
-                                        child: InkWell(
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        5.0, 5.0, 5.0, 2.0),
+                                    child: AspectRatio(
+                                      aspectRatio: 1.0,
+                                      child: InkWell(
                                           splashColor: Colors.transparent,
                                           focusColor: Colors.transparent,
                                           hoverColor: Colors.transparent,
@@ -301,37 +309,33 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                                         ),
                                       ),
                                     ),
-                                  ),
-                                  Align(
-                                    alignment: AlignmentDirectional(-1.0, -1.0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          5.0, 2.0, 0.0, 5.0),
-                                      child: AutoSizeText(
-                                        gridViewRecipesRecord.title,
-                                        maxLines: 1,
-                                        minFontSize: 14.0,
-                                        style: FlutterFlowTheme.of(context)
-                                            .bodyMedium
-                                            .override(
-                                              fontFamily:
-                                                  FlutterFlowTheme.of(context)
-                                                      .bodyMediumFamily,
-                                              letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
-                                              useGoogleFonts:
-                                                  !FlutterFlowTheme.of(context)
-                                                      .bodyMediumIsCustom,
-                                            ),
-                                      ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        5.0, 2.0, 5.0, 5.0),
+                                    child: Text(
+                                      gridViewRecipesRecord.title,
+                                      maxLines: 2,
+                                      overflow: TextOverflow.ellipsis,
+                                      style: FlutterFlowTheme.of(context)
+                                          .bodyMedium
+                                          .override(
+                                            fontFamily:
+                                                FlutterFlowTheme.of(context)
+                                                    .bodyMediumFamily,
+                                            color: FlutterFlowTheme.of(context)
+                                                .tertiary,
+                                            letterSpacing: 0.0,
+                                            fontWeight: FontWeight.w600,
+                                            useGoogleFonts:
+                                                !FlutterFlowTheme.of(context)
+                                                    .bodyMediumIsCustom,
+                                          ),
                                     ),
                                   ),
                                 ],
                               );
                             },
-                          );
-                        },
-                      ),
+                          ),
                     ),
                   Padding(
                     padding:

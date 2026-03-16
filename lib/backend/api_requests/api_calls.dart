@@ -123,7 +123,7 @@ class TestCall {
         response,
         r'''$.servings''',
       ));
-  static int? rating(dynamic response) => castToType<int>(getJsonField(
+  static double? rating(dynamic response) => castToType<double>(getJsonField(
         response,
         r'''$.rating''',
       ));

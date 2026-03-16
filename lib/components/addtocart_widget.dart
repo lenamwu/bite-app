@@ -46,6 +46,7 @@ class _AddtocartWidgetState extends State<AddtocartWidget> {
           milliseconds: 2500,
         ),
       );
+      if (!mounted) return;
       Navigator.pop(context);
     });
 

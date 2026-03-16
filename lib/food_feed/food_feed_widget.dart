@@ -1251,7 +1251,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .accent3,
+                                                              .customColor3,
                                                       fontSize: 12.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight:

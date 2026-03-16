@@ -636,7 +636,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
                                   crossAxisCount: 2,
-                                  childAspectRatio: 0.9,
+                                  childAspectRatio: 0.85,
                                 ),
                                 scrollDirection: Axis.vertical,
                                 builderDelegate:
@@ -673,120 +673,102 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                     final gridViewPostsRecord = _model
                                         .gridViewPagingController1!
                                         .itemList![gridViewIndex];
-                                    return Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.0, -1.0),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        5.0, 5.0, 5.0, 2.0),
-                                                child: InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    context.pushNamed(
-                                                      CommentRecipeWidget
-                                                          .routeName,
-                                                      queryParameters: {
-                                                        'docref':
-                                                            serializeParam(
-                                                          gridViewPostsRecord
-                                                              .reference,
-                                                          ParamType
-                                                              .DocumentReference,
-                                                        ),
-                                                        'reciperef':
-                                                            serializeParam(
-                                                          gridViewPostsRecord
-                                                              .recipeRef,
-                                                          ParamType
-                                                              .DocumentReference,
-                                                        ),
-                                                        'userref':
-                                                            serializeParam(
-                                                          gridViewPostsRecord
-                                                              .postUser,
-                                                          ParamType
-                                                              .DocumentReference,
-                                                        ),
-                                                      }.withoutNulls,
-                                                    );
-                                                  },
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            0.0),
-                                                    child: Image.network(
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsetsDirectional
+                                              .fromSTEB(5.0, 5.0, 5.0, 2.0),
+                                          child: AspectRatio(
+                                            aspectRatio: 1.0,
+                                            child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                context.pushNamed(
+                                                  CommentRecipeWidget.routeName,
+                                                  queryParameters: {
+                                                    'docref': serializeParam(
                                                       gridViewPostsRecord
-                                                          .postMultPhotos
-                                                          .firstOrNull!,
-                                                      width: double.infinity,
-                                                      height: double.infinity,
-                                                      fit: BoxFit.cover,
-                                                      alignment:
-                                                          Alignment(-1.0, -1.0),
-                                                      errorBuilder: (context,
-                                                              error,
-                                                              stackTrace) =>
-                                                          Image.asset(
-                                                        'assets/images/error_image.png',
-                                                        width: double.infinity,
-                                                        height: double.infinity,
-                                                        fit: BoxFit.cover,
-                                                        alignment: Alignment(
-                                                            -1.0, -1.0),
-                                                      ),
+                                                          .reference,
+                                                      ParamType
+                                                          .DocumentReference,
                                                     ),
+                                                    'reciperef': serializeParam(
+                                                      gridViewPostsRecord
+                                                          .recipeRef,
+                                                      ParamType
+                                                          .DocumentReference,
+                                                    ),
+                                                    'userref': serializeParam(
+                                                      gridViewPostsRecord
+                                                          .postUser,
+                                                      ParamType
+                                                          .DocumentReference,
+                                                    ),
+                                                  }.withoutNulls,
+                                                );
+                                              },
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(0.0),
+                                                child: Image.network(
+                                                  gridViewPostsRecord
+                                                      .postMultPhotos
+                                                      .firstOrNull!,
+                                                  width: double.infinity,
+                                                  height: double.infinity,
+                                                  fit: BoxFit.cover,
+                                                  alignment:
+                                                      Alignment(-1.0, -1.0),
+                                                  errorBuilder: (context, error,
+                                                          stackTrace) =>
+                                                      Image.asset(
+                                                    'assets/images/error_image.png',
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                    fit: BoxFit.cover,
+                                                    alignment:
+                                                        Alignment(-1.0, -1.0),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          Align(
-                                            alignment: AlignmentDirectional(
-                                                -1.0, -1.0),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(5.0, 2.0, 0.0, 2.0),
-                                              child: AutoSizeText(
-                                                gridViewPostsRecord.postText,
-                                                maxLines: 1,
-                                                minFontSize: 14.0,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMediumFamily,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .accent3,
-                                                      letterSpacing: 0.0,
-                                                      useGoogleFonts:
-                                                          !FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMediumIsCustom,
-                                                    ),
-                                              ),
-                                            ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsetsDirectional
+                                              .fromSTEB(5.0, 2.0, 5.0, 2.0),
+                                          child: Text(
+                                            gridViewPostsRecord.postText,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily,
+                                                  color:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .tertiary,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  useGoogleFonts:
+                                                      !FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumIsCustom,
+                                                ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     );
                                   },
                                 ),
@@ -817,8 +799,8 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                 padding: EdgeInsets.zero,
                                 gridDelegate:
                                     SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 3,
-                                  childAspectRatio: 0.9,
+                                  crossAxisCount: 2,
+                                  childAspectRatio: 0.85,
                                 ),
                                 scrollDirection: Axis.vertical,
                                 builderDelegate:
@@ -855,144 +837,126 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                     final gridViewPostsRecord = _model
                                         .gridViewPagingController2!
                                         .itemList![gridViewIndex];
-                                    return Align(
-                                      alignment: AlignmentDirectional(0.0, 0.0),
-                                      child: Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          Expanded(
-                                            child: Align(
-                                              alignment: AlignmentDirectional(
-                                                  0.0, -1.0),
-                                              child: Padding(
-                                                padding: EdgeInsetsDirectional
-                                                    .fromSTEB(
-                                                        5.0, 5.0, 5.0, 2.0),
-                                                child: InkWell(
-                                                  splashColor:
-                                                      Colors.transparent,
-                                                  focusColor:
-                                                      Colors.transparent,
-                                                  hoverColor:
-                                                      Colors.transparent,
-                                                  highlightColor:
-                                                      Colors.transparent,
-                                                  onTap: () async {
-                                                    if (gridViewPostsRecord
-                                                            .hasRecipe ==
-                                                        true) {
-                                                      context.pushNamed(
-                                                        CommentRecipeWidget
-                                                            .routeName,
-                                                        queryParameters: {
-                                                          'docref':
-                                                              serializeParam(
-                                                            gridViewPostsRecord
-                                                                .reference,
-                                                            ParamType
-                                                                .DocumentReference,
-                                                          ),
-                                                          'reciperef':
-                                                              serializeParam(
-                                                            gridViewPostsRecord
-                                                                .recipeRef,
-                                                            ParamType
-                                                                .DocumentReference,
-                                                          ),
-                                                          'userref':
-                                                              serializeParam(
-                                                            gridViewPostsRecord
-                                                                .postUser,
-                                                            ParamType
-                                                                .DocumentReference,
-                                                          ),
-                                                        }.withoutNulls,
-                                                      );
-                                                    } else {
-                                                      context.pushNamed(
-                                                        CommentWidget.routeName,
-                                                        queryParameters: {
-                                                          'docref':
-                                                              serializeParam(
-                                                            gridViewPostsRecord
-                                                                .reference,
-                                                            ParamType
-                                                                .DocumentReference,
-                                                          ),
-                                                          'userref':
-                                                              serializeParam(
-                                                            gridViewPostsRecord
-                                                                .postUser,
-                                                            ParamType
-                                                                .DocumentReference,
-                                                          ),
-                                                        }.withoutNulls,
-                                                      );
-                                                    }
-                                                  },
-                                                  child: ClipRRect(
-                                                    borderRadius:
-                                                        BorderRadius.circular(
-                                                            0.0),
-                                                    child: Image.network(
-                                                      gridViewPostsRecord
-                                                          .postMultPhotos
-                                                          .firstOrNull!,
-                                                      width: double.infinity,
-                                                      height: double.infinity,
-                                                      fit: BoxFit.cover,
-                                                      alignment:
-                                                          Alignment(-1.0, -1.0),
-                                                      errorBuilder: (context,
-                                                              error,
-                                                              stackTrace) =>
-                                                          Image.asset(
-                                                        'assets/images/error_image.png',
-                                                        width: double.infinity,
-                                                        height: double.infinity,
-                                                        fit: BoxFit.cover,
-                                                        alignment: Alignment(
-                                                            -1.0, -1.0),
+                                    return Column(
+                                      mainAxisSize: MainAxisSize.min,
+                                      crossAxisAlignment:
+                                          CrossAxisAlignment.start,
+                                      children: [
+                                        Padding(
+                                          padding: EdgeInsetsDirectional
+                                              .fromSTEB(5.0, 5.0, 5.0, 2.0),
+                                          child: AspectRatio(
+                                            aspectRatio: 1.0,
+                                            child: InkWell(
+                                              splashColor: Colors.transparent,
+                                              focusColor: Colors.transparent,
+                                              hoverColor: Colors.transparent,
+                                              highlightColor:
+                                                  Colors.transparent,
+                                              onTap: () async {
+                                                if (gridViewPostsRecord
+                                                        .hasRecipe ==
+                                                    true) {
+                                                  context.pushNamed(
+                                                    CommentRecipeWidget
+                                                        .routeName,
+                                                    queryParameters: {
+                                                      'docref': serializeParam(
+                                                        gridViewPostsRecord
+                                                            .reference,
+                                                        ParamType
+                                                            .DocumentReference,
                                                       ),
-                                                    ),
+                                                      'reciperef':
+                                                          serializeParam(
+                                                        gridViewPostsRecord
+                                                            .recipeRef,
+                                                        ParamType
+                                                            .DocumentReference,
+                                                      ),
+                                                      'userref': serializeParam(
+                                                        gridViewPostsRecord
+                                                            .postUser,
+                                                        ParamType
+                                                            .DocumentReference,
+                                                      ),
+                                                    }.withoutNulls,
+                                                  );
+                                                } else {
+                                                  context.pushNamed(
+                                                    CommentWidget.routeName,
+                                                    queryParameters: {
+                                                      'docref': serializeParam(
+                                                        gridViewPostsRecord
+                                                            .reference,
+                                                        ParamType
+                                                            .DocumentReference,
+                                                      ),
+                                                      'userref': serializeParam(
+                                                        gridViewPostsRecord
+                                                            .postUser,
+                                                        ParamType
+                                                            .DocumentReference,
+                                                      ),
+                                                    }.withoutNulls,
+                                                  );
+                                                }
+                                              },
+                                              child: ClipRRect(
+                                                borderRadius:
+                                                    BorderRadius.circular(0.0),
+                                                child: Image.network(
+                                                  gridViewPostsRecord
+                                                      .postMultPhotos
+                                                      .firstOrNull!,
+                                                  width: double.infinity,
+                                                  height: double.infinity,
+                                                  fit: BoxFit.cover,
+                                                  alignment:
+                                                      Alignment(-1.0, -1.0),
+                                                  errorBuilder: (context, error,
+                                                          stackTrace) =>
+                                                      Image.asset(
+                                                    'assets/images/error_image.png',
+                                                    width: double.infinity,
+                                                    height: double.infinity,
+                                                    fit: BoxFit.cover,
+                                                    alignment:
+                                                        Alignment(-1.0, -1.0),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                          Align(
-                                            alignment: AlignmentDirectional(
-                                                -1.0, -1.0),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(5.0, 2.0, 0.0, 2.0),
-                                              child: AutoSizeText(
-                                                gridViewPostsRecord.postText,
-                                                maxLines: 1,
-                                                minFontSize: 14.0,
-                                                style: FlutterFlowTheme.of(
-                                                        context)
-                                                    .bodyMedium
-                                                    .override(
-                                                      fontFamily:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMediumFamily,
-                                                      color:
-                                                          FlutterFlowTheme.of(
-                                                                  context)
-                                                              .accent3,
-                                                      letterSpacing: 0.0,
-                                                      useGoogleFonts:
-                                                          !FlutterFlowTheme.of(
-                                                                  context)
-                                                              .bodyMediumIsCustom,
-                                                    ),
-                                              ),
-                                            ),
+                                        ),
+                                        Padding(
+                                          padding: EdgeInsetsDirectional
+                                              .fromSTEB(5.0, 2.0, 5.0, 2.0),
+                                          child: Text(
+                                            gridViewPostsRecord.postText,
+                                            maxLines: 2,
+                                            overflow: TextOverflow.ellipsis,
+                                            style: FlutterFlowTheme.of(context)
+                                                .bodyMedium
+                                                .override(
+                                                  fontFamily:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumFamily,
+                                                  color:
+                                                      FlutterFlowTheme.of(
+                                                              context)
+                                                          .tertiary,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  useGoogleFonts:
+                                                      !FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMediumIsCustom,
+                                                ),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     );
                                   },
                                 ),

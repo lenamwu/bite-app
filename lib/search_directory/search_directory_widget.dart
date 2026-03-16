@@ -1,3 +1,4 @@
+import 'package:url_launcher/url_launcher.dart';
 import '/auth/base_auth_user_provider.dart';
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/api_requests/api_calls.dart';
@@ -681,6 +682,20 @@ class _SearchDirectoryWidgetState extends State<SearchDirectoryWidget>
                                                                                 ).toString(),
                                                                               );
 
+                                                                              // If scrape failed, open URL in browser
+                                                                              final status1 = getJsonField(
+                                                                                (_model.actionoutput?.jsonBody ?? ''),
+                                                                                r'''$.status''',
+                                                                              )?.toString();
+                                                                              if (status1 == 'failed') {
+                                                                                final recipeUrl = getJsonField(
+                                                                                  filteredRecipesItem,
+                                                                                  r'''$.link''',
+                                                                                ).toString();
+                                                                                await launchUrl(Uri.parse(recipeUrl), mode: LaunchMode.externalApplication);
+                                                                                return;
+                                                                              }
+
                                                                               _model.alrsavedrecipe = await queryRecipesRecordOnce(
                                                                                 queryBuilder: (recipesRecord) => recipesRecord.where(
                                                                                   'url',
@@ -734,6 +749,7 @@ class _SearchDirectoryWidgetState extends State<SearchDirectoryWidget>
                                                                                       r'''$.image_url''',
                                                                                     ).toString()}',
                                                                                     usercreated: false,
+                                                                                    rating: castToType<double>(getJsonField((_model.actionoutput?.jsonBody ?? ''), r'''$.rating''')),
                                                                                   ),
                                                                                   ...mapToFirestore(
                                                                                     {
@@ -784,6 +800,7 @@ class _SearchDirectoryWidgetState extends State<SearchDirectoryWidget>
                                                                                       r'''$.image_url''',
                                                                                     ).toString()}',
                                                                                     usercreated: false,
+                                                                                    rating: castToType<double>(getJsonField((_model.actionoutput?.jsonBody ?? ''), r'''$.rating''')),
                                                                                   ),
                                                                                   ...mapToFirestore(
                                                                                     {
@@ -1015,6 +1032,16 @@ class _SearchDirectoryWidgetState extends State<SearchDirectoryWidget>
                                                                               url: listViewRecommendationsRecord.url,
                                                                             );
 
+                                                                            // If scrape failed, open URL in browser
+                                                                            final status2 = getJsonField(
+                                                                              (_model.actionoutputcustom2?.jsonBody ?? ''),
+                                                                              r'''$.status''',
+                                                                            )?.toString();
+                                                                            if (status2 == 'failed') {
+                                                                              await launchUrl(Uri.parse(listViewRecommendationsRecord.url), mode: LaunchMode.externalApplication);
+                                                                              return;
+                                                                            }
+
                                                                             _model.alrsavedrecipe2 =
                                                                                 await queryRecipesRecordOnce(
                                                                               queryBuilder: (recipesRecord) => recipesRecord.where(
@@ -1061,6 +1088,7 @@ class _SearchDirectoryWidgetState extends State<SearchDirectoryWidget>
                                                                                   ).toString(),
                                                                                   publicrecipeimage: 'https://images.weserv.nl/?url=${listViewRecommendationsRecord.image}',
                                                                                   usercreated: false,
+                                                                                  rating: castToType<double>(getJsonField((_model.actionoutputcustom2?.jsonBody ?? ''), r'''$.rating''')),
                                                                                 ),
                                                                                 ...mapToFirestore(
                                                                                   {
@@ -1105,6 +1133,7 @@ class _SearchDirectoryWidgetState extends State<SearchDirectoryWidget>
                                                                                   ).toString(),
                                                                                   publicrecipeimage: 'https://images.weserv.nl/?url=${listViewRecommendationsRecord.image}',
                                                                                   usercreated: false,
+                                                                                  rating: castToType<double>(getJsonField((_model.actionoutputcustom2?.jsonBody ?? ''), r'''$.rating''')),
                                                                                 ),
                                                                                 ...mapToFirestore(
                                                                                   {

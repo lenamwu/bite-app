@@ -210,7 +210,7 @@ class _GrocerylistWidgetState extends State<GrocerylistWidget> {
                                         borderRadius: 18.0,
                                         buttonSize: 45.0,
                                         icon: Icon(
-                                          Icons.delete_outline,
+                                          Icons.close,
                                           color: FlutterFlowTheme.of(context)
                                               .accent3,
                                           size: 28.0,
@@ -379,13 +379,6 @@ class _GrocerylistWidgetState extends State<GrocerylistWidget> {
                                             contentPadding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     16.0, 0.0, 16.0, 0.0),
-                                            prefixIcon: Icon(
-                                              Icons.add_shopping_cart,
-                                              color:
-                                                  FlutterFlowTheme.of(context)
-                                                      .secondaryText,
-                                              size: 20.0,
-                                            ),
                                           ),
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
@@ -416,7 +409,7 @@ class _GrocerylistWidgetState extends State<GrocerylistWidget> {
                                         borderRadius: 8.0,
                                         buttonSize: 40.0,
                                         icon: Icon(
-                                          Icons.send,
+                                          Icons.add_shopping_cart,
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           size: 24.0,
