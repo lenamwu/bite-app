@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'auth_page_model.dart';
 export 'auth_page_model.dart';
+import '/components/bite_logo.dart';
 
 class AuthPageWidget extends StatefulWidget {
   const AuthPageWidget({super.key});
@@ -110,23 +111,7 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                                       Align(
                                         alignment:
                                             AlignmentDirectional(0.0, 0.0),
-                                        child: Text(
-                                          'bite',
-                                          style: FlutterFlowTheme.of(context)
-                                              .displayLarge
-                                              .override(
-                                                fontFamily:
-                                                    FlutterFlowTheme.of(context)
-                                                        .displayLargeFamily,
-                                                fontSize: 75.0,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.normal,
-                                                useGoogleFonts:
-                                                    !FlutterFlowTheme.of(
-                                                            context)
-                                                        .displayLargeIsCustom,
-                                              ),
-                                        ),
+                                        child: BiteLogo(fontSize: 75.0),
                                       ),
                                       Opacity(
                                         opacity: 0.3,
@@ -137,26 +122,7 @@ class _AuthPageWidgetState extends State<AuthPageWidget> {
                                             padding:
                                                 EdgeInsetsDirectional.fromSTEB(
                                                     15.0, 15.0, 0.0, 0.0),
-                                            child: Text(
-                                              'bite',
-                                              style:
-                                                  FlutterFlowTheme.of(context)
-                                                      .displayLarge
-                                                      .override(
-                                                        fontFamily:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .displayLargeFamily,
-                                                        fontSize: 75.0,
-                                                        letterSpacing: 0.0,
-                                                        fontWeight:
-                                                            FontWeight.normal,
-                                                        useGoogleFonts:
-                                                            !FlutterFlowTheme
-                                                                    .of(context)
-                                                                .displayLargeIsCustom,
-                                                      ),
-                                            ),
+                                            child: BiteLogo(fontSize: 75.0),
                                           ),
                                         ),
                                       ),

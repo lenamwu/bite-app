@@ -13,6 +13,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'featured_list_model.dart';
 export 'featured_list_model.dart';
+import '/components/bite_logo.dart';
 
 class FeaturedListWidget extends StatefulWidget {
   const FeaturedListWidget({
@@ -98,18 +99,7 @@ class _FeaturedListWidgetState extends State<FeaturedListWidget> {
                   context.pop();
                 },
               ),
-              title: Text(
-                'bite',
-                style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily:
-                          FlutterFlowTheme.of(context).headlineMediumFamily,
-                      color: FlutterFlowTheme.of(context).primary,
-                      fontSize: 22.0,
-                      letterSpacing: 0.0,
-                      useGoogleFonts:
-                          !FlutterFlowTheme.of(context).headlineMediumIsCustom,
-                    ),
-              ),
+              title: BiteLogo(),
               actions: [],
               centerTitle: false,
               elevation: 2.0,

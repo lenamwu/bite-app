@@ -19,6 +19,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'searched_profile_page_model.dart';
 export 'searched_profile_page_model.dart';
+import '/components/bite_logo.dart';
 
 class SearchedProfilePageWidget extends StatefulWidget {
   const SearchedProfilePageWidget({
@@ -121,18 +122,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                   context.pop();
                 },
               ),
-              title: Text(
-                'bite',
-                style: FlutterFlowTheme.of(context).headlineMedium.override(
-                      fontFamily:
-                          FlutterFlowTheme.of(context).headlineMediumFamily,
-                      color: FlutterFlowTheme.of(context).primary,
-                      fontSize: 22.0,
-                      letterSpacing: 0.0,
-                      useGoogleFonts:
-                          !FlutterFlowTheme.of(context).headlineMediumIsCustom,
-                    ),
-              ),
+              title: BiteLogo(),
               actions: [],
               centerTitle: false,
               elevation: 2.0,

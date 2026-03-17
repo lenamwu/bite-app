@@ -18,6 +18,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'notification_model.dart';
 export 'notification_model.dart';
+import '/components/bite_logo.dart';
 
 class NotificationWidget extends StatefulWidget {
   const NotificationWidget({super.key});
@@ -103,17 +104,7 @@ class _NotificationWidgetState extends State<NotificationWidget> {
             children: [
               Align(
                 alignment: AlignmentDirectional(-1.0, -1.0),
-                child: Text(
-                  'bite',
-                  style: FlutterFlowTheme.of(context).headlineMedium.override(
-                        fontFamily:
-                            FlutterFlowTheme.of(context).headlineMediumFamily,
-                        fontSize: 22.0,
-                        letterSpacing: 0.0,
-                        useGoogleFonts: !FlutterFlowTheme.of(context)
-                            .headlineMediumIsCustom,
-                      ),
-                ),
+                child: BiteLogo(),
               ),
             ],
           ),

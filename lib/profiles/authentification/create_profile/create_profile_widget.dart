@@ -17,6 +17,7 @@ import 'package:octo_image/octo_image.dart';
 import 'package:provider/provider.dart';
 import 'create_profile_model.dart';
 export 'create_profile_model.dart';
+import '/components/bite_logo.dart';
 
 class CreateProfileWidget extends StatefulWidget {
   const CreateProfileWidget({super.key});
@@ -68,17 +69,7 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
-          title: Text(
-            'bite',
-            style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: FlutterFlowTheme.of(context).headlineMediumFamily,
-                  color: FlutterFlowTheme.of(context).primary,
-                  fontSize: 22.0,
-                  letterSpacing: 0.0,
-                  useGoogleFonts:
-                      !FlutterFlowTheme.of(context).headlineMediumIsCustom,
-                ),
-          ),
+          title: BiteLogo(),
           actions: [],
           centerTitle: false,
           elevation: 2.0,

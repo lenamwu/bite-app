@@ -16,6 +16,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'edit_post_model.dart';
 export 'edit_post_model.dart';
+import '/components/bite_logo.dart';
 
 class EditPostWidget extends StatefulWidget {
   const EditPostWidget({
@@ -124,17 +125,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
               ),
               title: Align(
                 alignment: AlignmentDirectional(-1.0, -1.0),
-                child: Text(
-                  'bite',
-                  style: FlutterFlowTheme.of(context).headlineMedium.override(
-                        fontFamily:
-                            FlutterFlowTheme.of(context).headlineMediumFamily,
-                        fontSize: 22.0,
-                        letterSpacing: 0.0,
-                        useGoogleFonts: !FlutterFlowTheme.of(context)
-                            .headlineMediumIsCustom,
-                      ),
-                ),
+                child: BiteLogo(),
               ),
               actions: [],
               centerTitle: false,

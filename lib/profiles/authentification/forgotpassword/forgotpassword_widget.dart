@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'forgotpassword_model.dart';
 export 'forgotpassword_model.dart';
+import '/components/bite_logo.dart';
 
 class ForgotpasswordWidget extends StatefulWidget {
   const ForgotpasswordWidget({super.key});
@@ -74,17 +75,7 @@ class _ForgotpasswordWidgetState extends State<ForgotpasswordWidget> {
             context.pop();
           },
         ),
-        title: Text(
-          'bite',
-          style: FlutterFlowTheme.of(context).headlineMedium.override(
-                fontFamily: FlutterFlowTheme.of(context).headlineMediumFamily,
-                color: FlutterFlowTheme.of(context).primary,
-                fontSize: 22.0,
-                letterSpacing: 0.0,
-                useGoogleFonts:
-                    !FlutterFlowTheme.of(context).headlineMediumIsCustom,
-              ),
-        ),
+        title: BiteLogo(),
         actions: [],
         centerTitle: false,
         elevation: 2.0,

@@ -15,6 +15,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'grocerylist_model.dart';
 export 'grocerylist_model.dart';
+import '/components/bite_logo.dart';
 
 /// can you create a grocery list page.
 ///
@@ -79,17 +80,7 @@ class _GrocerylistWidgetState extends State<GrocerylistWidget> {
               context.pop();
             },
           ),
-          title: Text(
-            'bite',
-            style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: FlutterFlowTheme.of(context).headlineMediumFamily,
-                  color: FlutterFlowTheme.of(context).primary,
-                  fontSize: 22.0,
-                  letterSpacing: 0.0,
-                  useGoogleFonts:
-                      !FlutterFlowTheme.of(context).headlineMediumIsCustom,
-                ),
-          ),
+          title: BiteLogo(),
           actions: [],
           centerTitle: false,
           elevation: 2.0,

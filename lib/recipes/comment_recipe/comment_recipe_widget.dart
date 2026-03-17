@@ -22,6 +22,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'comment_recipe_model.dart';
 export 'comment_recipe_model.dart';
+import '/components/bite_logo.dart';
 
 class CommentRecipeWidget extends StatefulWidget {
   const CommentRecipeWidget({
@@ -151,17 +152,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                   context.pop();
                 },
               ),
-              title: Text(
-                'bite',
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                      fontSize: 22.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w600,
-                      useGoogleFonts:
-                          !FlutterFlowTheme.of(context).bodyMediumIsCustom,
-                    ),
-              ),
+              title: BiteLogo(),
               actions: [
                 Visibility(
                   visible: (commentRecipePostsRecord.postUser !=

@@ -15,6 +15,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'follow_requestpage_model.dart';
 export 'follow_requestpage_model.dart';
+import '/components/bite_logo.dart';
 
 class FollowRequestpageWidget extends StatefulWidget {
   const FollowRequestpageWidget({super.key});
@@ -76,17 +77,7 @@ class _FollowRequestpageWidgetState extends State<FollowRequestpageWidget> {
           ),
           title: Align(
             alignment: AlignmentDirectional(-1.0, -1.0),
-            child: Text(
-              'bite',
-              style: FlutterFlowTheme.of(context).headlineMedium.override(
-                    fontFamily:
-                        FlutterFlowTheme.of(context).headlineMediumFamily,
-                    fontSize: 22.0,
-                    letterSpacing: 0.0,
-                    useGoogleFonts:
-                        !FlutterFlowTheme.of(context).headlineMediumIsCustom,
-                  ),
-            ),
+            child: BiteLogo(),
           ),
           actions: [],
           centerTitle: false,

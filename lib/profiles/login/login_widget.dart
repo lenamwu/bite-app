@@ -11,6 +11,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'login_model.dart';
 export 'login_model.dart';
+import '/components/bite_logo.dart';
 
 class LoginWidget extends StatefulWidget {
   const LoginWidget({super.key});
@@ -102,26 +103,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             Align(
                                               alignment: AlignmentDirectional(
                                                   0.0, 0.0),
-                                              child: Text(
-                                                'bite',
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .displayLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .displayLargeFamily,
-                                                          fontSize: 75.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                          useGoogleFonts:
-                                                              !FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .displayLargeIsCustom,
-                                                        ),
-                                              ),
+                                              child: BiteLogo(fontSize: 75.0),
                                             ),
                                             Opacity(
                                               opacity: 0.3,
@@ -132,26 +114,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                                   padding: EdgeInsetsDirectional
                                                       .fromSTEB(
                                                           15.0, 15.0, 0.0, 0.0),
-                                                  child: Text(
-                                                    'bite',
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .displayLarge
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .displayLargeFamily,
-                                                          fontSize: 75.0,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.normal,
-                                                          useGoogleFonts:
-                                                              !FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .displayLargeIsCustom,
-                                                        ),
-                                                  ),
+                                                  child: BiteLogo(fontSize: 75.0),
                                                 ),
                                               ),
                                             ),

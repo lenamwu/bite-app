@@ -24,6 +24,7 @@ import 'package:provider/provider.dart';
 import 'package:text_search/text_search.dart';
 import 'search_directory_model.dart';
 export 'search_directory_model.dart';
+import '/components/bite_logo.dart';
 
 class SearchDirectoryWidget extends StatefulWidget {
   const SearchDirectoryWidget({super.key});
@@ -126,17 +127,7 @@ class _SearchDirectoryWidgetState extends State<SearchDirectoryWidget>
                   context.pushNamed(FoodFeedWidget.routeName);
                 },
               ),
-              title: Text(
-                'bite',
-                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                      fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                      fontSize: 22.0,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.w600,
-                      useGoogleFonts:
-                          !FlutterFlowTheme.of(context).bodyMediumIsCustom,
-                    ),
-              ),
+              title: BiteLogo(),
               actions: [],
               centerTitle: false,
               elevation: 2.0,

@@ -16,6 +16,7 @@ import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 import 'package:provider/provider.dart';
 import 'profile_page2_model.dart';
 export 'profile_page2_model.dart';
+import '/components/bite_logo.dart';
 
 class ProfilePage2Widget extends StatefulWidget {
   const ProfilePage2Widget({super.key});
@@ -92,17 +93,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
         appBar: AppBar(
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           automaticallyImplyLeading: false,
-          title: Text(
-            'bite',
-            style: FlutterFlowTheme.of(context).headlineMedium.override(
-                  fontFamily: FlutterFlowTheme.of(context).headlineMediumFamily,
-                  color: FlutterFlowTheme.of(context).primary,
-                  fontSize: 22.0,
-                  letterSpacing: 0.0,
-                  useGoogleFonts:
-                      !FlutterFlowTheme.of(context).headlineMediumIsCustom,
-                ),
-          ),
+          title: BiteLogo(),
           actions: [
             Align(
               alignment: AlignmentDirectional(0.94, 0.29),

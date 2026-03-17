@@ -8,6 +8,7 @@ import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_toggle_icon.dart';
 import '/flutter_flow/flutter_flow_util.dart';
 import '/flutter_flow/flutter_flow_widgets.dart';
+import 'package:url_launcher/url_launcher.dart';
 import 'dart:math';
 import 'dart:ui';
 import '/index.dart';
@@ -21,6 +22,7 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'public_recipe_model.dart';
 export 'public_recipe_model.dart';
+import '/components/bite_logo.dart';
 
 class PublicRecipeWidget extends StatefulWidget {
   const PublicRecipeWidget({
@@ -156,17 +158,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
               ),
               title: Align(
                 alignment: AlignmentDirectional(-1.0, -1.0),
-                child: Text(
-                  'bite',
-                  style: FlutterFlowTheme.of(context).headlineMedium.override(
-                        fontFamily:
-                            FlutterFlowTheme.of(context).headlineMediumFamily,
-                        fontSize: 22.0,
-                        letterSpacing: 0.0,
-                        useGoogleFonts: !FlutterFlowTheme.of(context)
-                            .headlineMediumIsCustom,
-                      ),
-                ),
+                child: BiteLogo(),
               ),
               actions: [
                 Padding(
@@ -378,9 +370,10 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                       Padding(
                                         padding: EdgeInsetsDirectional.fromSTEB(
                                             0.0, 12.0, 0.0, 0.0),
-                                        child: AutoSizeText(
+                                        child: Text(
                                           publicRecipeRecipesRecord.notes,
-                                          maxLines: 10,
+                                          maxLines: 4,
+                                          overflow: TextOverflow.ellipsis,
                                           style: FlutterFlowTheme.of(context)
                                               .bodyMedium
                                               .override(
@@ -396,6 +389,36 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                               ),
                                         ),
                                       ),
+                                      if (publicRecipeRecipesRecord.url.isNotEmpty)
+                                        Padding(
+                                          padding: EdgeInsetsDirectional.fromSTEB(
+                                              0.0, 6.0, 0.0, 0.0),
+                                          child: InkWell(
+                                            onTap: () async {
+                                              await launchUrl(
+                                                Uri.parse(publicRecipeRecipesRecord.url),
+                                                mode: LaunchMode.externalApplication,
+                                              );
+                                            },
+                                            child: Text(
+                                              'view original recipe',
+                                              style: FlutterFlowTheme.of(context)
+                                                  .bodyMedium
+                                                  .override(
+                                                    fontFamily:
+                                                        FlutterFlowTheme.of(context)
+                                                            .bodyMediumFamily,
+                                                    color: FlutterFlowTheme.of(context)
+                                                        .tertiary,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    useGoogleFonts:
+                                                        !FlutterFlowTheme.of(context)
+                                                            .bodyMediumIsCustom,
+                                                  ),
+                                            ),
+                                          ),
+                                        ),
                                       Column(
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
