@@ -500,17 +500,21 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                       },
                                                                                       child: ClipRRect(
                                                                                         borderRadius: BorderRadius.circular(0.0),
-                                                                                        child: Image.network(
-                                                                                          imagesItem,
-                                                                                          width: 350.0,
-                                                                                          height: 350.0,
-                                                                                          fit: BoxFit.cover,
-                                                                                          errorBuilder: (context, error, stackTrace) => Image.asset(
-                                                                                            'assets/images/error_image.png',
-                                                                                            width: 350.0,
-                                                                                            height: 350.0,
-                                                                                            fit: BoxFit.cover,
-                                                                                          ),
+                                                                                        child: Builder(
+                                                                                          builder: (context) {
+                                                                                            final screenWidth = MediaQuery.sizeOf(context).width;
+                                                                                            final imageHeight = (200.0 + (screenWidth - 375).clamp(0, 625) * 0.24);
+                                                                                            return Image.network(
+                                                                                              imagesItem,
+                                                                                              height: imageHeight,
+                                                                                              fit: BoxFit.cover,
+                                                                                              errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                                                                'assets/images/error_image.png',
+                                                                                                height: imageHeight,
+                                                                                                fit: BoxFit.cover,
+                                                                                              ),
+                                                                                            );
+                                                                                          },
                                                                                         ),
                                                                                       ),
                                                                                     ),
