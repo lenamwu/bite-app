@@ -28,6 +28,8 @@ class SearchDirectory2Model extends FlutterFlowModel<SearchDirectory2Widget> {
 
   String searchKeyword = 'chicken';
 
+  int? loadingIndex;
+
   List<dynamic> searchResults = [];
   void addToSearchResults(dynamic item) => searchResults.add(item);
   void removeFromSearchResults(dynamic item) => searchResults.remove(item);

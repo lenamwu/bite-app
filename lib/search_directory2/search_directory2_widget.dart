@@ -502,6 +502,11 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                       highlightColor:
                                                           Colors.transparent,
                                                       onTap: () async {
+                                                        if (_model.loadingIndex != null) return;
+                                                        safeSetState(() {
+                                                          _model.loadingIndex = recipesearchresIndex;
+                                                        });
+                                                        try {
                                                         final nav = GoRouter.of(context);
                                                         if (loggedIn == true) {
                                                           _model.weblinkoutput =
@@ -762,10 +767,15 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                               OnboardingWidget
                                                                   .routeName);
                                                         }
-
-                                                        safeSetState(() {});
+                                                        } finally {
+                                                          safeSetState(() {
+                                                            _model.loadingIndex = null;
+                                                          });
+                                                        }
                                                       },
-                                                      child: ClipRect(
+                                                      child: Stack(
+                                                        children: [
+                                                        ClipRect(
                                                         child: Column(
                                                         mainAxisSize:
                                                             MainAxisSize.min,
@@ -841,6 +851,30 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                           ),
                                                         ],
                                                       ),
+                                                      ),
+                                                      if (_model.loadingIndex == recipesearchresIndex)
+                                                        Positioned(
+                                                          left: 12.0,
+                                                          top: 5.0,
+                                                          right: 12.0,
+                                                          child: AspectRatio(
+                                                            aspectRatio: 1.0,
+                                                            child: Container(
+                                                              color: FlutterFlowTheme.of(context).primaryBackground.withOpacity(0.7),
+                                                              child: Center(
+                                                                child: SizedBox(
+                                                                  width: 24.0,
+                                                                  height: 24.0,
+                                                                  child: SpinKitFadingGrid(
+                                                                    color: FlutterFlowTheme.of(context).tertiary,
+                                                                    size: 24.0,
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            ),
+                                                          ),
+                                                        ),
+                                                      ],
                                                       ),
                                                     );
                                                   },

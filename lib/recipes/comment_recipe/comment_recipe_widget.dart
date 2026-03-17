@@ -1193,166 +1193,97 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                       mainAxisSize:
                                                           MainAxisSize.max,
                                                       children: [
-                                                        Align(
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  -1.0, -1.0),
+                                                        Expanded(
                                                           child: Column(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            crossAxisAlignment:
-                                                                CrossAxisAlignment
-                                                                    .start,
+                                                            mainAxisSize: MainAxisSize.max,
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
                                                             children: [
                                                               Row(
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
+                                                                mainAxisSize: MainAxisSize.max,
                                                                 children: [
                                                                   Text(
                                                                     'cooking time: ',
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyLarge
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).accent3,
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          useGoogleFonts:
-                                                                              !FlutterFlowTheme.of(context).bodyLargeIsCustom,
-                                                                        ),
+                                                                    style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                      fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
+                                                                      color: FlutterFlowTheme.of(context).accent3,
+                                                                      fontSize: 14.0,
+                                                                      letterSpacing: 0.0,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
+                                                                    ),
                                                                   ),
-                                                                  Text(
-                                                                    columnRecipesRecord
-                                                                        .cookingtime,
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyLarge
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).accent3,
-                                                                          fontSize:
-                                                                              14.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          useGoogleFonts:
-                                                                              !FlutterFlowTheme.of(context).bodyLargeIsCustom,
-                                                                        ),
+                                                                  Flexible(
+                                                                    child: Text(
+                                                                      columnRecipesRecord.cookingtime,
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                        fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
+                                                                        color: FlutterFlowTheme.of(context).accent3,
+                                                                        fontSize: 14.0,
+                                                                        letterSpacing: 0.0,
+                                                                        useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
+                                                                      ),
+                                                                    ),
                                                                   ),
                                                                 ],
                                                               ),
-                                                              Align(
-                                                                alignment:
-                                                                    AlignmentDirectional(
-                                                                        -1.0,
-                                                                        -1.0),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  children: [
-                                                                    Align(
-                                                                      alignment: AlignmentDirectional(
-                                                                          -1.0,
-                                                                          -1.0),
-                                                                      child:
-                                                                          Text(
-                                                                        'difficulty:  ',
-                                                                        style: FlutterFlowTheme.of(context)
-                                                                            .bodyLarge
-                                                                            .override(
-                                                                              fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                              color: FlutterFlowTheme.of(context).accent3,
-                                                                              fontSize: 14.0,
-                                                                              letterSpacing: 0.0,
-                                                                              fontWeight: FontWeight.bold,
-                                                                              useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
-                                                                            ),
+                                                              Row(
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  Text(
+                                                                    'difficulty:  ',
+                                                                    style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                      fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
+                                                                      color: FlutterFlowTheme.of(context).accent3,
+                                                                      fontSize: 14.0,
+                                                                      letterSpacing: 0.0,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
+                                                                    ),
+                                                                  ),
+                                                                  Flexible(
+                                                                    child: Text(
+                                                                      columnRecipesRecord.difficulty,
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                        fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
+                                                                        color: FlutterFlowTheme.of(context).accent3,
+                                                                        fontSize: 14.0,
+                                                                        letterSpacing: 0.0,
+                                                                        useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
                                                                       ),
                                                                     ),
-                                                                    Text(
-                                                                      columnRecipesRecord
-                                                                          .difficulty,
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyLarge
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).accent3,
-                                                                            fontSize:
-                                                                                14.0,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            useGoogleFonts:
-                                                                                !FlutterFlowTheme.of(context).bodyLargeIsCustom,
-                                                                          ),
-                                                                    ),
-                                                                  ],
-                                                                ),
+                                                                  ),
+                                                                ],
                                                               ),
-                                                              Align(
-                                                                alignment:
-                                                                    AlignmentDirectional(
-                                                                        -1.0,
-                                                                        -1.0),
-                                                                child: Row(
-                                                                  mainAxisSize:
-                                                                      MainAxisSize
-                                                                          .max,
-                                                                  children: [
-                                                                    Text(
-                                                                      'servings: ',
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyLarge
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).accent3,
-                                                                            fontSize:
-                                                                                14.0,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            fontWeight:
-                                                                                FontWeight.bold,
-                                                                            useGoogleFonts:
-                                                                                !FlutterFlowTheme.of(context).bodyLargeIsCustom,
-                                                                          ),
+                                                              Row(
+                                                                mainAxisSize: MainAxisSize.max,
+                                                                children: [
+                                                                  Text(
+                                                                    'servings: ',
+                                                                    style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                      fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
+                                                                      color: FlutterFlowTheme.of(context).accent3,
+                                                                      fontSize: 14.0,
+                                                                      letterSpacing: 0.0,
+                                                                      fontWeight: FontWeight.bold,
+                                                                      useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
                                                                     ),
-                                                                    Text(
-                                                                      columnRecipesRecord
-                                                                          .servings,
-                                                                      style: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyLarge
-                                                                          .override(
-                                                                            fontFamily:
-                                                                                FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                            color:
-                                                                                FlutterFlowTheme.of(context).accent3,
-                                                                            fontSize:
-                                                                                14.0,
-                                                                            letterSpacing:
-                                                                                0.0,
-                                                                            useGoogleFonts:
-                                                                                !FlutterFlowTheme.of(context).bodyLargeIsCustom,
-                                                                          ),
+                                                                  ),
+                                                                  Flexible(
+                                                                    child: Text(
+                                                                      columnRecipesRecord.servings,
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                                        fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
+                                                                        color: FlutterFlowTheme.of(context).accent3,
+                                                                        fontSize: 14.0,
+                                                                        letterSpacing: 0.0,
+                                                                        useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
+                                                                      ),
                                                                     ),
-                                                                  ],
-                                                                ),
+                                                                  ),
+                                                                ],
                                                               ),
                                                             ],
                                                           ),

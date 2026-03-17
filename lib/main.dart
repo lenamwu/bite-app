@@ -1,6 +1,7 @@
 import 'package:provider/provider.dart';
 import 'package:flutter/gestures.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_web_plugins/url_strategy.dart';
@@ -39,6 +40,9 @@ import 'index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+  ]);
   GoRouter.optionURLReflectsImperativeAPIs = true;
   usePathUrlStrategy();
 
@@ -75,7 +79,7 @@ class MyAppScrollBehavior extends MaterialScrollBehavior {
 class _MyAppState extends State<MyApp> {
   Locale? _locale;
 
-  ThemeMode _themeMode = FlutterFlowTheme.themeMode;
+  ThemeMode _themeMode = ThemeMode.light;
 
   late AppStateNotifier _appStateNotifier;
   late GoRouter _router;
@@ -127,10 +131,7 @@ class _MyAppState extends State<MyApp> {
     safeSetState(() => _locale = createLocale(language));
   }
 
-  void setThemeMode(ThemeMode mode) => safeSetState(() {
-        _themeMode = mode;
-        FlutterFlowTheme.saveThemeMode(mode);
-      });
+  void setThemeMode(ThemeMode mode) {}  // Dark mode disabled
 
   @override
   Widget build(BuildContext context) {

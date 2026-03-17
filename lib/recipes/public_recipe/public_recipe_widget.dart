@@ -409,10 +409,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                               child: Row(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            -1.0, -1.0),
+                                                  Expanded(
                                                     child: Column(
                                                       mainAxisSize:
                                                           MainAxisSize.max,
@@ -450,9 +447,11 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                                               .bodyLargeIsCustom,
                                                                     ),
                                                               ),
-                                                              Text(
+                                                              Flexible(
+                                                                child: Text(
                                                                 publicRecipeRecipesRecord
                                                                     .cookingtime,
+                                                                overflow: TextOverflow.ellipsis,
                                                                 style: FlutterFlowTheme
                                                                         .of(context)
                                                                     .bodyLarge
@@ -472,6 +471,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                                                   context)
                                                                               .bodyLargeIsCustom,
                                                                     ),
+                                                              ),
                                                               ),
                                                             ],
                                                           ),
@@ -508,9 +508,11 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                                                 .bodyLargeIsCustom,
                                                                       ),
                                                                 ),
-                                                                Text(
+                                                                Flexible(
+                                                                  child: Text(
                                                                   publicRecipeRecipesRecord
                                                                       .servings,
+                                                                  overflow: TextOverflow.ellipsis,
                                                                   style: FlutterFlowTheme
                                                                           .of(context)
                                                                       .bodyLarge
@@ -529,6 +531,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                                             !FlutterFlowTheme.of(context)
                                                                                 .bodyLargeIsCustom,
                                                                       ),
+                                                                ),
                                                                 ),
                                                               ],
                                                             ),
@@ -563,8 +566,10 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                                               .bodyLargeIsCustom,
                                                                     ),
                                                               ),
-                                                              Text(
+                                                              Flexible(
+                                                                child: Text(
                                                                 '${publicRecipeRecipesRecord.rating % 1 == 0 ? publicRecipeRecipesRecord.rating.toInt() : publicRecipeRecipesRecord.rating}/5',
+                                                                overflow: TextOverflow.ellipsis,
                                                                 style: FlutterFlowTheme
                                                                         .of(context)
                                                                     .bodyLarge
@@ -584,6 +589,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                                                   context)
                                                                               .bodyLargeIsCustom,
                                                                     ),
+                                                              ),
                                                               ),
                                                             ],
                                                           ),
