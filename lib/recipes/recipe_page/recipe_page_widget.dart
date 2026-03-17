@@ -67,10 +67,12 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
     return StreamBuilder<List<RecipesRecord>>(
       stream: _model.recipesaved(
         requestFn: () => queryRecipesRecord(
-          queryBuilder: (recipesRecord) => recipesRecord.where(
-            'recipe_saved_by',
-            arrayContains: currentUserReference,
-          ),
+          queryBuilder: (recipesRecord) => recipesRecord
+              .where(
+                'recipe_saved_by',
+                arrayContains: currentUserReference,
+              )
+              .orderBy('time_generated', descending: true),
         ),
       ),
       builder: (context, snapshot) {
