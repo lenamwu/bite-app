@@ -79,9 +79,9 @@ class SearchDirectoryModel extends FlutterFlowModel<SearchDirectoryWidget> {
   @override
   void dispose() {
     tabBarController?.dispose();
-    textFieldFocusNode1?.dispose();
     textController1?.dispose();
-
+    textFieldFocusNode1?.dispose();
+    textController2?.dispose();
     textFieldFocusNode2?.dispose();
   }
 }

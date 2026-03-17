@@ -223,8 +223,8 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                       child: GridView.builder(
                             padding: EdgeInsets.zero,
                             gridDelegate:
-                                SliverGridDelegateWithFixedCrossAxisCount(
-                              crossAxisCount: 2,
+                                SliverGridDelegateWithMaxCrossAxisExtent(
+                              maxCrossAxisExtent: 200.0,
                               childAspectRatio: 0.8,
                             ),
                             scrollDirection: Axis.vertical,
@@ -232,7 +232,8 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                             itemBuilder: (context, gridViewIndex) {
                               final gridViewRecipesRecord =
                                   recipePageRecipesRecordList[gridViewIndex];
-                              return Column(
+                              return ClipRect(
+                                child: Column(
                                 mainAxisSize: MainAxisSize.min,
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
@@ -309,30 +310,34 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                                         ),
                                       ),
                                     ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        5.0, 2.0, 5.0, 5.0),
-                                    child: Text(
-                                      gridViewRecipesRecord.title,
-                                      maxLines: 2,
-                                      overflow: TextOverflow.ellipsis,
-                                      style: FlutterFlowTheme.of(context)
-                                          .bodyMedium
-                                          .override(
-                                            fontFamily:
-                                                FlutterFlowTheme.of(context)
-                                                    .bodyMediumFamily,
-                                            color: FlutterFlowTheme.of(context)
-                                                .tertiary,
-                                            letterSpacing: 0.0,
-                                            fontWeight: FontWeight.w600,
-                                            useGoogleFonts:
-                                                !FlutterFlowTheme.of(context)
-                                                    .bodyMediumIsCustom,
-                                          ),
+                                  SizedBox(
+                                    height: 40.0,
+                                    child: Padding(
+                                      padding: EdgeInsetsDirectional.fromSTEB(
+                                          5.0, 2.0, 5.0, 0.0),
+                                      child: Text(
+                                        gridViewRecipesRecord.title,
+                                        maxLines: 2,
+                                        overflow: TextOverflow.ellipsis,
+                                        style: FlutterFlowTheme.of(context)
+                                            .bodyMedium
+                                            .override(
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .bodyMediumFamily,
+                                              color: FlutterFlowTheme.of(context)
+                                                  .tertiary,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.w600,
+                                              useGoogleFonts:
+                                                  !FlutterFlowTheme.of(context)
+                                                      .bodyMediumIsCustom,
+                                            ),
+                                      ),
                                     ),
                                   ),
                                 ],
+                              ),
                               );
                             },
                           ),

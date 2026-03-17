@@ -634,8 +634,8 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                 ),
                                 padding: EdgeInsets.zero,
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 200.0,
                                   childAspectRatio: 0.85,
                                 ),
                                 scrollDirection: Axis.vertical,
@@ -798,8 +798,8 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                 ),
                                 padding: EdgeInsets.zero,
                                 gridDelegate:
-                                    SliverGridDelegateWithFixedCrossAxisCount(
-                                  crossAxisCount: 2,
+                                    SliverGridDelegateWithMaxCrossAxisExtent(
+                                  maxCrossAxisExtent: 200.0,
                                   childAspectRatio: 0.85,
                                 ),
                                 scrollDirection: Axis.vertical,

@@ -1,5 +1,4 @@
-import 'dart:io';
-import 'package:flutter/foundation.dart';
+import 'package:flutter/foundation.dart' show kIsWeb, debugPrint, TargetPlatform, defaultTargetPlatform;
 import 'package:firebase_messaging/firebase_messaging.dart';
 import '/auth/firebase_auth/auth_util.dart';
 
@@ -7,6 +6,7 @@ bool _fcmInitialized = false;
 
 Future<void> initPushNotifications() async {
   if (_fcmInitialized) return;
+  if (kIsWeb) return; // FCM push tokens not supported on web
   _fcmInitialized = true;
 
   try {
@@ -21,7 +21,7 @@ Future<void> initPushNotifications() async {
     debugPrint('FCM: permission=${settings.authorizationStatus}');
 
     // On iOS, wait for the APNS token before requesting FCM token.
-    if (Platform.isIOS) {
+    if (defaultTargetPlatform == TargetPlatform.iOS) {
       String? apnsToken;
       for (int i = 0; i < 10; i++) {
         apnsToken = await messaging.getAPNSToken();

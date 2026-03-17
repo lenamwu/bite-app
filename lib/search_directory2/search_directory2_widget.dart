@@ -475,10 +475,10 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                 return GridView.builder(
                                                   padding: EdgeInsets.zero,
                                                   gridDelegate:
-                                                      SliverGridDelegateWithFixedCrossAxisCount(
-                                                    crossAxisCount: 2,
+                                                      SliverGridDelegateWithMaxCrossAxisExtent(
+                                                    maxCrossAxisExtent: 200.0,
                                                     mainAxisSpacing: 4.0,
-                                                    childAspectRatio: 0.82,
+                                                    childAspectRatio: 0.8,
                                                   ),
                                                   shrinkWrap: true,
                                                   physics:
@@ -765,9 +765,10 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
 
                                                         safeSetState(() {});
                                                       },
-                                                      child: Column(
+                                                      child: ClipRect(
+                                                        child: Column(
                                                         mainAxisSize:
-                                                            MainAxisSize.max,
+                                                            MainAxisSize.min,
                                                         crossAxisAlignment:
                                                             CrossAxisAlignment
                                                                 .start,
@@ -802,10 +803,8 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                               ),
                                                             ),
                                                           ),
-                                                          Align(
-                                                            alignment:
-                                                                AlignmentDirectional(
-                                                                    -1.0, 1.0),
+                                                          SizedBox(
+                                                            height: 40.0,
                                                             child: Padding(
                                                               padding:
                                                                   EdgeInsetsDirectional
@@ -819,6 +818,8 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                   recipesearchresItem,
                                                                   r'''$.title''',
                                                                 ).toString(),
+                                                                maxLines: 2,
+                                                                overflow: TextOverflow.ellipsis,
                                                                 style: FlutterFlowTheme.of(
                                                                         context)
                                                                     .bodyMedium
@@ -839,6 +840,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                             ),
                                                           ),
                                                         ],
+                                                      ),
                                                       ),
                                                     );
                                                   },

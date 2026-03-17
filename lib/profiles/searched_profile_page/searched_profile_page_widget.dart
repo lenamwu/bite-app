@@ -927,8 +927,8 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                         ),
                                         padding: EdgeInsets.zero,
                                         gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
+                                            SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent: 200.0,
                                           childAspectRatio: 0.85,
                                         ),
                                         scrollDirection: Axis.vertical,
@@ -1132,8 +1132,8 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                         ),
                                         padding: EdgeInsets.zero,
                                         gridDelegate:
-                                            SliverGridDelegateWithFixedCrossAxisCount(
-                                          crossAxisCount: 2,
+                                            SliverGridDelegateWithMaxCrossAxisExtent(
+                                          maxCrossAxisExtent: 200.0,
                                           childAspectRatio: 0.85,
                                         ),
                                         scrollDirection: Axis.vertical,
