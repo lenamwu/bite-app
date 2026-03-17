@@ -178,7 +178,11 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                     Padding(
                       padding:
                           EdgeInsetsDirectional.fromSTEB(0.0, 75.0, 0.0, 0.0),
-                      child: Stack(
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          minHeight: (_model.hasPosts == false || !loggedIn) ? 550.0 : 0.0,
+                        ),
+                        child: Stack(
                         children: [
                           if (loggedIn)
                             Padding(
@@ -1019,6 +1023,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                             ),
                           ),
                         ],
+                      ),
                       ),
                     ),
                     Padding(
