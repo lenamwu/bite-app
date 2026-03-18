@@ -387,10 +387,10 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                             rowUsersRecord.displayName,
                                                                                             style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                                                  color: FlutterFlowTheme.of(context).customColor4,
+                                                                                                  color: FlutterFlowTheme.of(context).primary,
                                                                                                   fontSize: 14.0,
                                                                                                   letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.w600,
+                                                                                                  fontWeight: FontWeight.bold,
                                                                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
                                                                                                 ),
                                                                                           ),
@@ -413,6 +413,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                                 color: FlutterFlowTheme.of(context).customColor4,
                                                                                                 fontSize: 10.0,
                                                                                                 letterSpacing: 0.0,
+                                                                                                fontWeight: FontWeight.bold,
                                                                                                 useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                                                               ),
                                                                                         ),
@@ -1082,7 +1083,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                     fontFamily: FlutterFlowTheme.of(context)
                                         .bodyMediumFamily,
                                     color: FlutterFlowTheme.of(context).accent3,
-                                    fontSize: 16.0,
+                                    fontSize: 17.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                     useGoogleFonts:
@@ -1311,7 +1312,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                     fontFamily: FlutterFlowTheme.of(context)
                                         .bodyMediumFamily,
                                     color: FlutterFlowTheme.of(context).accent3,
-                                    fontSize: 16.0,
+                                    fontSize: 17.0,
                                     letterSpacing: 0.0,
                                     fontWeight: FontWeight.bold,
                                     useGoogleFonts:

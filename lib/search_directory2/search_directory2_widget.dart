@@ -468,7 +468,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                       SliverGridDelegateWithMaxCrossAxisExtent(
                                                     maxCrossAxisExtent: 200.0,
                                                     mainAxisSpacing: 4.0,
-                                                    childAspectRatio: 0.8,
+                                                    childAspectRatio: 0.9,
                                                   ),
                                                   shrinkWrap: true,
                                                   physics:

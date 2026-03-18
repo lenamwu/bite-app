@@ -217,15 +217,15 @@ class _FeaturedListWidgetState extends State<FeaturedListWidget> {
                                                 child: Image.network(
                                                   rowRecipesRecord
                                                       .publicrecipeimage,
-                                                  width: 220.0,
-                                                  height: 220.0,
+                                                  width: 120.0,
+                                                  height: 120.0,
                                                   fit: BoxFit.cover,
                                                   errorBuilder: (context, error,
                                                           stackTrace) =>
                                                       Image.asset(
                                                     'assets/images/error_image.png',
-                                                    width: 220.0,
-                                                    height: 220.0,
+                                                    width: 120.0,
+                                                    height: 120.0,
                                                     fit: BoxFit.cover,
                                                   ),
                                                 ),
@@ -234,143 +234,215 @@ class _FeaturedListWidgetState extends State<FeaturedListWidget> {
                                           ),
                                           Expanded(
                                             child: Container(
-                                              height: 220.0,
-                                              child: Stack(
+                                              height: 120.0,
+                                              child: Column(
+                                                mainAxisSize: MainAxisSize.max,
+                                                crossAxisAlignment:
+                                                    CrossAxisAlignment.start,
                                                 children: [
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            -1.0, 1.0),
-                                                    child: FFButtonWidget(
-                                                      onPressed: () async {
-                                                        context.pushNamed(
-                                                          PublicRecipeWidget
-                                                              .routeName,
-                                                          queryParameters: {
-                                                            'userparam':
-                                                                serializeParam(
-                                                              currentUserReference,
-                                                              ParamType
-                                                                  .DocumentReference,
-                                                            ),
-                                                            'recipeParam':
-                                                                serializeParam(
-                                                              rowRecipesRecord
-                                                                  .reference,
-                                                              ParamType
-                                                                  .DocumentReference,
-                                                            ),
-                                                          }.withoutNulls,
-                                                        );
-                                                      },
-                                                      text: 'save recipe',
-                                                      options: FFButtonOptions(
-                                                        height: 39.6,
-                                                        padding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    16.0,
-                                                                    0.0,
-                                                                    16.0,
-                                                                    0.0),
-                                                        iconPadding:
-                                                            EdgeInsetsDirectional
-                                                                .fromSTEB(
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0,
-                                                                    0.0),
-                                                        color: FlutterFlowTheme
-                                                                .of(context)
-                                                            .primaryBackground,
-                                                        textStyle:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleSmall
-                                                                .override(
-                                                                  fontFamily: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleSmallFamily,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .primary,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  useGoogleFonts:
-                                                                      !FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleSmallIsCustom,
-                                                                ),
-                                                        elevation: 0.0,
-                                                        borderSide: BorderSide(
-                                                          color: FlutterFlowTheme
-                                                                  .of(context)
-                                                              .primary,
-                                                          width: 2.0,
-                                                        ),
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(8.0),
+                                                  // Recipe title
+                                                  SelectionArea(
+                                                    child: Text(
+                                                      rowRecipesRecord.title
+                                                          .maybeHandleOverflow(
+                                                        maxChars: 40,
+                                                        replacement: '…',
                                                       ),
+                                                      maxLines: 2,
+                                                      style: FlutterFlowTheme
+                                                              .of(context)
+                                                          .titleLarge
+                                                          .override(
+                                                            fontFamily:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleLargeFamily,
+                                                            color:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .accent3,
+                                                            fontSize: 18.0,
+                                                            letterSpacing: 0.0,
+                                                            useGoogleFonts:
+                                                                !FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleLargeIsCustom,
+                                                          ),
                                                     ),
                                                   ),
-                                                  Column(
+                                                  SizedBox(height: 6.0),
+                                                  // Rating + cooking time
+                                                  Row(
                                                     mainAxisSize:
                                                         MainAxisSize.min,
-                                                    mainAxisAlignment:
-                                                        MainAxisAlignment
-                                                            .spaceBetween,
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .start,
                                                     children: [
-                                                      Expanded(
-                                                        child: Align(
-                                                          alignment:
-                                                              AlignmentDirectional(
-                                                                  -1.0, -1.0),
-                                                          child: Padding(
-                                                            padding:
-                                                                EdgeInsetsDirectional
-                                                                    .fromSTEB(
-                                                                        0.0,
-                                                                        5.0,
-                                                                        0.0,
-                                                                        0.0),
-                                                            child:
-                                                                SelectionArea(
-                                                                    child: Text(
+                                                      if (rowRecipesRecord
+                                                              .rating >
+                                                          0)
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Icon(
+                                                              Icons
+                                                                  .star_rounded,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .tertiary,
+                                                              size: 18.0,
+                                                            ),
+                                                            SizedBox(
+                                                                width: 2.0),
+                                                            Text(
                                                               rowRecipesRecord
-                                                                  .title
-                                                                  .maybeHandleOverflow(
-                                                                maxChars: 40,
-                                                                replacement:
-                                                                    '…',
-                                                              ),
-                                                              maxLines: 5,
+                                                                  .rating
+                                                                  .toStringAsFixed(
+                                                                      1),
                                                               style: FlutterFlowTheme
                                                                       .of(context)
-                                                                  .titleLarge
+                                                                  .bodyMedium
                                                                   .override(
                                                                     fontFamily:
                                                                         FlutterFlowTheme.of(context)
-                                                                            .titleLargeFamily,
+                                                                            .bodyMediumFamily,
                                                                     color: FlutterFlowTheme.of(
                                                                             context)
-                                                                        .accent3,
+                                                                        .secondaryText,
                                                                     fontSize:
-                                                                        18.0,
+                                                                        13.0,
                                                                     letterSpacing:
                                                                         0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
                                                                     useGoogleFonts:
                                                                         !FlutterFlowTheme.of(context)
-                                                                            .titleLargeIsCustom,
+                                                                            .bodyMediumIsCustom,
                                                                   ),
-                                                            )),
-                                                          ),
+                                                            ),
+                                                            SizedBox(
+                                                                width: 10.0),
+                                                          ],
                                                         ),
-                                                      ),
+                                                      if (rowRecipesRecord
+                                                          .cookingtime
+                                                          .isNotEmpty)
+                                                        Row(
+                                                          mainAxisSize:
+                                                              MainAxisSize.min,
+                                                          children: [
+                                                            Icon(
+                                                              Icons
+                                                                  .access_time_rounded,
+                                                              color: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .secondaryText,
+                                                              size: 16.0,
+                                                            ),
+                                                            SizedBox(
+                                                                width: 4.0),
+                                                            Text(
+                                                              rowRecipesRecord
+                                                                  .cookingtime,
+                                                              style: FlutterFlowTheme
+                                                                      .of(context)
+                                                                  .bodyMedium
+                                                                  .override(
+                                                                    fontFamily:
+                                                                        FlutterFlowTheme.of(context)
+                                                                            .bodyMediumFamily,
+                                                                    color: FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .secondaryText,
+                                                                    fontSize:
+                                                                        13.0,
+                                                                    letterSpacing:
+                                                                        0.0,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .w600,
+                                                                    useGoogleFonts:
+                                                                        !FlutterFlowTheme.of(context)
+                                                                            .bodyMediumIsCustom,
+                                                                  ),
+                                                            ),
+                                                          ],
+                                                        ),
                                                     ],
+                                                  ),
+                                                  Spacer(),
+                                                  // Save recipe button (bottom-aligned with image)
+                                                  FFButtonWidget(
+                                                    onPressed: () async {
+                                                      context.pushNamed(
+                                                        PublicRecipeWidget
+                                                            .routeName,
+                                                        queryParameters: {
+                                                          'userparam':
+                                                              serializeParam(
+                                                            currentUserReference,
+                                                            ParamType
+                                                                .DocumentReference,
+                                                          ),
+                                                          'recipeParam':
+                                                              serializeParam(
+                                                            rowRecipesRecord
+                                                                .reference,
+                                                            ParamType
+                                                                .DocumentReference,
+                                                          ),
+                                                        }.withoutNulls,
+                                                      );
+                                                    },
+                                                    text: 'save recipe',
+                                                    options: FFButtonOptions(
+                                                      height: 36.0,
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  16.0,
+                                                                  0.0,
+                                                                  16.0,
+                                                                  0.0),
+                                                      iconPadding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0,
+                                                                  0.0),
+                                                      color: FlutterFlowTheme
+                                                              .of(context)
+                                                          .primaryBackground,
+                                                      textStyle:
+                                                          FlutterFlowTheme.of(
+                                                                  context)
+                                                              .titleSmall
+                                                              .override(
+                                                                fontFamily: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .titleSmallFamily,
+                                                                color: FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .primary,
+                                                                letterSpacing:
+                                                                    0.0,
+                                                                useGoogleFonts:
+                                                                    !FlutterFlowTheme.of(
+                                                                            context)
+                                                                        .titleSmallIsCustom,
+                                                              ),
+                                                      elevation: 0.0,
+                                                      borderSide: BorderSide(
+                                                        color: FlutterFlowTheme
+                                                                .of(context)
+                                                            .primary,
+                                                        width: 2.0,
+                                                      ),
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              8.0),
+                                                    ),
                                                   ),
                                                 ],
                                               ),

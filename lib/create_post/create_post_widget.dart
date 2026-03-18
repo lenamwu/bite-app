@@ -158,6 +158,30 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
       );
       return false;
     }
+    // Require at least one non-empty ingredient or preparation step.
+    final hasIngredients = _model.ingredientFieldModels
+        .getValues((m) => m.textController.text)
+        .any((t) => t.trim().isNotEmpty);
+    final hasSteps = _model.preparationFieldModels
+        .getValues((m) => m.textController.text)
+        .any((t) => t.trim().isNotEmpty);
+    if (!hasIngredients && !hasSteps) {
+      await showDialog(
+        context: context,
+        builder: (alertDialogContext) {
+          return AlertDialog(
+            content: Text('please add at least one ingredient or preparation step'),
+            actions: [
+              TextButton(
+                onPressed: () => Navigator.pop(alertDialogContext),
+                child: Text('Ok'),
+              ),
+            ],
+          );
+        },
+      );
+      return false;
+    }
     return true;
   }
 
@@ -293,9 +317,8 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                               BorderRadius.circular(0.0),
                                           child: Image.network(
                                             uploadedphotosItem,
-                                            width: 200.0,
                                             height: 200.0,
-                                            fit: BoxFit.cover,
+                                            fit: BoxFit.contain,
                                             errorBuilder:
                                                 (context, error, stackTrace) =>
                                                     Image.asset(
@@ -306,9 +329,9 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                             ),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                              150.0, 155.0, 0.0, 0.0),
+                                        Positioned(
+                                          right: 4.0,
+                                          bottom: 4.0,
                                           child: InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,
@@ -527,6 +550,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                         fontFamily: FlutterFlowTheme.of(context)
                                             .labelLargeFamily,
                                         letterSpacing: 0.0,
+                                        fontWeight: FontWeight.bold,
                                         useGoogleFonts:
                                             !FlutterFlowTheme.of(context)
                                                 .labelLargeIsCustom,
@@ -621,13 +645,15 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                     Text(
                                       _model.isRecipeSectionExpanded
                                           ? 'fill in recipe details'
-                                          : 'add recipe (optional)',
+                                          : 'add recipe',
                                       style: FlutterFlowTheme.of(context)
                                           .labelLarge
                                           .override(
                                             fontFamily: FlutterFlowTheme.of(context)
                                                 .labelLargeFamily,
                                             letterSpacing: 0.0,
+                                            color: FlutterFlowTheme.of(context).primary,
+                                            fontWeight: FontWeight.bold,
                                             useGoogleFonts:
                                                 !FlutterFlowTheme.of(context)
                                                     .labelLargeIsCustom,
@@ -1214,7 +1240,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                                 fontFamily: FlutterFlowTheme.of(context)
                                                     .titleSmallFamily,
                                                 color:
-                                                    FlutterFlowTheme.of(context).accent3,
+                                                    FlutterFlowTheme.of(context).primary,
                                                 letterSpacing: 0.0,
                                                 fontWeight: FontWeight.bold,
                                                 useGoogleFonts:
@@ -1331,7 +1357,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                               fontFamily: FlutterFlowTheme.of(context)
                                                   .titleSmallFamily,
                                               color: FlutterFlowTheme.of(context)
-                                                  .accent3,
+                                                  .primary,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.bold,
                                               useGoogleFonts:
@@ -1352,13 +1378,17 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                             ),
                           ),
                         // === SHARE + SAVE DRAFT ROW ===
-                        Padding(
-                          padding: EdgeInsetsDirectional.fromSTEB(
-                              15.0, 20.0, 15.0, 0.0),
-                          child: Row(
-                            mainAxisAlignment: MainAxisAlignment.start,
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
+                        Align(
+                          alignment: AlignmentDirectional(0.0, 0.0),
+                          child: Padding(
+                            padding: EdgeInsetsDirectional.fromSTEB(
+                                0.0, 20.0, 0.0, 0.0),
+                            child: Container(
+                              width: 370.0,
+                              child: Row(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
                               FFButtonWidget(
                                 onPressed: () async {
                                   if (loggedIn != true) {
@@ -1503,6 +1533,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                 },
                                 text: 'share',
                                 options: FFButtonOptions(
+                                  width: 120.0,
                                   height: 50.0,
                                   padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
@@ -1561,6 +1592,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                 },
                                 text: 'save draft',
                                 options: FFButtonOptions(
+                                  width: 120.0,
                                   height: 50.0,
                                   padding: EdgeInsetsDirectional.fromSTEB(24.0, 0.0, 24.0, 0.0),
                                   iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
@@ -1580,7 +1612,9 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                   borderRadius: BorderRadius.circular(12.0),
                                 ),
                               ),
-                            ],
+                                ],
+                              ),
+                            ),
                           ),
                         ),
                         // === VIEW DRAFTS BUTTON ===

@@ -1120,64 +1120,6 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                               return Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 children: [
-                                                  Align(
-                                                    alignment:
-                                                        AlignmentDirectional(
-                                                            -1.0, -1.0),
-                                                    child: Padding(
-                                                      padding:
-                                                          EdgeInsetsDirectional
-                                                              .fromSTEB(
-                                                                  0.0,
-                                                                  10.0,
-                                                                  0.0,
-                                                                  0.0),
-                                                      child: Row(
-                                                        mainAxisSize:
-                                                            MainAxisSize.max,
-                                                        children: [
-                                                          Flexible(
-                                                            child: Align(
-                                                              alignment:
-                                                                  AlignmentDirectional(
-                                                                      -1.0,
-                                                                      -1.0),
-                                                              child: Flex(
-                                                                direction: Axis
-                                                                    .vertical,
-                                                                mainAxisSize:
-                                                                    MainAxisSize
-                                                                        .max,
-                                                                children: [
-                                                                  Text(
-                                                                    '${columnRecipesRecord.title} recipe',
-                                                                    maxLines: 3,
-                                                                    style: FlutterFlowTheme.of(
-                                                                            context)
-                                                                        .bodyLarge
-                                                                        .override(
-                                                                          fontFamily:
-                                                                              FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                          color:
-                                                                              FlutterFlowTheme.of(context).customColor4,
-                                                                          fontSize:
-                                                                              16.0,
-                                                                          letterSpacing:
-                                                                              0.0,
-                                                                          fontWeight:
-                                                                              FontWeight.bold,
-                                                                          useGoogleFonts:
-                                                                              !FlutterFlowTheme.of(context).bodyLargeIsCustom,
-                                                                        ),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ),
-                                                          ),
-                                                        ],
-                                                      ),
-                                                    ),
-                                                  ),
                                                   Padding(
                                                     padding:
                                                         EdgeInsetsDirectional

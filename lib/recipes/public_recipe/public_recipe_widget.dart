@@ -431,6 +431,28 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                               ],
                                             ),
                                           ),
+                                        Builder(
+                                          builder: (context) {
+                                            final otherSaves = publicRecipeRecipesRecord.recipeSavedBy
+                                                .where((ref) => ref != currentUserReference)
+                                                .length;
+                                            if (otherSaves < 1) return SizedBox.shrink();
+                                            return Padding(
+                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 6.0),
+                                              child: Text(
+                                                'saved by $otherSaves other user${otherSaves == 1 ? '' : 's'}',
+                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                  color: FlutterFlowTheme.of(context).secondaryText,
+                                                  fontSize: 13.0,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.w600,
+                                                  useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                ),
+                                              ),
+                                            );
+                                          },
+                                        ),
                                         if (publicRecipeRecipesRecord.url.isNotEmpty)
                                           Padding(
                                             padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),

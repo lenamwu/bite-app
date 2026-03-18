@@ -112,7 +112,7 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                                 .override(
                                   fontFamily: FlutterFlowTheme.of(context)
                                       .titleSmallFamily,
-                                  color: FlutterFlowTheme.of(context).accent3,
+                                  color: FlutterFlowTheme.of(context).tertiary,
                                   letterSpacing: 0.0,
                                   useGoogleFonts: !FlutterFlowTheme.of(context)
                                       .titleSmallIsCustom,
@@ -126,6 +126,7 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                               .override(
                                 fontFamily: FlutterFlowTheme.of(context)
                                     .titleSmallFamily,
+                                color: FlutterFlowTheme.of(context).primary,
                                 letterSpacing: 0.0,
                                 useGoogleFonts: !FlutterFlowTheme.of(context)
                                     .titleSmallIsCustom,
@@ -138,7 +139,7 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                               .override(
                                 fontFamily: FlutterFlowTheme.of(context)
                                     .titleSmallFamily,
-                                color: FlutterFlowTheme.of(context).accent3,
+                                color: FlutterFlowTheme.of(context).tertiary,
                                 letterSpacing: 0.0,
                                 useGoogleFonts: !FlutterFlowTheme.of(context)
                                     .titleSmallIsCustom,
@@ -187,15 +188,14 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                                 final containerUsersRecord = snapshot.data!;
 
                                 return Container(
-                                  width: 100.0,
-                                  height: 72.0,
+                                  width: double.infinity,
                                   decoration: BoxDecoration(
                                     color: FlutterFlowTheme.of(context)
                                         .secondaryBackground,
                                   ),
                                   child: Padding(
                                     padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 0.0),
+                                        16.0, 6.0, 16.0, 6.0),
                                     child: InkWell(
                                       splashColor: Colors.transparent,
                                       focusColor: Colors.transparent,
@@ -223,31 +223,34 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                                         mainAxisSize: MainAxisSize.max,
                                         mainAxisAlignment:
                                             MainAxisAlignment.start,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            width: 44.0,
-                                            height: 44.0,
+                                            width: 46.0,
+                                            height: 46.0,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
+                                              border: Border.all(
+                                                color: FlutterFlowTheme.of(context).tertiary,
+                                                width: 2.0,
+                                              ),
                                             ),
-                                            child: Padding(
-                                              padding: EdgeInsets.all(2.0),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(44.0),
-                                                child: Image.network(
-                                                  containerUsersRecord.photoUrl,
-                                                  width: 44.0,
-                                                  height: 44.0,
+                                            child: ClipRRect(
+                                              borderRadius:
+                                                  BorderRadius.circular(46.0),
+                                              child: Image.network(
+                                                containerUsersRecord.photoUrl,
+                                                width: 41.0,
+                                                height: 41.0,
+                                                fit: BoxFit.cover,
+                                                errorBuilder: (context, error,
+                                                        stackTrace) =>
+                                                    Image.asset(
+                                                  'assets/images/error_image.png',
+                                                  width: 41.0,
+                                                  height: 41.0,
                                                   fit: BoxFit.cover,
-                                                  errorBuilder: (context, error,
-                                                          stackTrace) =>
-                                                      Image.asset(
-                                                    'assets/images/error_image.png',
-                                                    width: 44.0,
-                                                    height: 44.0,
-                                                    fit: BoxFit.cover,
-                                                  ),
                                                 ),
                                               ),
                                             ),
@@ -256,54 +259,54 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      12.0, 0.0, 0.0, 0.0),
+                                                      10.0, 0.0, 0.0, 0.0),
                                               child: Column(
-                                                mainAxisSize: MainAxisSize.max,
-                                                mainAxisAlignment:
-                                                    MainAxisAlignment.center,
+                                                mainAxisSize: MainAxisSize.min,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 0.0,
-                                                                0.0, 4.0),
-                                                    child: Text(
-                                                      containerUsersRecord
-                                                          .displayName,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyLarge
-                                                          .override(
-                                                            fontFamily:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyLargeFamily,
-                                                            letterSpacing: 0.0,
-                                                            useGoogleFonts:
-                                                                !FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyLargeIsCustom,
-                                                          ),
-                                                    ),
+                                                  Text(
+                                                    containerUsersRecord
+                                                        .displayName,
+                                                    style: FlutterFlowTheme.of(
+                                                            context)
+                                                        .bodyMedium
+                                                        .override(
+                                                          fontFamily:
+                                                              FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMediumFamily,
+                                                          color: FlutterFlowTheme.of(
+                                                                  context)
+                                                              .tertiary,
+                                                          letterSpacing: 0.0,
+                                                          fontWeight:
+                                                              FontWeight.bold,
+                                                          useGoogleFonts:
+                                                              !FlutterFlowTheme.of(
+                                                                      context)
+                                                                  .bodyMediumIsCustom,
+                                                        ),
                                                   ),
                                                   Text(
                                                     containerUsersRecord
                                                         .username,
                                                     style: FlutterFlowTheme.of(
                                                             context)
-                                                        .labelMedium
+                                                        .labelSmall
                                                         .override(
                                                           fontFamily:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .labelMediumFamily,
+                                                                  .labelSmallFamily,
+                                                          color: FlutterFlowTheme.of(
+                                                                  context)
+                                                              .primary,
                                                           letterSpacing: 0.0,
                                                           useGoogleFonts:
                                                               !FlutterFlowTheme
                                                                       .of(context)
-                                                                  .labelMediumIsCustom,
+                                                                  .labelSmallIsCustom,
                                                         ),
                                                   ),
                                                 ],
@@ -314,7 +317,7 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                                             Icons.chevron_right_rounded,
                                             color: FlutterFlowTheme.of(context)
                                                 .secondaryText,
-                                            size: 24.0,
+                                            size: 20.0,
                                           ),
                                         ],
                                       ),
