@@ -367,28 +367,6 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      Padding(
-                                        padding: EdgeInsetsDirectional.fromSTEB(
-                                            0.0, 12.0, 0.0, 0.0),
-                                        child: Text(
-                                          publicRecipeRecipesRecord.notes,
-                                          maxLines: 4,
-                                          overflow: TextOverflow.ellipsis,
-                                          style: FlutterFlowTheme.of(context)
-                                              .bodyMedium
-                                              .override(
-                                                fontFamily:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMediumFamily,
-                                                letterSpacing: 0.0,
-                                                fontWeight: FontWeight.w600,
-                                                useGoogleFonts:
-                                                    !FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMediumIsCustom,
-                                              ),
-                                        ),
-                                      ),
                                       if (publicRecipeRecipesRecord.url.isNotEmpty)
                                         Padding(
                                           padding: EdgeInsetsDirectional.fromSTEB(
