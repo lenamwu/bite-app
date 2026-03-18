@@ -87,5 +87,12 @@ service cloud.firestore {
       allow write: if true;
       allow delete: if true;
     }
+
+    match /drafts/{document} {
+      allow create: if request.auth != null;
+      allow read: if request.auth != null;
+      allow write: if request.auth != null;
+      allow delete: if request.auth != null;
+    }
   }
 }

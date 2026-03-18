@@ -712,57 +712,78 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(0.0),
-                                                child: Image.network(
-                                                  gridViewPostsRecord
-                                                      .postMultPhotos
-                                                      .firstOrNull!,
-                                                  width: double.infinity,
-                                                  height: double.infinity,
-                                                  fit: BoxFit.cover,
-                                                  alignment:
-                                                      Alignment(-1.0, -1.0),
-                                                  errorBuilder: (context, error,
-                                                          stackTrace) =>
-                                                      Image.asset(
-                                                    'assets/images/error_image.png',
-                                                    width: double.infinity,
-                                                    height: double.infinity,
-                                                    fit: BoxFit.cover,
-                                                    alignment:
-                                                        Alignment(-1.0, -1.0),
-                                                  ),
-                                                ),
+                                                child: (gridViewPostsRecord.postMultPhotos.isNotEmpty &&
+                                                        gridViewPostsRecord.postMultPhotos.first.isNotEmpty)
+                                                    ? Image.network(
+                                                        gridViewPostsRecord
+                                                            .postMultPhotos
+                                                            .first,
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                        fit: BoxFit.cover,
+                                                        alignment:
+                                                            Alignment(-1.0, -1.0),
+                                                        errorBuilder: (context, error,
+                                                                stackTrace) =>
+                                                            Image.asset(
+                                                          'assets/images/error_image.png',
+                                                          width: double.infinity,
+                                                          height: double.infinity,
+                                                          fit: BoxFit.cover,
+                                                          alignment:
+                                                              Alignment(-1.0, -1.0),
+                                                        ),
+                                                      )
+                                                    : Center(
+                                                        child: FractionallySizedBox(
+                                                          widthFactor: 0.55,
+                                                          heightFactor: 0.55,
+                                                          child: Image.asset(
+                                                            'assets/images/ChatGPT_Image_May_2,_2025_at_02_15_40_PM.png',
+                                                            fit: BoxFit.contain,
+                                                          ),
+                                                        ),
+                                                      ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                        Padding(
-                                          padding: EdgeInsetsDirectional
-                                              .fromSTEB(5.0, 2.0, 5.0, 2.0),
-                                          child: Text(
-                                            gridViewPostsRecord.postText,
-                                            maxLines: 2,
-                                            overflow: TextOverflow.ellipsis,
-                                            style: FlutterFlowTheme.of(context)
-                                                .bodyMedium
-                                                .override(
-                                                  fontFamily:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMediumFamily,
-                                                  color:
-                                                      FlutterFlowTheme.of(
-                                                              context)
-                                                          .tertiary,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  useGoogleFonts:
-                                                      !FlutterFlowTheme.of(
-                                                              context)
-                                                          .bodyMediumIsCustom,
-                                                ),
+                                        if (gridViewPostsRecord.recipeRef != null)
+                                          Padding(
+                                            padding: EdgeInsetsDirectional
+                                                .fromSTEB(5.0, 2.0, 5.0, 2.0),
+                                            child: StreamBuilder<RecipesRecord>(
+                                              stream: RecipesRecord.getDocument(
+                                                  gridViewPostsRecord.recipeRef!),
+                                              builder: (context, recipeSnapshot) {
+                                                final recipeTitle =
+                                                    recipeSnapshot.data?.title ?? '';
+                                                return Text(
+                                                  recipeTitle,
+                                                  maxLines: 2,
+                                                  overflow: TextOverflow.ellipsis,
+                                                  style: FlutterFlowTheme.of(context)
+                                                      .bodyMedium
+                                                      .override(
+                                                        fontFamily:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMediumFamily,
+                                                        color:
+                                                            FlutterFlowTheme.of(
+                                                                    context)
+                                                                .tertiary,
+                                                        letterSpacing: 0.0,
+                                                        fontWeight: FontWeight.w600,
+                                                        useGoogleFonts:
+                                                            !FlutterFlowTheme.of(
+                                                                    context)
+                                                                .bodyMediumIsCustom,
+                                                      ),
+                                                );
+                                              },
+                                            ),
                                           ),
-                                        ),
                                       ],
                                     );
                                   },
@@ -787,6 +808,10 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                       .where(
                                         'postUser',
                                         isEqualTo: currentUserReference,
+                                      )
+                                      .where(
+                                        'has_recipe',
+                                        isEqualTo: false,
                                       )
                                       .orderBy('created_time',
                                           descending: true),
@@ -900,26 +925,38 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(0.0),
-                                                child: Image.network(
-                                                  gridViewPostsRecord
-                                                      .postMultPhotos
-                                                      .firstOrNull!,
-                                                  width: double.infinity,
-                                                  height: double.infinity,
-                                                  fit: BoxFit.cover,
-                                                  alignment:
-                                                      Alignment(-1.0, -1.0),
-                                                  errorBuilder: (context, error,
-                                                          stackTrace) =>
-                                                      Image.asset(
-                                                    'assets/images/error_image.png',
-                                                    width: double.infinity,
-                                                    height: double.infinity,
-                                                    fit: BoxFit.cover,
-                                                    alignment:
-                                                        Alignment(-1.0, -1.0),
-                                                  ),
-                                                ),
+                                                child: (gridViewPostsRecord.postMultPhotos.isNotEmpty &&
+                                                        gridViewPostsRecord.postMultPhotos.first.isNotEmpty)
+                                                    ? Image.network(
+                                                        gridViewPostsRecord
+                                                            .postMultPhotos
+                                                            .first,
+                                                        width: double.infinity,
+                                                        height: double.infinity,
+                                                        fit: BoxFit.cover,
+                                                        alignment:
+                                                            Alignment(-1.0, -1.0),
+                                                        errorBuilder: (context, error,
+                                                                stackTrace) =>
+                                                            Image.asset(
+                                                          'assets/images/error_image.png',
+                                                          width: double.infinity,
+                                                          height: double.infinity,
+                                                          fit: BoxFit.cover,
+                                                          alignment:
+                                                              Alignment(-1.0, -1.0),
+                                                        ),
+                                                      )
+                                                    : Center(
+                                                        child: FractionallySizedBox(
+                                                          widthFactor: 0.55,
+                                                          heightFactor: 0.55,
+                                                          child: Image.asset(
+                                                            'assets/images/ChatGPT_Image_May_2,_2025_at_02_15_40_PM.png',
+                                                            fit: BoxFit.contain,
+                                                          ),
+                                                        ),
+                                                      ),
                                               ),
                                             ),
                                           ),

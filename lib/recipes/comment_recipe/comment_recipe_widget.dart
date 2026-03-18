@@ -346,7 +346,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                   .fromSTEB(
                                                       10.0, 10.0, 0.0, 0.0),
                                               child: Text(
-                                                rowRecipesRecord.title,
+                                                '${rowRecipesRecord.title} recipe',
                                                 maxLines: 3,
                                                 style:
                                                     FlutterFlowTheme.of(context)
@@ -356,6 +356,8 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                               FlutterFlowTheme.of(
                                                                       context)
                                                                   .headlineSmallFamily,
+                                                          color: FlutterFlowTheme.of(context)
+                                                              .customColor4,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -385,18 +387,18 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                   child: SingleChildScrollView(
                                     primary: false,
                                     child: Column(
-                                      mainAxisSize: MainAxisSize.max,
+                                      mainAxisSize: MainAxisSize.min,
                                       crossAxisAlignment:
                                           CrossAxisAlignment.start,
                                       children: [
                                         Row(
-                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisSize: MainAxisSize.min,
                                           crossAxisAlignment:
                                               CrossAxisAlignment.start,
                                           children: [
                                             Expanded(
                                               child: Column(
-                                                mainAxisSize: MainAxisSize.max,
+                                                mainAxisSize: MainAxisSize.min,
                                                 crossAxisAlignment:
                                                     CrossAxisAlignment.start,
                                                 children: [
@@ -570,61 +572,63 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                       ),
                                                     ],
                                                   ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(0.0, 10.0,
-                                                                0.0, 0.0),
-                                                    child: Builder(
-                                                      builder: (context) {
-                                                        final commentImages =
-                                                            scrollableContentPostsRecord
-                                                                .postMultPhotos
-                                                                .toList();
+                                                  if (scrollableContentPostsRecord.postMultPhotos.any((e) => e.isNotEmpty))
+                                                    Padding(
+                                                      padding:
+                                                          EdgeInsetsDirectional
+                                                              .fromSTEB(0.0, 10.0,
+                                                                  0.0, 0.0),
+                                                      child: Builder(
+                                                        builder: (context) {
+                                                          final commentImages =
+                                                              scrollableContentPostsRecord
+                                                                  .postMultPhotos
+                                                                  .where((e) => e.isNotEmpty)
+                                                                  .toList();
 
-                                                        return SingleChildScrollView(
-                                                          scrollDirection:
-                                                              Axis.horizontal,
-                                                          child: Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize
-                                                                    .max,
-                                                            children: List.generate(
-                                                                commentImages
-                                                                    .length,
-                                                                (commentImagesIndex) {
-                                                              final commentImagesItem =
-                                                                  commentImages[
-                                                                      commentImagesIndex];
-                                                              return Align(
-                                                                alignment:
-                                                                    AlignmentDirectional(
-                                                                        0.0,
-                                                                        -1.0),
-                                                                child:
-                                                                    ClipRRect(
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .circular(
-                                                                              0.0),
-                                                                  child: Image
-                                                                      .network(
-                                                                    commentImagesItem,
-                                                                    width:
-                                                                        250.0,
-                                                                    height:
-                                                                        250.0,
-                                                                    fit: BoxFit
-                                                                        .cover,
+                                                          return SingleChildScrollView(
+                                                            scrollDirection:
+                                                                Axis.horizontal,
+                                                            child: Row(
+                                                              mainAxisSize:
+                                                                  MainAxisSize
+                                                                      .max,
+                                                              children: List.generate(
+                                                                  commentImages
+                                                                      .length,
+                                                                  (commentImagesIndex) {
+                                                                final commentImagesItem =
+                                                                    commentImages[
+                                                                        commentImagesIndex];
+                                                                return Align(
+                                                                  alignment:
+                                                                      AlignmentDirectional(
+                                                                          0.0,
+                                                                          -1.0),
+                                                                  child:
+                                                                      ClipRRect(
+                                                                    borderRadius:
+                                                                        BorderRadius
+                                                                            .circular(
+                                                                                0.0),
+                                                                    child: Image
+                                                                        .network(
+                                                                      commentImagesItem,
+                                                                      width:
+                                                                          250.0,
+                                                                      height:
+                                                                          250.0,
+                                                                      fit: BoxFit
+                                                                          .cover,
+                                                                    ),
                                                                   ),
-                                                                ),
-                                                              );
-                                                            }),
-                                                          ),
-                                                        );
-                                                      },
+                                                                );
+                                                              }),
+                                                            ),
+                                                          );
+                                                        },
+                                                      ),
                                                     ),
-                                                  ),
                                                 ],
                                               ),
                                             ),
@@ -1146,8 +1150,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                         .max,
                                                                 children: [
                                                                   Text(
-                                                                    columnRecipesRecord
-                                                                        .title,
+                                                                    '${columnRecipesRecord.title} recipe',
                                                                     maxLines: 3,
                                                                     style: FlutterFlowTheme.of(
                                                                             context)
@@ -1156,7 +1159,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                           fontFamily:
                                                                               FlutterFlowTheme.of(context).bodyLargeFamily,
                                                                           color:
-                                                                              FlutterFlowTheme.of(context).primary,
+                                                                              FlutterFlowTheme.of(context).customColor4,
                                                                           fontSize:
                                                                               16.0,
                                                                           letterSpacing:
@@ -1196,7 +1199,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                     'cooking time: ',
                                                                     style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                       fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                      color: FlutterFlowTheme.of(context).accent3,
+                                                                      color: FlutterFlowTheme.of(context).alternate,
                                                                       fontSize: 14.0,
                                                                       letterSpacing: 0.0,
                                                                       fontWeight: FontWeight.bold,
@@ -1209,7 +1212,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                       overflow: TextOverflow.ellipsis,
                                                                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                         fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                        color: FlutterFlowTheme.of(context).accent3,
+                                                                        color: FlutterFlowTheme.of(context).accent1,
                                                                         fontSize: 14.0,
                                                                         letterSpacing: 0.0,
                                                                         useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
@@ -1225,7 +1228,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                     'difficulty:  ',
                                                                     style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                       fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                      color: FlutterFlowTheme.of(context).accent3,
+                                                                      color: FlutterFlowTheme.of(context).alternate,
                                                                       fontSize: 14.0,
                                                                       letterSpacing: 0.0,
                                                                       fontWeight: FontWeight.bold,
@@ -1238,7 +1241,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                       overflow: TextOverflow.ellipsis,
                                                                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                         fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                        color: FlutterFlowTheme.of(context).accent3,
+                                                                        color: FlutterFlowTheme.of(context).accent1,
                                                                         fontSize: 14.0,
                                                                         letterSpacing: 0.0,
                                                                         useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
@@ -1254,7 +1257,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                     'servings: ',
                                                                     style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                       fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                      color: FlutterFlowTheme.of(context).accent3,
+                                                                      color: FlutterFlowTheme.of(context).alternate,
                                                                       fontSize: 14.0,
                                                                       letterSpacing: 0.0,
                                                                       fontWeight: FontWeight.bold,
@@ -1267,7 +1270,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                       overflow: TextOverflow.ellipsis,
                                                                       style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                         fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                        color: FlutterFlowTheme.of(context).accent3,
+                                                                        color: FlutterFlowTheme.of(context).accent1,
                                                                         fontSize: 14.0,
                                                                         letterSpacing: 0.0,
                                                                         useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
@@ -1312,11 +1315,11 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                   labelColor:
                                                                       FlutterFlowTheme.of(
                                                                               context)
-                                                                          .accent3,
+                                                                          .tertiary,
                                                                   unselectedLabelColor:
                                                                       FlutterFlowTheme.of(
                                                                               context)
-                                                                          .warning,
+                                                                          .secondary,
                                                                   labelStyle: FlutterFlowTheme.of(
                                                                           context)
                                                                       .bodyLarge
@@ -1335,7 +1338,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                   indicatorColor:
                                                                       FlutterFlowTheme.of(
                                                                               context)
-                                                                          .primary,
+                                                                          .tertiary,
                                                                   indicatorWeight:
                                                                       3.0,
                                                                   tabs: [
@@ -1430,7 +1433,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                                     ingredientsItem,
                                                                                     style: FlutterFlowTheme.of(context).labelMedium.override(
                                                                                           fontFamily: FlutterFlowTheme.of(context).labelMediumFamily,
-                                                                                          color: FlutterFlowTheme.of(context).accent3,
+                                                                                          color: FlutterFlowTheme.of(context).accent1,
                                                                                           fontSize: 14.0,
                                                                                           letterSpacing: 0.0,
                                                                                           fontWeight: FontWeight.w600,
@@ -1483,7 +1486,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                                   preparationItem,
                                                                                   style: FlutterFlowTheme.of(context).labelMedium.override(
                                                                                         fontFamily: FlutterFlowTheme.of(context).labelMediumFamily,
-                                                                                        color: FlutterFlowTheme.of(context).accent3,
+                                                                                        color: FlutterFlowTheme.of(context).accent1,
                                                                                         fontSize: 14.0,
                                                                                         letterSpacing: 0.0,
                                                                                         fontWeight: FontWeight.w600,

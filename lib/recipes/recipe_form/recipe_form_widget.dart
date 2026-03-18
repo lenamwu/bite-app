@@ -78,17 +78,12 @@ class _RecipeFormWidgetState extends State<RecipeFormWidget> {
               size: 30.0,
             ),
             onPressed: () async {
+              // Preserve text field values so user can come back to them
+              FFAppState().recipetitle =
+                  _model.recipeTextTextController?.text ?? '';
+              FFAppState().recipenotes =
+                  _model.notesTextTextController?.text ?? '';
               context.pop();
-              if (!FFAppState().editedRecipe) {
-                FFAppState().ingredientsList = [];
-                FFAppState().preparationList = [];
-                FFAppState().hasRecipe = false;
-                FFAppState().recipetitle = '';
-                FFAppState().recipenotes = '';
-                FFAppState().difficulty = '';
-                FFAppState().cookingtime = '';
-                FFAppState().servings = '';
-              }
             },
           ),
           title: Align(

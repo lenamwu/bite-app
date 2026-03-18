@@ -439,9 +439,82 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                           (context) {
                                                                         final images = listViewPostsRecord
                                                                             .postMultPhotos
-                                                                            .map((e) =>
-                                                                                e)
+                                                                            .where((e) => e.isNotEmpty)
                                                                             .toList();
+
+                                                                        // No images — show recipe title if available
+                                                                        if (images.isEmpty) {
+                                                                          if (listViewPostsRecord.hasRecipe && listViewPostsRecord.recipeRef != null) {
+                                                                            return StreamBuilder<RecipesRecord>(
+                                                                              stream: RecipesRecord.getDocument(listViewPostsRecord.recipeRef!),
+                                                                              builder: (context, recipeSnapshot) {
+                                                                                final recipeTitle = recipeSnapshot.data?.title ?? '';
+                                                                                if (recipeTitle.isEmpty) return SizedBox.shrink();
+                                                                                return Padding(
+                                                                                  padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 4.0),
+                                                                                  child: InkWell(
+                                                                                    onTap: () async {
+                                                                                      context.pushNamed(
+                                                                                        CommentRecipeWidget.routeName,
+                                                                                        queryParameters: {
+                                                                                          'docref': serializeParam(
+                                                                                            listViewPostsRecord.reference,
+                                                                                            ParamType.DocumentReference,
+                                                                                          ),
+                                                                                          'reciperef': serializeParam(
+                                                                                            listViewPostsRecord.recipeRef,
+                                                                                            ParamType.DocumentReference,
+                                                                                          ),
+                                                                                          'userref': serializeParam(
+                                                                                            listViewPostsRecord.postUser,
+                                                                                            ParamType.DocumentReference,
+                                                                                          ),
+                                                                                        }.withoutNulls,
+                                                                                      );
+                                                                                    },
+                                                                                    child: RichText(
+                                                                                      text: TextSpan(
+                                                                                        children: [
+                                                                                          TextSpan(
+                                                                                            text: '${listViewPostsRecord.displayName} posted a ',
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                                                                ),
+                                                                                          ),
+                                                                                          TextSpan(
+                                                                                            text: recipeTitle,
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                                                  color: FlutterFlowTheme.of(context).tertiary,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                                                                ),
+                                                                                          ),
+                                                                                          TextSpan(
+                                                                                            text: ' recipe',
+                                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                                  letterSpacing: 0.0,
+                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                                                                ),
+                                                                                          ),
+                                                                                        ],
+                                                                                      ),
+                                                                                    ),
+                                                                                  ),
+                                                                                );
+                                                                              },
+                                                                            );
+                                                                          }
+                                                                          return SizedBox.shrink();
+                                                                        }
 
                                                                         return SingleChildScrollView(
                                                                           scrollDirection:
