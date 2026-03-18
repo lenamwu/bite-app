@@ -167,7 +167,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                         fontFamily: FlutterFlowTheme.of(context)
                                             .bodyLargeFamily,
                                         color: FlutterFlowTheme.of(context)
-                                            .accent3,
+                                            .accent1,
                                         fontSize: 18.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
@@ -193,6 +193,8 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                       .override(
                                         fontFamily: FlutterFlowTheme.of(context)
                                             .bodyMediumFamily,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                         useGoogleFonts:
@@ -295,7 +297,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                                       .titleLargeFamily,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .accent3,
+                                                                      .tertiary,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
@@ -398,7 +400,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                                       .titleLargeFamily,
                                                                   color: FlutterFlowTheme.of(
                                                                           context)
-                                                                      .accent3,
+                                                                      .tertiary,
                                                                   letterSpacing:
                                                                       0.0,
                                                                   fontWeight:
@@ -502,6 +504,8 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                               fontFamily:
                                                   FlutterFlowTheme.of(context)
                                                       .labelLargeFamily,
+                                              color: FlutterFlowTheme.of(context)
+                                                  .accent1,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.bold,
                                               useGoogleFonts:

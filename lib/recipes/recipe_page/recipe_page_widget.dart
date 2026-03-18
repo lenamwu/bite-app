@@ -179,7 +179,7 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                               .override(
                                 fontFamily: FlutterFlowTheme.of(context)
                                     .bodyLargeFamily,
-                                color: FlutterFlowTheme.of(context).accent3,
+                                color: FlutterFlowTheme.of(context).alternate,
                                 letterSpacing: 0.0,
                                 fontWeight: FontWeight.w600,
                                 useGoogleFonts: !FlutterFlowTheme.of(context)
@@ -216,8 +216,8 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                             padding: EdgeInsets.zero,
                             gridDelegate:
                                 SliverGridDelegateWithMaxCrossAxisExtent(
-                              maxCrossAxisExtent: 200.0,
-                              childAspectRatio: 0.8,
+                              maxCrossAxisExtent: 150.0,
+                              childAspectRatio: 0.74,
                             ),
                             scrollDirection: Axis.vertical,
                             itemCount: recipePageRecipesRecordList.length,
@@ -318,7 +318,7 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMediumFamily,
                                               color: FlutterFlowTheme.of(context)
-                                                  .tertiary,
+                                                  .customColor4,
                                               letterSpacing: 0.0,
                                               fontWeight: FontWeight.w600,
                                               useGoogleFonts:
@@ -372,7 +372,7 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                                     10.0, 0.0, 0.0, 0.0),
                                 child: Icon(
                                   Icons.search,
-                                  color: FlutterFlowTheme.of(context).primary,
+                                  color: FlutterFlowTheme.of(context).secondary,
                                   size: 24.0,
                                 ),
                               ),

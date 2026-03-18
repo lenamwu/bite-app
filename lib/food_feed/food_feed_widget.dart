@@ -387,7 +387,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                             rowUsersRecord.displayName,
                                                                                             style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                                                  color: FlutterFlowTheme.of(context).accent3,
+                                                                                                  color: FlutterFlowTheme.of(context).customColor4,
                                                                                                   fontSize: 14.0,
                                                                                                   letterSpacing: 0.0,
                                                                                                   fontWeight: FontWeight.w600,
@@ -410,6 +410,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                           ),
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                 fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                                                color: FlutterFlowTheme.of(context).customColor4,
                                                                                                 fontSize: 10.0,
                                                                                                 letterSpacing: 0.0,
                                                                                                 useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -1061,7 +1062,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                       10.0, 0.0, 0.0, 0.0),
                                   child: Icon(
                                     Icons.search,
-                                    color: FlutterFlowTheme.of(context).primary,
+                                    color: FlutterFlowTheme.of(context).secondary,
                                     size: 24.0,
                                   ),
                                 ),

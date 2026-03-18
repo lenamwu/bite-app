@@ -173,6 +173,7 @@ class LightModeTheme extends FlutterFlowTheme {
 
   late Color primary = const Color.fromARGB(255, 116, 184, 247);
   late Color secondary = const Color.fromARGB(255, 255, 185, 243);
+  // original lavendary 255, 209, 158, 255
   late Color tertiary = const Color.fromARGB(255, 209, 158, 255);
   late Color alternate = const Color.fromARGB(255, 209, 158, 255);
   late Color primaryText = const Color.fromARGB(255, 116, 184, 247);
@@ -191,7 +192,7 @@ class LightModeTheme extends FlutterFlowTheme {
   late Color customColor1 = const Color(0xFF9C175F);
   late Color customColor2 = const Color(0xFF660000);
   late Color customColor3 = const Color(0xFF000000);
-  late Color customColor4 = const Color(0x00336600);
+  late Color customColor4 = const Color.fromARGB(188, 0, 0, 0);
 }
 
 abstract class Typography {

@@ -192,6 +192,8 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                           fontFamily:
                                               FlutterFlowTheme.of(context)
                                                   .bodyMediumFamily,
+                                          color: FlutterFlowTheme.of(context)
+                                              .primary,
                                           fontSize: 16.0,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.bold,
@@ -215,6 +217,8 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                       .override(
                                         fontFamily: FlutterFlowTheme.of(context)
                                             .bodyMediumFamily,
+                                        color: FlutterFlowTheme.of(context)
+                                            .primary,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                         useGoogleFonts:
@@ -261,12 +265,12 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                 .contains(currentUserReference),
                             onIcon: Icon(
                               Icons.bookmark_rounded,
-                              color: FlutterFlowTheme.of(context).primary,
+                              color: FlutterFlowTheme.of(context).accent1,
                               size: 30.0,
                             ),
                             offIcon: Icon(
                               Icons.bookmark_border,
-                              color: FlutterFlowTheme.of(context).secondaryText,
+                              color: FlutterFlowTheme.of(context).accent1,
                               size: 30.0,
                             ),
                           ),
@@ -306,7 +310,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                         fontFamily: FlutterFlowTheme.of(context)
                                             .headlineSmallFamily,
                                         color: FlutterFlowTheme.of(context)
-                                            .tertiary,
+                                            .customColor4,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                         useGoogleFonts:
@@ -318,37 +322,141 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 20.0, 0.0, 0.0),
-                              child: SingleChildScrollView(
-                                scrollDirection: Axis.horizontal,
-                                child: Row(
-                                  mainAxisSize: MainAxisSize.max,
-                                  children: [
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(0.0, -1.0),
-                                      child: ClipRRect(
-                                        borderRadius:
-                                            BorderRadius.circular(0.0),
-                                        child: Image.network(
-                                          publicRecipeRecipesRecord
-                                              .publicrecipeimage,
-                                          width: 250.0,
-                                          height: 250.0,
-                                          fit: BoxFit.cover,
-                                          errorBuilder:
-                                              (context, error, stackTrace) =>
-                                                  Image.asset(
-                                            'assets/images/error_image.png',
-                                            width: 250.0,
-                                            height: 250.0,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
+                                  10.0, 16.0, 10.0, 0.0),
+                              child: Row(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  ClipRRect(
+                                    borderRadius: BorderRadius.circular(0.0),
+                                    child: Image.network(
+                                      publicRecipeRecipesRecord
+                                          .publicrecipeimage,
+                                      width: 140.0,
+                                      height: 140.0,
+                                      fit: BoxFit.cover,
+                                      errorBuilder:
+                                          (context, error, stackTrace) =>
+                                              Image.asset(
+                                        'assets/images/error_image.png',
+                                        width: 140.0,
+                                        height: 140.0,
+                                        fit: BoxFit.cover,
                                       ),
                                     ),
-                                  ],
-                                ),
+                                  ),
+                                  SizedBox(width: 14.0),
+                                  Expanded(
+                                    child: Column(
+                                      crossAxisAlignment: CrossAxisAlignment.start,
+                                      children: [
+                                        if (publicRecipeRecipesRecord.hasRating() && publicRecipeRecipesRecord.rating > 0)
+                                          Padding(
+                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 8.0),
+                                            child: Row(
+                                              children: List.generate(5, (index) {
+                                                final rating = publicRecipeRecipesRecord.rating;
+                                                if (index < rating.floor()) {
+                                                  return Icon(Icons.star_rounded, color: Color(0xFFFFE082), size: 20.0);
+                                                } else if (index < rating.ceil() && rating % 1 >= 0.5) {
+                                                  return Icon(Icons.star_half_rounded, color: Color(0xFFFFE082), size: 20.0);
+                                                } else {
+                                                  return Icon(Icons.star_outline_rounded, color: Color(0xFF000000), size: 20.0);
+                                                }
+                                              }),
+                                            ),
+                                          ),
+                                        if (publicRecipeRecipesRecord.cookingtime.isNotEmpty)
+                                          Padding(
+                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 6.0),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  'cooking time: ',
+                                                  style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                    fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
+                                                    color: FlutterFlowTheme.of(context).alternate,
+                                                    fontSize: 13.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
+                                                  ),
+                                                ),
+                                                Flexible(
+                                                  child: Text(
+                                                    publicRecipeRecipesRecord.cookingtime,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                      fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
+                                                      color: FlutterFlowTheme.of(context).accent1,
+                                                      fontSize: 13.0,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight: FontWeight.bold,
+                                                      useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        if (publicRecipeRecipesRecord.servings.isNotEmpty)
+                                          Padding(
+                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 6.0),
+                                            child: Row(
+                                              children: [
+                                                Text(
+                                                  'servings: ',
+                                                  style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                    fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
+                                                    color: FlutterFlowTheme.of(context).alternate,
+                                                    fontSize: 13.0,
+                                                    letterSpacing: 0.0,
+                                                    fontWeight: FontWeight.bold,
+                                                    useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
+                                                  ),
+                                                ),
+                                                Flexible(
+                                                  child: Text(
+                                                    publicRecipeRecipesRecord.servings,
+                                                    overflow: TextOverflow.ellipsis,
+                                                    style: FlutterFlowTheme.of(context).bodyLarge.override(
+                                                      fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
+                                                      color: FlutterFlowTheme.of(context).accent1,
+                                                      fontSize: 13.0,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight: FontWeight.bold,
+                                                      useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
+                                                    ),
+                                                  ),
+                                                ),
+                                              ],
+                                            ),
+                                          ),
+                                        if (publicRecipeRecipesRecord.url.isNotEmpty)
+                                          Padding(
+                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                            child: InkWell(
+                                              onTap: () async {
+                                                await launchUrl(
+                                                  Uri.parse(publicRecipeRecipesRecord.url),
+                                                  mode: LaunchMode.externalApplication,
+                                                );
+                                              },
+                                              child: Text(
+                                                'view original recipe',
+                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                  color: FlutterFlowTheme.of(context).primary,
+                                                  letterSpacing: 0.0,
+                                                  fontWeight: FontWeight.bold,
+                                                  useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                ),
+                                              ),
+                                            ),
+                                          ),
+                                      ],
+                                    ),
+                                  ),
+                                ],
                               ),
                             ),
                             Padding(
@@ -367,239 +475,6 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                     crossAxisAlignment:
                                         CrossAxisAlignment.start,
                                     children: [
-                                      if (publicRecipeRecipesRecord.url.isNotEmpty)
-                                        Padding(
-                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                              0.0, 6.0, 0.0, 0.0),
-                                          child: InkWell(
-                                            onTap: () async {
-                                              await launchUrl(
-                                                Uri.parse(publicRecipeRecipesRecord.url),
-                                                mode: LaunchMode.externalApplication,
-                                              );
-                                            },
-                                            child: Text(
-                                              'view original recipe',
-                                              style: FlutterFlowTheme.of(context)
-                                                  .bodyMedium
-                                                  .override(
-                                                    fontFamily:
-                                                        FlutterFlowTheme.of(context)
-                                                            .bodyMediumFamily,
-                                                    color: FlutterFlowTheme.of(context)
-                                                        .tertiary,
-                                                    letterSpacing: 0.0,
-                                                    fontWeight: FontWeight.bold,
-                                                    useGoogleFonts:
-                                                        !FlutterFlowTheme.of(context)
-                                                            .bodyMediumIsCustom,
-                                                  ),
-                                            ),
-                                          ),
-                                        ),
-                                      Column(
-                                        mainAxisSize: MainAxisSize.max,
-                                        children: [
-                                          if (publicRecipeRecipesRecord.cookingtime.isNotEmpty ||
-                                              publicRecipeRecipesRecord.servings.isNotEmpty ||
-                                              publicRecipeRecipesRecord.hasRating())
-                                            Padding(
-                                              padding:
-                                                  EdgeInsetsDirectional.fromSTEB(
-                                                      0.0, 10.0, 0.0, 10.0),
-                                              child: Row(
-                                                mainAxisSize: MainAxisSize.max,
-                                                children: [
-                                                  Expanded(
-                                                    child: Column(
-                                                      mainAxisSize:
-                                                          MainAxisSize.max,
-                                                      crossAxisAlignment:
-                                                          CrossAxisAlignment
-                                                              .start,
-                                                      children: [
-                                                        if (publicRecipeRecipesRecord.cookingtime.isNotEmpty)
-                                                          Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize.max,
-                                                            children: [
-                                                              Text(
-                                                                'cooking time: ',
-                                                                style: FlutterFlowTheme
-                                                                        .of(context)
-                                                                    .bodyLarge
-                                                                    .override(
-                                                                      fontFamily: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyLargeFamily,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .accent3,
-                                                                      fontSize:
-                                                                          14.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      useGoogleFonts:
-                                                                          !FlutterFlowTheme.of(
-                                                                                  context)
-                                                                              .bodyLargeIsCustom,
-                                                                    ),
-                                                              ),
-                                                              Flexible(
-                                                                child: Text(
-                                                                publicRecipeRecipesRecord
-                                                                    .cookingtime,
-                                                                overflow: TextOverflow.ellipsis,
-                                                                style: FlutterFlowTheme
-                                                                        .of(context)
-                                                                    .bodyLarge
-                                                                    .override(
-                                                                      fontFamily: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyLargeFamily,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .accent3,
-                                                                      fontSize:
-                                                                          14.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      useGoogleFonts:
-                                                                          !FlutterFlowTheme.of(
-                                                                                  context)
-                                                                              .bodyLargeIsCustom,
-                                                                    ),
-                                                              ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        if (publicRecipeRecipesRecord.servings.isNotEmpty)
-                                                          Align(
-                                                            alignment:
-                                                                AlignmentDirectional(
-                                                                    -1.0, -1.0),
-                                                            child: Row(
-                                                              mainAxisSize:
-                                                                  MainAxisSize.max,
-                                                              children: [
-                                                                Text(
-                                                                  'servings: ',
-                                                                  style: FlutterFlowTheme
-                                                                          .of(context)
-                                                                      .bodyLarge
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            FlutterFlowTheme.of(context)
-                                                                                .bodyLargeFamily,
-                                                                        color: FlutterFlowTheme.of(
-                                                                                context)
-                                                                            .accent3,
-                                                                        fontSize:
-                                                                            14.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .bold,
-                                                                        useGoogleFonts:
-                                                                            !FlutterFlowTheme.of(context)
-                                                                                .bodyLargeIsCustom,
-                                                                      ),
-                                                                ),
-                                                                Flexible(
-                                                                  child: Text(
-                                                                  publicRecipeRecipesRecord
-                                                                      .servings,
-                                                                  overflow: TextOverflow.ellipsis,
-                                                                  style: FlutterFlowTheme
-                                                                          .of(context)
-                                                                      .bodyLarge
-                                                                      .override(
-                                                                        fontFamily:
-                                                                            FlutterFlowTheme.of(context)
-                                                                                .bodyLargeFamily,
-                                                                        color: FlutterFlowTheme.of(
-                                                                                context)
-                                                                            .accent3,
-                                                                        fontSize:
-                                                                            14.0,
-                                                                        letterSpacing:
-                                                                            0.0,
-                                                                        useGoogleFonts:
-                                                                            !FlutterFlowTheme.of(context)
-                                                                                .bodyLargeIsCustom,
-                                                                      ),
-                                                                ),
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                        if (publicRecipeRecipesRecord.hasRating() && publicRecipeRecipesRecord.rating > 0)
-                                                          Row(
-                                                            mainAxisSize:
-                                                                MainAxisSize.max,
-                                                            children: [
-                                                              Text(
-                                                                'rating: ',
-                                                                style: FlutterFlowTheme
-                                                                        .of(context)
-                                                                    .bodyLarge
-                                                                    .override(
-                                                                      fontFamily: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyLargeFamily,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .accent3,
-                                                                      fontSize:
-                                                                          14.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
-                                                                      useGoogleFonts:
-                                                                          !FlutterFlowTheme.of(
-                                                                                  context)
-                                                                              .bodyLargeIsCustom,
-                                                                    ),
-                                                              ),
-                                                              Flexible(
-                                                                child: Text(
-                                                                '${publicRecipeRecipesRecord.rating % 1 == 0 ? publicRecipeRecipesRecord.rating.toInt() : publicRecipeRecipesRecord.rating}/5',
-                                                                overflow: TextOverflow.ellipsis,
-                                                                style: FlutterFlowTheme
-                                                                        .of(context)
-                                                                    .bodyLarge
-                                                                    .override(
-                                                                      fontFamily: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .bodyLargeFamily,
-                                                                      color: FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .accent3,
-                                                                      fontSize:
-                                                                          14.0,
-                                                                      letterSpacing:
-                                                                          0.0,
-                                                                      useGoogleFonts:
-                                                                          !FlutterFlowTheme.of(
-                                                                                  context)
-                                                                              .bodyLargeIsCustom,
-                                                                    ),
-                                                              ),
-                                                              ),
-                                                            ],
-                                                          ),
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
                                           Stack(
                                             children: [
                                               Container(
@@ -628,11 +503,11 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                           labelColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .accent3,
+                                                                  .tertiary,
                                                           unselectedLabelColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .warning,
+                                                                  .secondary,
                                                           labelStyle:
                                                               FlutterFlowTheme.of(
                                                                       context)
@@ -655,7 +530,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                           indicatorColor:
                                                               FlutterFlowTheme.of(
                                                                       context)
-                                                                  .primary,
+                                                                  .tertiary,
                                                           indicatorWeight: 3.0,
                                                           tabs: [
                                                             Tab(
@@ -770,7 +645,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                                               ingredientsItem,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                    color: FlutterFlowTheme.of(context).accent3,
+                                                                                    color: FlutterFlowTheme.of(context).accent1,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.bold,
                                                                                     useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -841,7 +716,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                                             preparationItem,
                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                  color: FlutterFlowTheme.of(context).accent3,
+                                                                                  color: FlutterFlowTheme.of(context).accent1,
                                                                                   letterSpacing: 0.0,
                                                                                   fontWeight: FontWeight.w600,
                                                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -863,8 +738,6 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                               ),
                                             ],
                                           ),
-                                        ],
-                                      ),
                                     ],
                                   ),
                                 ),
