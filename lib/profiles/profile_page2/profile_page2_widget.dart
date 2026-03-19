@@ -612,7 +612,10 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 90.0),
-                              child: PagedGridView<DocumentSnapshot<Object?>?,
+                              child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                final crossAxisCount = (constraints.maxWidth / 185.0).floor().clamp(2, 6);
+                                return PagedGridView<DocumentSnapshot<Object?>?,
                                   PostsRecord>(
                                 pagingController: _model.setGridViewController1(
                                   PostsRecord.collection
@@ -629,8 +632,8 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                 ),
                                 padding: EdgeInsets.zero,
                                 gridDelegate:
-                                    SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200.0,
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: crossAxisCount,
                                   childAspectRatio: 0.85,
                                 ),
                                 scrollDirection: Axis.vertical,
@@ -788,6 +791,8 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                     );
                                   },
                                 ),
+                              );
+                              },
                               ),
                             ),
                           ),
@@ -801,7 +806,10 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
                                   0.0, 0.0, 0.0, 90.0),
-                              child: PagedGridView<DocumentSnapshot<Object?>?,
+                              child: LayoutBuilder(
+                              builder: (context, constraints) {
+                                final crossAxisCount = (constraints.maxWidth / 185.0).floor().clamp(2, 6);
+                                return PagedGridView<DocumentSnapshot<Object?>?,
                                   PostsRecord>(
                                 pagingController: _model.setGridViewController2(
                                   PostsRecord.collection
@@ -818,8 +826,8 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                 ),
                                 padding: EdgeInsets.zero,
                                 gridDelegate:
-                                    SliverGridDelegateWithMaxCrossAxisExtent(
-                                  maxCrossAxisExtent: 200.0,
+                                    SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: crossAxisCount,
                                   childAspectRatio: 0.85,
                                 ),
                                 scrollDirection: Axis.vertical,
@@ -992,6 +1000,8 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                     );
                                   },
                                 ),
+                              );
+                              },
                               ),
                             ),
                           ),

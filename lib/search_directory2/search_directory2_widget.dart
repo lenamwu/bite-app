@@ -462,13 +462,16 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                     .searchResults
                                                     .toList();
 
-                                                return GridView.builder(
+                                                return LayoutBuilder(
+                                                  builder: (context, constraints) {
+                                                    final crossAxisCount = (constraints.maxWidth / 185.0).floor().clamp(2, 6);
+                                                    return GridView.builder(
                                                   padding: EdgeInsets.zero,
                                                   gridDelegate:
-                                                      SliverGridDelegateWithMaxCrossAxisExtent(
-                                                    maxCrossAxisExtent: 200.0,
+                                                      SliverGridDelegateWithFixedCrossAxisCount(
+                                                    crossAxisCount: crossAxisCount,
                                                     mainAxisSpacing: 4.0,
-                                                    childAspectRatio: 0.9,
+                                                    childAspectRatio: 0.89,
                                                   ),
                                                   shrinkWrap: true,
                                                   physics:
@@ -869,6 +872,8 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                     );
                                                   },
                                                 );
+                                                    },
+                                                  );
                                               },
                                             ),
                                           ),
