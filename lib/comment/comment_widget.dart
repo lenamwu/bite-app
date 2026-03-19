@@ -1334,7 +1334,7 @@ class _CommentWidgetState extends State<CommentWidget>
                                                                               listViewCommentsRecord.displayname,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                    color: FlutterFlowTheme.of(context).accent3,
+                                                                                    color: FlutterFlowTheme.of(context).primary,
                                                                                     letterSpacing: 0.0,
                                                                                     fontWeight: FontWeight.bold,
                                                                                     useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -1355,8 +1355,10 @@ class _CommentWidgetState extends State<CommentWidget>
                                                                                 ),
                                                                                 style: FlutterFlowTheme.of(context).labelSmall.override(
                                                                                       fontFamily: FlutterFlowTheme.of(context).labelSmallFamily,
+                                                                                      color: FlutterFlowTheme.of(context).tertiary,
                                                                                       fontSize: 10.0,
                                                                                       letterSpacing: 0.0,
+                                                                                      fontWeight: FontWeight.bold,
                                                                                       useGoogleFonts: !FlutterFlowTheme.of(context).labelSmallIsCustom,
                                                                                     ),
                                                                               ),
@@ -1373,6 +1375,7 @@ class _CommentWidgetState extends State<CommentWidget>
                                                                             .bodyMedium
                                                                             .override(
                                                                               fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                              color: FlutterFlowTheme.of(context).accent3,
                                                                               letterSpacing: 0.0,
                                                                               useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                                             ),

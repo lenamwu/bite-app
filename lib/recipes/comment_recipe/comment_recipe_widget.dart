@@ -179,59 +179,152 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
 
                         final toggleIconRecipesRecord = snapshot.data!;
 
-                        return ToggleIcon(
-                          onPressed: () async {
-                            final recipeSavedByElement = currentUserReference;
-                            final recipeSavedByUpdate = toggleIconRecipesRecord
-                                    .recipeSavedBy
-                                    .contains(recipeSavedByElement)
-                                ? FieldValue.arrayRemove([recipeSavedByElement])
-                                : FieldValue.arrayUnion([recipeSavedByElement]);
-                            await toggleIconRecipesRecord.reference.update({
-                              ...mapToFirestore(
-                                {
-                                  'recipe_saved_by': recipeSavedByUpdate,
-                                },
-                              ),
-                            });
+                        return Row(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
                             if (toggleIconRecipesRecord.recipeSavedBy
-                                .contains(currentUserReference)) {
-                              await toggleIconRecipesRecord.reference.update({
-                                ...mapToFirestore(
-                                  {
-                                    'recipe_saved_by': FieldValue.arrayRemove(
-                                        [currentUserReference]),
-                                  },
-                                ),
-                              });
-                            } else {
-                              await toggleIconRecipesRecord.reference.update({
-                                ...mapToFirestore(
-                                  {
-                                    'recipe_saved_by': FieldValue.arrayUnion(
-                                        [currentUserReference]),
-                                  },
-                                ),
-                              });
-                            }
-                          },
-                          value: toggleIconRecipesRecord.recipeSavedBy
-                              .contains(currentUserReference),
-                          onIcon: Icon(
-                            Icons.bookmark_sharp,
-                            color: FlutterFlowTheme.of(context).primary,
-                            size: 35.0,
-                          ),
-                          offIcon: Icon(
-                            Icons.bookmark_border,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                            size: 35.0,
-                          ),
+                                    .contains(currentUserReference) ==
+                                false)
+                              Text(
+                                'save recipe',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily,
+                                      color: FlutterFlowTheme.of(context).primary,
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
+                                      useGoogleFonts: !FlutterFlowTheme.of(context)
+                                          .bodyMediumIsCustom,
+                                    ),
+                              ),
+                            if (toggleIconRecipesRecord.recipeSavedBy
+                                    .contains(currentUserReference) ==
+                                true)
+                              Text(
+                                'recipe saved!',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily,
+                                      color: FlutterFlowTheme.of(context).primary,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
+                                      useGoogleFonts: !FlutterFlowTheme.of(context)
+                                          .bodyMediumIsCustom,
+                                    ),
+                              ),
+                            ToggleIcon(
+                              onPressed: () async {
+                                if (toggleIconRecipesRecord.recipeSavedBy
+                                    .contains(currentUserReference)) {
+                                  // Unsaving — check if forked copy
+                                  if (toggleIconRecipesRecord.hasForkedFrom()) {
+                                    await toggleIconRecipesRecord.reference.delete();
+                                    if (context.mounted) context.pop();
+                                    return;
+                                  }
+                                  await toggleIconRecipesRecord.reference.update({
+                                    ...mapToFirestore(
+                                      {
+                                        'recipe_saved_by': FieldValue.arrayRemove(
+                                            [currentUserReference]),
+                                      },
+                                    ),
+                                  });
+                                } else {
+                                  await toggleIconRecipesRecord.reference.update({
+                                    ...mapToFirestore(
+                                      {
+                                        'recipe_saved_by': FieldValue.arrayUnion(
+                                            [currentUserReference]),
+                                      },
+                                    ),
+                                  });
+                                }
+                              },
+                              value: toggleIconRecipesRecord.recipeSavedBy
+                                  .contains(currentUserReference),
+                              onIcon: Icon(
+                                Icons.bookmark_sharp,
+                                color: FlutterFlowTheme.of(context).primary,
+                                size: 35.0,
+                              ),
+                              offIcon: Icon(
+                                Icons.bookmark_border,
+                                color: FlutterFlowTheme.of(context).secondaryText,
+                                size: 35.0,
+                              ),
+                            ),
+                          ],
                         );
                       },
                     ),
                   ),
                 ),
+                if (loggedIn && widget!.reciperef != null)
+                  StreamBuilder<RecipesRecord>(
+                    stream: RecipesRecord.getDocument(widget!.reciperef!),
+                    builder: (context, editSnapshot) {
+                      if (!editSnapshot.hasData) return SizedBox.shrink();
+                      final editRecipe = editSnapshot.data!;
+                      if (!editRecipe.recipeSavedBy.contains(currentUserReference))
+                        return SizedBox.shrink();
+                      return InkWell(
+                        splashColor: Colors.transparent,
+                        focusColor: Colors.transparent,
+                        hoverColor: Colors.transparent,
+                        highlightColor: Colors.transparent,
+                        onTap: () {
+                          context.pushNamed(
+                            EditSavedRecipeWidget.routeName,
+                            queryParameters: {
+                              'recipeRef': serializeParam(
+                                editRecipe.reference,
+                                ParamType.DocumentReference,
+                              ),
+                            }.withoutNulls,
+                          );
+                        },
+                        child: Padding(
+                          padding: EdgeInsetsDirectional.fromSTEB(
+                              0.0, 0.0, 5.0, 0.0),
+                          child: Row(
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                'edit',
+                                style: FlutterFlowTheme.of(context)
+                                    .bodyMedium
+                                    .override(
+                                      fontFamily: FlutterFlowTheme.of(context)
+                                          .bodyMediumFamily,
+                                      color: FlutterFlowTheme.of(context).primary,
+                                      fontSize: 16.0,
+                                      letterSpacing: 0.0,
+                                      fontWeight: FontWeight.bold,
+                                      useGoogleFonts: !FlutterFlowTheme.of(context)
+                                          .bodyMediumIsCustom,
+                                    ),
+                              ),
+                              Padding(
+                                padding: EdgeInsetsDirectional.fromSTEB(
+                                    2.0, 0.0, 0.0, 0.0),
+                                child: Icon(
+                                  Icons.edit_outlined,
+                                  color: FlutterFlowTheme.of(context).accent3,
+                                  size: 18.0,
+                                ),
+                              ),
+                            ],
+                          ),
+                        ),
+                      );
+                    },
+                  ),
                 Visibility(
                   visible:
                       commentRecipePostsRecord.postUser == currentUserReference,
@@ -1229,8 +1322,15 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                   ),
                                                   Stack(
                                                     children: [
-                                                      Container(
-                                                        height: 270.0,
+                                                      Builder(
+                                                        builder: (context) {
+                                                          final maxItems = [
+                                                            columnRecipesRecord.ingredients.length,
+                                                            columnRecipesRecord.preparation.length,
+                                                          ].reduce((a, b) => a > b ? a : b);
+                                                          final dynamicHeight = 60.0 + (maxItems * 40.0).clamp(80.0, 800.0);
+                                                          return Container(
+                                                        height: dynamicHeight,
                                                         child: InkWell(
                                                           splashColor: Colors
                                                               .transparent,
@@ -1447,6 +1547,8 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                             ],
                                                           ),
                                                         ),
+                                                      );
+                                                        },
                                                       ),
                                                     ],
                                                   ),
@@ -1899,7 +2001,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                                     listViewCommentsRecord.displayname,
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                          color: FlutterFlowTheme.of(context).accent3,
+                                                                                          color: FlutterFlowTheme.of(context).primary,
                                                                                           letterSpacing: 0.0,
                                                                                           fontWeight: FontWeight.bold,
                                                                                           useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -1919,8 +2021,10 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                                       maxLines: 5,
                                                                                       style: FlutterFlowTheme.of(context).labelSmall.override(
                                                                                             fontFamily: FlutterFlowTheme.of(context).labelSmallFamily,
+                                                                                            color: FlutterFlowTheme.of(context).tertiary,
                                                                                             fontSize: 10.0,
                                                                                             letterSpacing: 0.0,
+                                                                                            fontWeight: FontWeight.bold,
                                                                                             useGoogleFonts: !FlutterFlowTheme.of(context).labelSmallIsCustom,
                                                                                           ),
                                                                                     ),
@@ -1933,6 +2037,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                               maxLines: 4,
                                                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                     fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                                    color: FlutterFlowTheme.of(context).accent3,
                                                                                     letterSpacing: 0.0,
                                                                                     useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                                                   ),

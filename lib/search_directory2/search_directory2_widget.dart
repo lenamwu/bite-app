@@ -525,7 +525,8 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                             return;
                                                           }
 
-                                                          _model.alrsavedrecipe =
+                                                          // Find original recipe by URL (exclude user forks)
+                                                          final allUrlMatches =
                                                               await queryRecipesRecordOnce(
                                                             queryBuilder:
                                                                 (recipesRecord) =>
@@ -538,9 +539,11 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                 r'''$.link''',
                                                               ).toString(),
                                                             ),
-                                                            singleRecord: true,
-                                                          ).then((s) => s
-                                                                  .firstOrNull);
+                                                          );
+                                                          _model.alrsavedrecipe =
+                                                              allUrlMatches
+                                                                  .where((r) => !r.hasForkedFrom())
+                                                                  .firstOrNull;
                                                           if (_model
                                                                   .alrsavedrecipe
                                                                   ?.reference !=

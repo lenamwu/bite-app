@@ -164,13 +164,12 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                 Padding(
                   padding: EdgeInsetsDirectional.fromSTEB(0.0, 5.0, 5.0, 5.0),
                   child: Container(
-                    width: 150.0,
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(24.0),
                       shape: BoxShape.rectangle,
                     ),
                     child: Row(
-                      mainAxisSize: MainAxisSize.max,
+                      mainAxisSize: MainAxisSize.min,
                       children: [
                         Column(
                           mainAxisSize: MainAxisSize.max,
@@ -250,6 +249,12 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                   ),
                                 });
                               } else {
+                                // If this is a forked copy, delete it entirely
+                                if (publicRecipeRecipesRecord.hasForkedFrom()) {
+                                  await publicRecipeRecipesRecord.reference.delete();
+                                  if (context.mounted) context.pop();
+                                  return;
+                                }
                                 await publicRecipeRecipesRecord.reference
                                     .update({
                                   ...mapToFirestore(
@@ -275,6 +280,59 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                             ),
                           ),
                         ),
+                        if (loggedIn &&
+                            publicRecipeRecipesRecord.recipeSavedBy
+                                .contains(currentUserReference))
+                          InkWell(
+                            splashColor: Colors.transparent,
+                            focusColor: Colors.transparent,
+                            hoverColor: Colors.transparent,
+                            highlightColor: Colors.transparent,
+                            onTap: () {
+                              context.pushNamed(
+                                EditSavedRecipeWidget.routeName,
+                                queryParameters: {
+                                  'recipeRef': serializeParam(
+                                    publicRecipeRecipesRecord.reference,
+                                    ParamType.DocumentReference,
+                                  ),
+                                }.withoutNulls,
+                              );
+                            },
+                            child: Padding(
+                              padding: EdgeInsetsDirectional.fromSTEB(
+                                  4.0, 0.0, 0.0, 0.0),
+                              child: Row(
+                                mainAxisSize: MainAxisSize.min,
+                                children: [
+                                  Text(
+                                    'edit',
+                                    style: FlutterFlowTheme.of(context)
+                                        .bodyMedium
+                                        .override(
+                                          fontFamily: FlutterFlowTheme.of(context)
+                                              .bodyMediumFamily,
+                                          color: FlutterFlowTheme.of(context).primary,
+                                          fontSize: 16.0,
+                                          letterSpacing: 0.0,
+                                          fontWeight: FontWeight.bold,
+                                          useGoogleFonts: !FlutterFlowTheme.of(context)
+                                              .bodyMediumIsCustom,
+                                        ),
+                                  ),
+                                  Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        2.0, 0.0, 0.0, 0.0),
+                                    child: Icon(
+                                      Icons.edit_outlined,
+                                      color: FlutterFlowTheme.of(context).accent3,
+                                      size: 18.0,
+                                    ),
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
                       ],
                     ),
                   ),

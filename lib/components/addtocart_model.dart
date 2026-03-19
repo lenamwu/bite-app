@@ -13,9 +13,15 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class AddtocartModel extends FlutterFlowModel<AddtocartWidget> {
+  late TextEditingController ingredientTextController;
+  late FocusNode ingredientFocusNode;
+
   @override
   void initState(BuildContext context) {}
 
   @override
-  void dispose() {}
+  void dispose() {
+    ingredientTextController.dispose();
+    ingredientFocusNode.dispose();
+  }
 }

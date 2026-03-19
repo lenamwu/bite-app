@@ -34,3 +34,5 @@ export '/profiles/authentification/onboarding/onboarding_widget.dart'
 export '/search_directory2/search_directory2_widget.dart'
     show SearchDirectory2Widget;
 export '/featured_list/featured_list_widget.dart' show FeaturedListWidget;
+export '/recipes/edit_saved_recipe/edit_saved_recipe_widget.dart'
+    show EditSavedRecipeWidget;

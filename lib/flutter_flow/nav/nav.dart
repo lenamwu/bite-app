@@ -296,6 +296,18 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
           builder: (context, params) => SearchDirectory2Widget(),
         ),
         FFRoute(
+          name: EditSavedRecipeWidget.routeName,
+          path: EditSavedRecipeWidget.routePath,
+          builder: (context, params) => EditSavedRecipeWidget(
+            recipeRef: params.getParam(
+              'recipeRef',
+              ParamType.DocumentReference,
+              isList: false,
+              collectionNamePath: ['recipes'],
+            ),
+          ),
+        ),
+        FFRoute(
           name: FeaturedListWidget.routeName,
           path: FeaturedListWidget.routePath,
           builder: (context, params) => FeaturedListWidget(

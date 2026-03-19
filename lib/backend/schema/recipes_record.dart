@@ -96,6 +96,11 @@ class RecipesRecord extends FirestoreRecord {
   double get rating => _rating ?? 0.0;
   bool hasRating() => _rating != null;
 
+  // "forked_from" field.
+  DocumentReference? _forkedFrom;
+  DocumentReference? get forkedFrom => _forkedFrom;
+  bool hasForkedFrom() => _forkedFrom != null;
+
   void _initializeFields() {
     _title = snapshotData['title'] as String?;
     _notes = snapshotData['notes'] as String?;
@@ -113,6 +118,7 @@ class RecipesRecord extends FirestoreRecord {
     _publicrecipeimage = snapshotData['publicrecipeimage'] as String?;
     _usercreated = snapshotData['usercreated'] as bool?;
     _rating = castToType<double>(snapshotData['rating']);
+    _forkedFrom = snapshotData['forked_from'] as DocumentReference?;
   }
 
   static CollectionReference get collection =>
@@ -162,6 +168,7 @@ Map<String, dynamic> createRecipesRecordData({
   String? publicrecipeimage,
   bool? usercreated,
   double? rating,
+  DocumentReference? forkedFrom,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -177,6 +184,7 @@ Map<String, dynamic> createRecipesRecordData({
       'publicrecipeimage': publicrecipeimage,
       'usercreated': usercreated,
       'rating': rating,
+      'forked_from': forkedFrom,
     }.withoutNulls,
   );
 
@@ -204,7 +212,8 @@ class RecipesRecordDocumentEquality implements Equality<RecipesRecord> {
         e1?.url == e2?.url &&
         e1?.publicrecipeimage == e2?.publicrecipeimage &&
         e1?.usercreated == e2?.usercreated &&
-        e1?.rating == e2?.rating;
+        e1?.rating == e2?.rating &&
+        e1?.forkedFrom == e2?.forkedFrom;
   }
 
   @override
@@ -224,7 +233,8 @@ class RecipesRecordDocumentEquality implements Equality<RecipesRecord> {
         e?.url,
         e?.publicrecipeimage,
         e?.usercreated,
-        e?.rating
+        e?.rating,
+        e?.forkedFrom
       ]);
 
   @override

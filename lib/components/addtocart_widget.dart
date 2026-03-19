@@ -39,16 +39,9 @@ class _AddtocartWidgetState extends State<AddtocartWidget> {
     super.initState();
     _model = createModel(context, () => AddtocartModel());
 
-    // On component load action.
-    SchedulerBinding.instance.addPostFrameCallback((_) async {
-      await Future.delayed(
-        Duration(
-          milliseconds: 2500,
-        ),
-      );
-      if (!mounted) return;
-      Navigator.pop(context);
-    });
+    _model.ingredientTextController =
+        TextEditingController(text: widget.ingredientItem ?? '');
+    _model.ingredientFocusNode = FocusNode();
 
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -64,7 +57,6 @@ class _AddtocartWidgetState extends State<AddtocartWidget> {
   Widget build(BuildContext context) {
     return Container(
       width: double.infinity,
-      height: 100.0,
       decoration: BoxDecoration(
         color: FlutterFlowTheme.of(context).secondaryBackground,
         boxShadow: [
@@ -77,22 +69,103 @@ class _AddtocartWidgetState extends State<AddtocartWidget> {
             ),
           )
         ],
-        borderRadius: BorderRadius.only(
-          bottomLeft: Radius.circular(0.0),
-          bottomRight: Radius.circular(0.0),
-          topLeft: Radius.circular(0.0),
-          topRight: Radius.circular(0.0),
-        ),
       ),
-      child: Stack(
-        children: [
-          Padding(
-            padding: EdgeInsetsDirectional.fromSTEB(15.0, 20.0, 15.0, 0.0),
-            child: FFButtonWidget(
+      child: Padding(
+        padding: EdgeInsetsDirectional.fromSTEB(15.0, 15.0, 15.0, 15.0),
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Text(
+                  'Add to grocery cart',
+                  style: FlutterFlowTheme.of(context).bodyLarge.override(
+                        fontFamily:
+                            FlutterFlowTheme.of(context).bodyLargeFamily,
+                        letterSpacing: 0.0,
+                        fontWeight: FontWeight.bold,
+                        useGoogleFonts:
+                            !FlutterFlowTheme.of(context).bodyLargeIsCustom,
+                      ),
+                ),
+                FlutterFlowIconButton(
+                  borderRadius: 8.0,
+                  buttonSize: 40.0,
+                  icon: Icon(
+                    Icons.close,
+                    color: FlutterFlowTheme.of(context).secondaryText,
+                    size: 24.0,
+                  ),
+                  onPressed: () async {
+                    Navigator.pop(context);
+                  },
+                ),
+              ],
+            ),
+            Padding(
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 12.0),
+              child: TextFormField(
+                controller: _model.ingredientTextController,
+                focusNode: _model.ingredientFocusNode,
+                decoration: InputDecoration(
+                  labelText: 'Ingredient',
+                  labelStyle:
+                      FlutterFlowTheme.of(context).bodyMedium.override(
+                            fontFamily: FlutterFlowTheme.of(context)
+                                .bodyMediumFamily,
+                            letterSpacing: 0.0,
+                            useGoogleFonts: !FlutterFlowTheme.of(context)
+                                .bodyMediumIsCustom,
+                          ),
+                  enabledBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: FlutterFlowTheme.of(context).primary,
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: FlutterFlowTheme.of(context).tertiary,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  errorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: FlutterFlowTheme.of(context).error,
+                      width: 1.5,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  focusedErrorBorder: OutlineInputBorder(
+                    borderSide: BorderSide(
+                      color: FlutterFlowTheme.of(context).error,
+                      width: 2.0,
+                    ),
+                    borderRadius: BorderRadius.circular(8.0),
+                  ),
+                  contentPadding:
+                      EdgeInsetsDirectional.fromSTEB(12.0, 12.0, 12.0, 12.0),
+                ),
+                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                      fontFamily:
+                          FlutterFlowTheme.of(context).bodyMediumFamily,
+                      letterSpacing: 0.0,
+                      useGoogleFonts: !FlutterFlowTheme.of(context)
+                          .bodyMediumIsCustom,
+                    ),
+              ),
+            ),
+            FFButtonWidget(
               onPressed: () async {
+                final text = _model.ingredientTextController.text.trim();
+                if (text.isEmpty) return;
                 await GroceryListRecord.createDoc(currentUserReference!)
                     .set(createGroceryListRecordData(
-                  ingredient: widget!.ingredientItem,
+                  ingredient: text,
                   completed: false,
                   createdTime: getCurrentTimestamp,
                 ));
@@ -101,42 +174,31 @@ class _AddtocartWidgetState extends State<AddtocartWidget> {
               text: 'add to cart',
               options: FFButtonOptions(
                 width: double.infinity,
-                height: 60.0,
-                padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
-                iconPadding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                height: 50.0,
+                padding:
+                    EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
+                iconPadding:
+                    EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                 color: FlutterFlowTheme.of(context).primaryBackground,
-                textStyle: FlutterFlowTheme.of(context).bodyLarge.override(
-                      fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                      letterSpacing: 0.0,
-                      fontWeight: FontWeight.bold,
-                      useGoogleFonts:
-                          !FlutterFlowTheme.of(context).bodyLargeIsCustom,
-                    ),
+                textStyle:
+                    FlutterFlowTheme.of(context).bodyLarge.override(
+                          fontFamily:
+                              FlutterFlowTheme.of(context).bodyLargeFamily,
+                          letterSpacing: 0.0,
+                          fontWeight: FontWeight.bold,
+                          useGoogleFonts: !FlutterFlowTheme.of(context)
+                              .bodyLargeIsCustom,
+                        ),
                 elevation: 2.0,
                 borderSide: BorderSide(
                   color: FlutterFlowTheme.of(context).primary,
                   width: 2.0,
                 ),
+                borderRadius: BorderRadius.circular(8.0),
               ),
             ),
-          ),
-          Align(
-            alignment: AlignmentDirectional(1.0, -1.0),
-            child: FlutterFlowIconButton(
-              borderRadius: 8.0,
-              buttonSize: 50.0,
-              fillColor: FlutterFlowTheme.of(context).primaryBackground,
-              icon: Icon(
-                Icons.cancel_sharp,
-                color: Color(0xFFFF000F),
-                size: 35.0,
-              ),
-              onPressed: () async {
-                Navigator.pop(context);
-              },
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
