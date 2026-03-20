@@ -203,7 +203,7 @@ class _FollowRequestpageWidgetState extends State<FollowRequestpageWidget> {
                                                       color:
                                                           FlutterFlowTheme.of(
                                                                   context)
-                                                              .accent3,
+                                                              .tertiary,
                                                       letterSpacing: 0.0,
                                                       fontWeight:
                                                           FontWeight.bold,
@@ -360,7 +360,7 @@ class _FollowRequestpageWidgetState extends State<FollowRequestpageWidget> {
                                                                             .bodyLarge
                                                                             .override(
                                                                               fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
-                                                                              color: FlutterFlowTheme.of(context).accent3,
+                                                                              color: FlutterFlowTheme.of(context).primary,
                                                                               fontSize: 14.0,
                                                                               letterSpacing: 0.0,
                                                                               useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,

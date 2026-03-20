@@ -480,9 +480,9 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                             text: '${listViewPostsRecord.displayName} posted a ',
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                                  color: FlutterFlowTheme.of(context).accent1,
                                                                                                   letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  fontWeight: FontWeight.w600,
                                                                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                                                                 ),
                                                                                           ),
@@ -492,7 +492,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                                   color: FlutterFlowTheme.of(context).tertiary,
                                                                                                   letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  fontWeight: FontWeight.w600,
                                                                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                                                                 ),
                                                                                           ),
@@ -500,9 +500,9 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                             text: ' recipe',
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                                  color: FlutterFlowTheme.of(context).accent1,
                                                                                                   letterSpacing: 0.0,
-                                                                                                  fontWeight: FontWeight.bold,
+                                                                                                  fontWeight: FontWeight.w600,
                                                                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                                                                 ),
                                                                                           ),
@@ -1163,7 +1163,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                             color: FlutterFlowTheme.of(context)
                                                 .primary,
                                             letterSpacing: 0.0,
-                                            fontWeight: FontWeight.bold,
+                                            fontWeight: FontWeight.w600,
                                             useGoogleFonts:
                                                 !FlutterFlowTheme.of(context)
                                                     .bodyLargeIsCustom,

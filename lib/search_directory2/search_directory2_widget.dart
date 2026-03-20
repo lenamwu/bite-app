@@ -279,9 +279,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                     .bodyLargeFamily,
                                                                 letterSpacing:
                                                                     0.0,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
+                                                                fontWeight: FontWeight.w600,
                                                                 useGoogleFonts:
                                                                     !FlutterFlowTheme.of(
                                                                             context)
@@ -1313,9 +1311,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                           .primary,
                                                                       letterSpacing:
                                                                           0.0,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .bold,
+                                                                      fontWeight: FontWeight.w600,
                                                                       useGoogleFonts:
                                                                           !FlutterFlowTheme.of(context)
                                                                               .labelLargeIsCustom,
@@ -1474,7 +1470,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                           .labelMediumFamily,
                                                   fontSize: 16.0,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.bold,
+                                                  fontWeight: FontWeight.w600,
                                                   useGoogleFonts:
                                                       !FlutterFlowTheme.of(
                                                               context)

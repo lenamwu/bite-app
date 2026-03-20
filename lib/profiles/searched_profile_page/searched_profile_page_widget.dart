@@ -153,7 +153,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                       fontFamily: FlutterFlowTheme.of(context)
                                           .bodyLargeFamily,
                                       color:
-                                          FlutterFlowTheme.of(context).accent3,
+                                          FlutterFlowTheme.of(context).primary,
                                       fontSize: 18.0,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.bold,
@@ -176,6 +176,8 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                     .override(
                                       fontFamily: FlutterFlowTheme.of(context)
                                           .bodyMediumFamily,
+                                      color:
+                                          FlutterFlowTheme.of(context).accent1,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.bold,
                                       useGoogleFonts:
@@ -263,7 +265,8 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                                                   .titleLargeFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .accent3,
+                                                              .tertiary,
+                                                          fontSize: 18.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -352,7 +355,8 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                                                   .titleLargeFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .accent3,
+                                                              .tertiary,
+                                                          fontSize: 18.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -394,26 +398,24 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                           Align(
                             alignment: AlignmentDirectional(-1.0, -1.0),
                             child: ClipRRect(
-                              borderRadius: BorderRadius.circular(50.0),
-                              child: CachedNetworkImage(
-                                fadeInDuration: Duration(milliseconds: 500),
-                                fadeOutDuration: Duration(milliseconds: 500),
-                                imageUrl:
-                                    searchedProfilePageUsersRecord.photoUrl,
-                                width: 80.0,
-                                height: 80.0,
-                                fit: BoxFit.cover,
-                                alignment: Alignment(-1.0, -1.0),
-                                errorWidget: (context, error, stackTrace) =>
-                                    Image.asset(
-                                  'assets/images/error_image.png',
-                                  width: 80.0,
-                                  height: 80.0,
+                                borderRadius: BorderRadius.circular(50.0),
+                                child: CachedNetworkImage(
+                                  fadeInDuration: Duration(milliseconds: 500),
+                                  fadeOutDuration: Duration(milliseconds: 500),
+                                  imageUrl:
+                                      searchedProfilePageUsersRecord.photoUrl,
+                                  width: 72.0,
+                                  height: 72.0,
                                   fit: BoxFit.cover,
-                                  alignment: Alignment(-1.0, -1.0),
+                                  errorWidget: (context, error, stackTrace) =>
+                                      Image.asset(
+                                    'assets/images/error_image.png',
+                                    width: 72.0,
+                                    height: 72.0,
+                                    fit: BoxFit.cover,
+                                  ),
                                 ),
                               ),
-                            ),
                           ),
                         ],
                       ),
@@ -891,204 +893,304 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                     color: FlutterFlowTheme.of(context)
                                         .primaryBackground,
                                   ),
-                                  child: Align(
-                                    alignment: AlignmentDirectional(0.0, 0.0),
-                                    child: Padding(
-                                      padding: EdgeInsetsDirectional.fromSTEB(
-                                          0.0, 0.0, 0.0, 90.0),
-                                      child: PagedGridView<
-                                          DocumentSnapshot<Object?>?,
-                                          PostsRecord>(
-                                        pagingController:
-                                            _model.setGridViewController1(
-                                          PostsRecord.collection
-                                              .where(
-                                                'postUser',
-                                                isEqualTo:
-                                                    searchedProfilePageUsersRecord
-                                                        .reference,
-                                              )
-                                              .where(
-                                                'has_recipe',
-                                                isEqualTo: true,
-                                              )
-                                              .orderBy('created_time',
-                                                  descending: true),
-                                        ),
-                                        padding: EdgeInsets.zero,
-                                        gridDelegate:
-                                            SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent: 200.0,
-                                          childAspectRatio: 0.85,
-                                        ),
-                                        scrollDirection: Axis.vertical,
-                                        builderDelegate:
-                                            PagedChildBuilderDelegate<
-                                                PostsRecord>(
-                                          // Customize what your widget looks like when it's loading the first page.
-                                          firstPageProgressIndicatorBuilder:
-                                              (_) => Center(
-                                            child: SizedBox(
-                                              width: 30.0,
-                                              height: 30.0,
-                                              child: SpinKitFadingGrid(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiary,
-                                                size: 30.0,
-                                              ),
+                                  child: Padding(
+                                    padding: EdgeInsetsDirectional.fromSTEB(
+                                        0.0, 0.0, 0.0, 90.0),
+                                    child: PagedListView<
+                                        DocumentSnapshot<Object?>?,
+                                        PostsRecord>(
+                                      pagingController:
+                                          _model.setGridViewController1(
+                                        PostsRecord.collection
+                                            .where(
+                                              'postUser',
+                                              isEqualTo:
+                                                  searchedProfilePageUsersRecord
+                                                      .reference,
+                                            )
+                                            .where(
+                                              'has_recipe',
+                                              isEqualTo: true,
+                                            )
+                                            .orderBy('created_time',
+                                                descending: true),
+                                      ),
+                                      padding: EdgeInsets.zero,
+                                      scrollDirection: Axis.vertical,
+                                      builderDelegate:
+                                          PagedChildBuilderDelegate<
+                                              PostsRecord>(
+                                        firstPageProgressIndicatorBuilder:
+                                            (_) => Center(
+                                          child: SizedBox(
+                                            width: 30.0,
+                                            height: 30.0,
+                                            child: SpinKitFadingGrid(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiary,
+                                              size: 30.0,
                                             ),
                                           ),
-                                          // Customize what your widget looks like when it's loading another page.
-                                          newPageProgressIndicatorBuilder:
-                                              (_) => Center(
-                                            child: SizedBox(
-                                              width: 30.0,
-                                              height: 30.0,
-                                              child: SpinKitFadingGrid(
-                                                color:
-                                                    FlutterFlowTheme.of(context)
-                                                        .tertiary,
-                                                size: 30.0,
-                                              ),
+                                        ),
+                                        newPageProgressIndicatorBuilder:
+                                            (_) => Center(
+                                          child: SizedBox(
+                                            width: 30.0,
+                                            height: 30.0,
+                                            child: SpinKitFadingGrid(
+                                              color:
+                                                  FlutterFlowTheme.of(context)
+                                                      .tertiary,
+                                              size: 30.0,
                                             ),
                                           ),
-                                          noItemsFoundIndicatorBuilder: (_) =>
-                                              NotificationcompWidget(),
-                                          itemBuilder:
-                                              (context, _, gridViewIndex) {
-                                            final gridViewPostsRecord = _model
-                                                .gridViewPagingController1!
-                                                .itemList![gridViewIndex];
-                                            return Visibility(
-                                              visible: gridViewPostsRecord
-                                                      .reference !=
-                                                  null,
-                                              child: Column(
-                                                mainAxisSize: MainAxisSize.min,
-                                                crossAxisAlignment:
-                                                    CrossAxisAlignment.start,
-                                                children: [
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(5.0, 5.0,
-                                                                5.0, 2.0),
-                                                    child: AspectRatio(
-                                                      aspectRatio: 1.0,
-                                                      child: InkWell(
-                                                        splashColor:
-                                                            Colors.transparent,
-                                                        focusColor:
-                                                            Colors.transparent,
-                                                        hoverColor:
-                                                            Colors.transparent,
-                                                        highlightColor:
-                                                            Colors.transparent,
-                                                        onTap: () async {
-                                                          context.pushNamed(
-                                                            CommentRecipeWidget
-                                                                .routeName,
-                                                            queryParameters: {
-                                                              'docref':
-                                                                  serializeParam(
-                                                                gridViewPostsRecord
-                                                                    .reference,
-                                                                ParamType
-                                                                    .DocumentReference,
-                                                              ),
-                                                              'reciperef':
-                                                                  serializeParam(
-                                                                gridViewPostsRecord
-                                                                    .recipeRef,
-                                                                ParamType
-                                                                    .DocumentReference,
-                                                              ),
-                                                              'userref':
-                                                                  serializeParam(
-                                                                gridViewPostsRecord
-                                                                    .postUser,
-                                                                ParamType
-                                                                    .DocumentReference,
-                                                              ),
-                                                            }.withoutNulls,
-                                                          );
-                                                        },
-                                                        child: ClipRRect(
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(
-                                                                      0.0),
-                                                          child: Image.network(
-                                                            gridViewPostsRecord
-                                                                .postMultPhotos
-                                                                .firstOrNull!,
-                                                            width:
-                                                                double.infinity,
-                                                            height:
-                                                                double.infinity,
-                                                            fit: BoxFit.cover,
-                                                            alignment:
-                                                                Alignment(-1.0,
-                                                                    -1.0),
-                                                            errorBuilder: (context,
-                                                                    error,
-                                                                    stackTrace) =>
-                                                                Image.asset(
-                                                              'assets/images/error_image.png',
-                                                              width: double
-                                                                  .infinity,
-                                                              height: double
-                                                                  .infinity,
-                                                              fit:
-                                                                  BoxFit.cover,
-                                                              alignment:
-                                                                  Alignment(
-                                                                      -1.0,
-                                                                      -1.0),
-                                                            ),
-                                                          ),
+                                        ),
+                                        noItemsFoundIndicatorBuilder: (_) =>
+                                            NotificationcompWidget(),
+                                        itemBuilder:
+                                            (context, _, listViewIndex) {
+                                          final listViewPostsRecord = _model
+                                              .gridViewPagingController1!
+                                              .itemList![listViewIndex];
+                                          if (listViewPostsRecord.recipeRef == null) {
+                                            return SizedBox.shrink();
+                                          }
+                                          return Padding(
+                                            padding: EdgeInsetsDirectional.fromSTEB(
+                                                12.0, 8.0, 12.0, 0.0),
+                                            child: StreamBuilder<RecipesRecord>(
+                                              stream: RecipesRecord.getDocument(
+                                                  listViewPostsRecord.recipeRef!),
+                                              builder: (context, recipeSnapshot) {
+                                                if (!recipeSnapshot.hasData) {
+                                                  return SizedBox(
+                                                    height: 105.0,
+                                                    child: Center(
+                                                      child: SizedBox(
+                                                        width: 20.0,
+                                                        height: 20.0,
+                                                        child: SpinKitFadingGrid(
+                                                          color: FlutterFlowTheme.of(context).tertiary,
+                                                          size: 20.0,
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  Padding(
-                                                    padding:
-                                                        EdgeInsetsDirectional
-                                                            .fromSTEB(5.0, 2.0,
-                                                                5.0, 2.0),
-                                                    child: Text(
-                                                      gridViewPostsRecord
-                                                          .postText,
-                                                      maxLines: 2,
-                                                      overflow:
-                                                          TextOverflow.ellipsis,
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .bodyMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMediumFamily,
-                                                            color: FlutterFlowTheme
-                                                                    .of(context)
-                                                                .tertiary,
-                                                            letterSpacing: 0.0,
-                                                            fontWeight:
-                                                                FontWeight.w600,
-                                                            useGoogleFonts:
-                                                                !FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .bodyMediumIsCustom,
+                                                  );
+                                                }
+                                                final recipeRecord = recipeSnapshot.data!;
+                                                final postHasPhoto = listViewPostsRecord.postMultPhotos.isNotEmpty &&
+                                                    listViewPostsRecord.postMultPhotos.first.isNotEmpty;
+                                                final imageUrl = postHasPhoto
+                                                    ? listViewPostsRecord.postMultPhotos.first
+                                                    : recipeRecord.publicrecipeimage;
+                                                return InkWell(
+                                                  splashColor: Colors.transparent,
+                                                  focusColor: Colors.transparent,
+                                                  hoverColor: Colors.transparent,
+                                                  highlightColor: Colors.transparent,
+                                                  onTap: () async {
+                                                    context.pushNamed(
+                                                      CommentRecipeWidget.routeName,
+                                                      queryParameters: {
+                                                        'docref': serializeParam(
+                                                          listViewPostsRecord.reference,
+                                                          ParamType.DocumentReference,
+                                                        ),
+                                                        'reciperef': serializeParam(
+                                                          listViewPostsRecord.recipeRef,
+                                                          ParamType.DocumentReference,
+                                                        ),
+                                                        'userref': serializeParam(
+                                                          listViewPostsRecord.postUser,
+                                                          ParamType.DocumentReference,
+                                                        ),
+                                                      }.withoutNulls,
+                                                    );
+                                                  },
+                                                  child: Row(
+                                                    crossAxisAlignment: CrossAxisAlignment.start,
+                                                    children: [
+                                                      ClipRRect(
+                                                        borderRadius: BorderRadius.circular(8.0),
+                                                        child: imageUrl.isNotEmpty
+                                                            ? Image.network(
+                                                                imageUrl,
+                                                                width: 105.0,
+                                                                height: 105.0,
+                                                                fit: BoxFit.cover,
+                                                                errorBuilder: (context, error, stackTrace) =>
+                                                                    Image.asset(
+                                                                  'assets/images/error_image.png',
+                                                                  width: 105.0,
+                                                                  height: 105.0,
+                                                                  fit: BoxFit.cover,
+                                                                ),
+                                                              )
+                                                            : SizedBox(
+                                                                width: 105.0,
+                                                                height: 105.0,
+                                                                child: Center(
+                                                                  child: FractionallySizedBox(
+                                                                    widthFactor: 0.55,
+                                                                    heightFactor: 0.55,
+                                                                    child: Image.asset(
+                                                                      'assets/images/ChatGPT_Image_May_2,_2025_at_02_15_40_PM.png',
+                                                                      fit: BoxFit.contain,
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                      ),
+                                                      SizedBox(width: 12.0),
+                                                      Expanded(
+                                                        child: SizedBox(
+                                                          height: 105.0,
+                                                          child: Column(
+                                                            crossAxisAlignment: CrossAxisAlignment.start,
+                                                            mainAxisAlignment: MainAxisAlignment.start,
+                                                            children: [
+                                                              SizedBox(height: 2.0),
+                                                              Text(
+                                                                recipeRecord.title.maybeHandleOverflow(
+                                                                  maxChars: 50,
+                                                                  replacement: '…',
+                                                                ),
+                                                                maxLines: 2,
+                                                                overflow: TextOverflow.ellipsis,
+                                                                style: FlutterFlowTheme.of(context)
+                                                                    .titleLarge
+                                                                    .override(
+                                                                      fontFamily: FlutterFlowTheme.of(context).titleLargeFamily,
+                                                                      color: FlutterFlowTheme.of(context).customColor4,
+                                                                      fontSize: 14.0,
+                                                                      letterSpacing: 0.0,
+                                                                      fontWeight: FontWeight.w600,
+                                                                      useGoogleFonts: !FlutterFlowTheme.of(context).titleLargeIsCustom,
+                                                                    ),
+                                                              ),
+                                                              SizedBox(height: 6.0),
+                                                              Row(
+                                                                mainAxisSize: MainAxisSize.min,
+                                                                children: [
+                                                                  if (recipeRecord.rating > 0)
+                                                                    Row(
+                                                                      mainAxisSize: MainAxisSize.min,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons.star_rounded,
+                                                                          color: FlutterFlowTheme.of(context).tertiary,
+                                                                          size: 16.0,
+                                                                        ),
+                                                                        SizedBox(width: 2.0),
+                                                                        Text(
+                                                                          recipeRecord.rating.toStringAsFixed(1),
+                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                            fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                            color: FlutterFlowTheme.of(context).secondaryText,
+                                                                            fontSize: 12.0,
+                                                                            letterSpacing: 0.0,
+                                                                            fontWeight: FontWeight.w600,
+                                                                            useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(width: 10.0),
+                                                                      ],
+                                                                    ),
+                                                                  if (recipeRecord.cookingtime.isNotEmpty)
+                                                                    Row(
+                                                                      mainAxisSize: MainAxisSize.min,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons.access_time_rounded,
+                                                                          color: FlutterFlowTheme.of(context).secondaryText,
+                                                                          size: 14.0,
+                                                                        ),
+                                                                        SizedBox(width: 3.0),
+                                                                        Text(
+                                                                          recipeRecord.cookingtime,
+                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                            fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                            color: FlutterFlowTheme.of(context).tertiary,
+                                                                            fontSize: 12.0,
+                                                                            letterSpacing: 0.0,
+                                                                            fontWeight: FontWeight.w600,
+                                                                            useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                                          ),
+                                                                        ),
+                                                                        SizedBox(width: 10.0),
+                                                                      ],
+                                                                    ),
+                                                                  if (listViewPostsRecord.likes.isNotEmpty)
+                                                                    Row(
+                                                                      mainAxisSize: MainAxisSize.min,
+                                                                      children: [
+                                                                        Icon(
+                                                                          Icons.favorite_rounded,
+                                                                          color: FlutterFlowTheme.of(context).secondary,
+                                                                          size: 14.0,
+                                                                        ),
+                                                                        SizedBox(width: 3.0),
+                                                                        Text(
+                                                                          listViewPostsRecord.likes.length.toString(),
+                                                                          style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                            fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                            color: FlutterFlowTheme.of(context).tertiary,
+                                                                            fontSize: 12.0,
+                                                                            letterSpacing: 0.0,
+                                                                            fontWeight: FontWeight.w600,
+                                                                            useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                                          ),
+                                                                        ),
+                                                                      ],
+                                                                    ),
+                                                                ],
+                                                              ),
+                                                              if (listViewPostsRecord.postText.isNotEmpty)
+                                                                Flexible(
+                                                                  child: Padding(
+                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
+                                                                    child: Text(
+                                                                      listViewPostsRecord.postText,
+                                                                      maxLines: 1,
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: FlutterFlowTheme.of(context).bodySmall.override(
+                                                                        fontFamily: FlutterFlowTheme.of(context).bodySmallFamily,
+                                                                        color: FlutterFlowTheme.of(context).tertiary,
+                                                                        letterSpacing: 0.0,
+                                                                        useGoogleFonts: !FlutterFlowTheme.of(context).bodySmallIsCustom,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              if (recipeRecord.notes.isNotEmpty)
+                                                                Flexible(
+                                                                  child: Padding(
+                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 2.0, 0.0, 0.0),
+                                                                    child: Text(
+                                                                      recipeRecord.notes,
+                                                                      maxLines: 1,
+                                                                      overflow: TextOverflow.ellipsis,
+                                                                      style: FlutterFlowTheme.of(context).bodySmall.override(
+                                                                        fontFamily: FlutterFlowTheme.of(context).bodySmallFamily,
+                                                                        color: FlutterFlowTheme.of(context).accent1,
+                                                                        letterSpacing: 0.0,
+                                                                        useGoogleFonts: !FlutterFlowTheme.of(context).bodySmallIsCustom,
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                            ],
                                                           ),
-                                                    ),
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
-                                                ],
-                                              ),
-                                            );
-                                          },
-                                        ),
+                                                );
+                                              },
+                                            ),
+                                          );
+                                        },
                                       ),
                                     ),
                                   ),
@@ -1105,7 +1207,10 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                     child: Padding(
                                       padding: EdgeInsetsDirectional.fromSTEB(
                                           0.0, 0.0, 0.0, 90.0),
-                                      child: PagedGridView<
+                                      child: LayoutBuilder(
+                                      builder: (context, constraints) {
+                                        final crossAxisCount = (constraints.maxWidth / 185.0).floor().clamp(2, 6);
+                                        return PagedGridView<
                                           DocumentSnapshot<Object?>?,
                                           PostsRecord>(
                                         pagingController:
@@ -1117,13 +1222,17 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                                     searchedProfilePageUsersRecord
                                                         .reference,
                                               )
+                                              .where(
+                                                'has_recipe',
+                                                isEqualTo: false,
+                                              )
                                               .orderBy('created_time',
                                                   descending: true),
                                         ),
                                         padding: EdgeInsets.zero,
                                         gridDelegate:
-                                            SliverGridDelegateWithMaxCrossAxisExtent(
-                                          maxCrossAxisExtent: 200.0,
+                                            SliverGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: crossAxisCount,
                                           childAspectRatio: 0.85,
                                         ),
                                         scrollDirection: Axis.vertical,
@@ -1243,73 +1352,89 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                                         borderRadius:
                                                             BorderRadius
                                                                 .circular(0.0),
-                                                        child: Image.network(
-                                                          gridViewPostsRecord
-                                                              .postMultPhotos
-                                                              .firstOrNull!,
-                                                          width:
-                                                              double.infinity,
-                                                          height:
-                                                              double.infinity,
-                                                          fit: BoxFit.cover,
-                                                          alignment: Alignment(
-                                                              -1.0, -1.0),
-                                                          errorBuilder:
-                                                              (context, error,
-                                                                      stackTrace) =>
-                                                                  Image.asset(
-                                                            'assets/images/error_image.png',
-                                                            width:
-                                                                double.infinity,
-                                                            height:
-                                                                double.infinity,
-                                                            fit: BoxFit.cover,
-                                                            alignment:
-                                                                Alignment(-1.0,
-                                                                    -1.0),
-                                                          ),
-                                                        ),
+                                                        child: (gridViewPostsRecord.postMultPhotos.isNotEmpty &&
+                                                                gridViewPostsRecord.postMultPhotos.first.isNotEmpty)
+                                                            ? Image.network(
+                                                                gridViewPostsRecord
+                                                                    .postMultPhotos
+                                                                    .first,
+                                                                width:
+                                                                    double.infinity,
+                                                                height:
+                                                                    double.infinity,
+                                                                fit: BoxFit.cover,
+                                                                alignment: Alignment(
+                                                                    -1.0, -1.0),
+                                                                errorBuilder:
+                                                                    (context, error,
+                                                                            stackTrace) =>
+                                                                        Image.asset(
+                                                                  'assets/images/error_image.png',
+                                                                  width:
+                                                                      double.infinity,
+                                                                  height:
+                                                                      double.infinity,
+                                                                  fit: BoxFit.cover,
+                                                                  alignment:
+                                                                      Alignment(-1.0,
+                                                                          -1.0),
+                                                                ),
+                                                              )
+                                                            : Center(
+                                                                child: FractionallySizedBox(
+                                                                  widthFactor: 0.55,
+                                                                  heightFactor: 0.55,
+                                                                  child: Image.asset(
+                                                                    'assets/images/ChatGPT_Image_May_2,_2025_at_02_15_40_PM.png',
+                                                                    fit: BoxFit.contain,
+                                                                  ),
+                                                                ),
+                                                              ),
                                                       ),
                                                     ),
                                                   ),
                                                 ),
-                                                Padding(
-                                                  padding:
-                                                      EdgeInsetsDirectional
-                                                          .fromSTEB(5.0, 2.0,
-                                                              5.0, 2.0),
-                                                  child: Text(
-                                                    gridViewPostsRecord
-                                                        .postText,
-                                                    maxLines: 2,
-                                                    overflow:
-                                                        TextOverflow.ellipsis,
-                                                    style: FlutterFlowTheme.of(
-                                                            context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMediumFamily,
-                                                          color:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .tertiary,
-                                                          letterSpacing: 0.0,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          useGoogleFonts:
-                                                              !FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMediumIsCustom,
-                                                        ),
+                                                Flexible(
+                                                  child: Padding(
+                                                    padding:
+                                                        EdgeInsetsDirectional
+                                                            .fromSTEB(5.0, 2.0,
+                                                                5.0, 2.0),
+                                                    child: Text(
+                                                      gridViewPostsRecord
+                                                          .postText,
+                                                      maxLines: 1,
+                                                      overflow:
+                                                          TextOverflow.ellipsis,
+                                                      style: FlutterFlowTheme.of(
+                                                              context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumFamily,
+                                                            color:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .tertiary,
+                                                            letterSpacing: 0.0,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            useGoogleFonts:
+                                                                !FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumIsCustom,
+                                                          ),
+                                                    ),
                                                   ),
                                                 ),
                                               ],
                                             );
                                           },
                                         ),
+                                      );
+                                      },
                                       ),
                                     ),
                                   ),

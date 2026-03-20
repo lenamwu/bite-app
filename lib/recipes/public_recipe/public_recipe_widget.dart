@@ -219,6 +219,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                             .bodyMediumFamily,
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
+                                        fontSize: 16.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                         useGoogleFonts:
@@ -281,145 +282,6 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                             ),
                           ),
                         ),
-                        if (loggedIn &&
-                            publicRecipeRecipesRecord.recipeSavedBy
-                                .contains(currentUserReference) &&
-                            publicRecipeRecipesRecord.usercreated != true)
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () async {
-                              // Check if already in cookbook
-                              final existingPosts = await queryPostsRecordOnce(
-                                queryBuilder: (postsRecord) => postsRecord
-                                    .where('postUser', isEqualTo: currentUserReference)
-                                    .where('has_recipe', isEqualTo: true)
-                                    .where('recipe_ref', isEqualTo: publicRecipeRecipesRecord.reference),
-                              );
-                              if (existingPosts.isNotEmpty) {
-                                if (context.mounted) {
-                                  ScaffoldMessenger.of(context)
-                                    ..hideCurrentSnackBar()
-                                    ..showSnackBar(
-                                      SnackBar(
-                                        content: Text(
-                                          'this recipe is already in your cookbook!',
-                                          style: TextStyle(
-                                            color: FlutterFlowTheme.of(context).primaryBackground,
-                                          ),
-                                        ),
-                                        backgroundColor: FlutterFlowTheme.of(context).tertiary,
-                                        duration: Duration(seconds: 2),
-                                      ),
-                                    );
-                                }
-                                return;
-                              }
-                              if (context.mounted) {
-                                await showModalBottomSheet(
-                                  isScrollControlled: true,
-                                  backgroundColor: Colors.transparent,
-                                  context: context,
-                                  builder: (context) {
-                                    return Padding(
-                                      padding: MediaQuery.viewInsetsOf(context),
-                                      child: AddToCookbookWidget(
-                                        recipeRef: publicRecipeRecipesRecord.reference,
-                                      ),
-                                    );
-                                  },
-                                );
-                              }
-                            },
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  4.0, 0.0, 0.0, 0.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'cookbook',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: FlutterFlowTheme.of(context)
-                                              .bodyMediumFamily,
-                                          color: FlutterFlowTheme.of(context).primary,
-                                          fontSize: 16.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
-                                          useGoogleFonts: !FlutterFlowTheme.of(context)
-                                              .bodyMediumIsCustom,
-                                        ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        2.0, 0.0, 0.0, 0.0),
-                                    child: Icon(
-                                      Icons.menu_book_outlined,
-                                      color: FlutterFlowTheme.of(context).accent3,
-                                      size: 18.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
-                        if (loggedIn &&
-                            publicRecipeRecipesRecord.recipeSavedBy
-                                .contains(currentUserReference))
-                          InkWell(
-                            splashColor: Colors.transparent,
-                            focusColor: Colors.transparent,
-                            hoverColor: Colors.transparent,
-                            highlightColor: Colors.transparent,
-                            onTap: () {
-                              context.pushNamed(
-                                EditSavedRecipeWidget.routeName,
-                                queryParameters: {
-                                  'recipeRef': serializeParam(
-                                    publicRecipeRecipesRecord.reference,
-                                    ParamType.DocumentReference,
-                                  ),
-                                }.withoutNulls,
-                              );
-                            },
-                            child: Padding(
-                              padding: EdgeInsetsDirectional.fromSTEB(
-                                  4.0, 0.0, 0.0, 0.0),
-                              child: Row(
-                                mainAxisSize: MainAxisSize.min,
-                                children: [
-                                  Text(
-                                    'edit',
-                                    style: FlutterFlowTheme.of(context)
-                                        .bodyMedium
-                                        .override(
-                                          fontFamily: FlutterFlowTheme.of(context)
-                                              .bodyMediumFamily,
-                                          color: FlutterFlowTheme.of(context).primary,
-                                          fontSize: 16.0,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
-                                          useGoogleFonts: !FlutterFlowTheme.of(context)
-                                              .bodyMediumIsCustom,
-                                        ),
-                                  ),
-                                  Padding(
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        2.0, 0.0, 0.0, 0.0),
-                                    child: Icon(
-                                      Icons.edit_outlined,
-                                      color: FlutterFlowTheme.of(context).accent3,
-                                      size: 18.0,
-                                    ),
-                                  ),
-                                ],
-                              ),
-                            ),
-                          ),
                       ],
                     ),
                   ),
@@ -599,6 +461,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                           },
                                         ),
                                         if (publicRecipeRecipesRecord.url.isNotEmpty)
+                                          if (publicRecipeRecipesRecord.url.isNotEmpty)
                                           Padding(
                                             padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
                                             child: InkWell(
@@ -618,6 +481,135 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                 ),
                                               ),
+                                            ),
+                                          ),
+                                        if (loggedIn &&
+                                            publicRecipeRecipesRecord.recipeSavedBy
+                                                .contains(currentUserReference))
+                                          Padding(
+                                            padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.min,
+                                              children: [
+                                                InkWell(
+                                                  splashColor: Colors.transparent,
+                                                  focusColor: Colors.transparent,
+                                                  hoverColor: Colors.transparent,
+                                                  highlightColor: Colors.transparent,
+                                                  onTap: () {
+                                                    context.pushNamed(
+                                                      EditSavedRecipeWidget.routeName,
+                                                      queryParameters: {
+                                                        'recipeRef': serializeParam(
+                                                          publicRecipeRecipesRecord.reference,
+                                                          ParamType.DocumentReference,
+                                                        ),
+                                                      }.withoutNulls,
+                                                    );
+                                                  },
+                                                  child: Row(
+                                                    mainAxisSize: MainAxisSize.min,
+                                                    children: [
+                                                      Text(
+                                                        'edit',
+                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                          fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                          color: FlutterFlowTheme.of(context).customColor4,
+                                                          letterSpacing: 0.0,
+                                                          fontSize: 13.0,
+                                                          fontWeight: FontWeight.bold,
+                                                          useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                        ),
+                                                      ),
+                                                      Padding(
+                                                        padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
+                                                        child: Icon(
+                                                          Icons.edit_outlined,
+                                                          color: FlutterFlowTheme.of(context).accent3,
+                                                          size: 16.0,
+                                                        ),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                ),
+                                                if (publicRecipeRecipesRecord.usercreated != true)
+                                                  Padding(
+                                                    padding: EdgeInsetsDirectional.fromSTEB(16.0, 0.0, 0.0, 0.0),
+                                                    child: InkWell(
+                                                      splashColor: Colors.transparent,
+                                                      focusColor: Colors.transparent,
+                                                      hoverColor: Colors.transparent,
+                                                      highlightColor: Colors.transparent,
+                                                      onTap: () async {
+                                                        // Check if already in cookbook
+                                                        final existingPosts = await queryPostsRecordOnce(
+                                                          queryBuilder: (postsRecord) => postsRecord
+                                                              .where('postUser', isEqualTo: currentUserReference)
+                                                              .where('has_recipe', isEqualTo: true)
+                                                              .where('recipe_ref', isEqualTo: publicRecipeRecipesRecord.reference),
+                                                        );
+                                                        if (existingPosts.isNotEmpty) {
+                                                          if (context.mounted) {
+                                                            ScaffoldMessenger.of(context)
+                                                              ..hideCurrentSnackBar()
+                                                              ..showSnackBar(
+                                                                SnackBar(
+                                                                  content: Text(
+                                                                    'this recipe is already in your cookbook!',
+                                                                    style: TextStyle(
+                                                                      color: FlutterFlowTheme.of(context).primaryBackground,
+                                                                    ),
+                                                                  ),
+                                                                  backgroundColor: FlutterFlowTheme.of(context).tertiary,
+                                                                  duration: Duration(seconds: 2),
+                                                                ),
+                                                              );
+                                                          }
+                                                          return;
+                                                        }
+                                                        if (context.mounted) {
+                                                          await showModalBottomSheet(
+                                                            isScrollControlled: true,
+                                                            backgroundColor: Colors.transparent,
+                                                            context: context,
+                                                            builder: (context) {
+                                                              return Padding(
+                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                child: AddToCookbookWidget(
+                                                                  recipeRef: publicRecipeRecipesRecord.reference,
+                                                                ),
+                                                              );
+                                                            },
+                                                          );
+                                                        }
+                                                      },
+                                                      child: Row(
+                                                        mainAxisSize: MainAxisSize.min,
+                                                        children: [
+                                                          Text(
+                                                            'add to cookbook',
+                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                              fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                              color: FlutterFlowTheme.of(context).customColor4,
+                                                              letterSpacing: 0.0,
+                                                              fontSize: 13.0,
+                                                              fontWeight: FontWeight.bold,
+                                                              useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                            ),
+                                                          ),
+                                                          Padding(
+                                                            padding: EdgeInsetsDirectional.fromSTEB(4.0, 0.0, 0.0, 0.0),
+                                                            child: Icon(
+                                                              Icons.menu_book_outlined,
+                                                              color: FlutterFlowTheme.of(context).accent3,
+                                                              size: 16.0,
+                                                            ),
+                                                          ),
+                                                        ],
+                                                      ),
+                                                    ),
+                                                  ),
+                                              ],
                                             ),
                                           ),
                                       ],

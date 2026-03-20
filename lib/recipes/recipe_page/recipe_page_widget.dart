@@ -217,7 +217,7 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                             gridDelegate:
                                 SliverGridDelegateWithMaxCrossAxisExtent(
                               maxCrossAxisExtent: 150.0,
-                              childAspectRatio: 0.74,
+                              childAspectRatio: 0.76,
                             ),
                             scrollDirection: Axis.vertical,
                             itemCount: recipePageRecipesRecordList.length,
@@ -318,8 +318,9 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                                                   FlutterFlowTheme.of(context)
                                                       .bodyMediumFamily,
                                               color: FlutterFlowTheme.of(context)
-                                                  .customColor4,
+                                                  .accent1,
                                               letterSpacing: 0.0,
+                                              fontSize: 12,
                                               fontWeight: FontWeight.w600,
                                               useGoogleFonts:
                                                   !FlutterFlowTheme.of(context)

@@ -1174,7 +1174,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                             mainAxisSize: MainAxisSize.max,
                                             children: [
                                               Container(
-                                                width: 350.0,
+                                                width: 340.0,
                                                 child: Align(
                                                   alignment:
                                                       AlignmentDirectional(0.0, -1.0),
@@ -1300,7 +1300,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                         mainAxisSize: MainAxisSize.max,
                                         children: [
                                           Container(
-                                            width: 350.0,
+                                            width: 340.0,
                                             child: Align(
                                               alignment: AlignmentDirectional(0.0, -1.0),
                                               child: Padding(
@@ -1323,7 +1323,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                                         final prepChildrenItem =
                                                             prepChildren[prepChildrenIndex];
                                                         return Container(
-                                                          height: 80.0,
+                                                          height: 70.0,
                                                           child: wrapWithModel(
                                                             model: _model
                                                                 .preparationFieldModels
