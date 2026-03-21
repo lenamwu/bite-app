@@ -35,6 +35,41 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
 
   final animationsMap = <String, AnimationInfo>{};
 
+  // All unique food images for the masonry grid
+  static const List<String> _foodImages = [
+    'assets/images/food_06.jpg',
+    'assets/images/food_01.jpg',
+    'assets/images/food_04.jpg',
+    'assets/images/spaghetti-with-clams-and-braised-greens-XL-RECIPE0918-9b1076f105534dfd80e5f83060dce561.jpg',
+    'assets/images/20792-b-and-ls-strawberry-smoothie-ddmfs-0321-3x4-hero-f9aad20d876448a49a3561bec1da6363.jpg',
+    'assets/images/pasta.jpg',
+    'assets/images/Matcha-Chocolate-Chip-Cookies-2-4886.jpg',
+    'assets/images/Crepese-1.jpg.webp',
+    'assets/images/ultimate-chocolate-mousse-XL-RECIPE0918-979cde297b8b43e7a189aebafee40b3e.jpg',
+    'assets/images/Authentic-Swedish-Cinnamon-Rolls-Kanelbullar_2.jpg',
+    'assets/images/food_02.jpg',
+    'assets/images/food_11.jpg',
+    'assets/images/_0IN2a9Y7.jpg.webp',
+    'assets/images/food_10.jpg',
+    'assets/images/food_03.jpg',
+    'assets/images/14FD-most-popular-French-Lentil-Salad--fzbk-superJumbo.jpg-2.webp',
+    'assets/images/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2018__02__Creme-Brulee-LEAD-VERTICAL-c99fa6c67f20441c9430df056b6e9d6a.jpg',
+    'assets/images/Artisan-Bread-square-FS-46.jpg',
+    'assets/images/14FD-most-popular-hoisin-garlic-noodles-zbwp-superJumbo.jpg.webp',
+    'assets/images/food_05.jpg',
+    'assets/images/food_07.jpg',
+    'assets/images/food_09.jpg',
+    'assets/images/food_08.jpg',
+  ];
+
+  // Varying heights for masonry effect (ratio multipliers)
+  static const List<double> _heightRatios = [
+    1.2, 0.9, 1.4, 1.0, 1.3, 0.85, 1.1, 1.5, 0.95, 1.25,
+    1.0, 1.35, 0.9, 1.15, 1.4, 1.0, 1.2, 0.85, 1.3, 1.1,
+    0.95, 1.45, 1.0, 1.2, 0.9, 1.3, 1.1, 1.0, 1.25, 0.85,
+    1.15, 1.4,
+  ];
+
   @override
   void initState() {
     super.initState();
@@ -47,18 +82,11 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
         trigger: AnimationTrigger.onPageLoad,
         effectsBuilder: () => [
           MoveEffect(
-            curve: Curves.easeOut,
-            delay: 0.0.ms,
-            duration: 3200.0.ms,
-            begin: Offset(0.0, -80.0),
-            end: Offset(0.0, 0.0),
-          ),
-          MoveEffect(
             curve: Curves.easeInOut,
-            delay: 3200.0.ms,
-            duration: 3200.0.ms,
-            begin: Offset(0.0, 0.0),
-            end: Offset(0.0, -80.0),
+            delay: 0.0.ms,
+            duration: 8000.0.ms,
+            begin: Offset(.0, -150.0),
+            end: Offset(0.0, 0.0),
           ),
         ],
       ),
@@ -254,6 +282,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
               child: Stack(
                 alignment: AlignmentDirectional(0.0, 0.0),
                 children: [
+                  // Bouncing food photo masonry grid
                   Align(
                     alignment: AlignmentDirectional(0.0, 0.0),
                     child: Column(
@@ -263,180 +292,50 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                         Expanded(
                           child: Align(
                             alignment: AlignmentDirectional(0.0, -1.0),
-                            child: ClipRRect(
-                              child: Container(
-                                width: double.infinity,
-                                height: double.infinity,
-                                decoration: BoxDecoration(
-                                  color: FlutterFlowTheme.of(context)
-                                      .secondaryBackground,
-                                ),
-                                child: Align(
-                                  alignment: AlignmentDirectional(0.0, -1.0),
-                                  child: MasonryGridView.builder(
-                                    physics:
-                                        const NeverScrollableScrollPhysics(),
-                                    gridDelegate:
-                                        SliverSimpleGridDelegateWithFixedCrossAxisCount(
-                                      crossAxisCount: 3,
+                            child: ClipRect(
+                              child: LayoutBuilder(
+                                builder: (context, constraints) {
+                                  final screenWidth = constraints.maxWidth;
+                                  final screenHeight = constraints.maxHeight;
+                                  final isDesktop = screenWidth > 900;
+                                  final isTablet = screenWidth > 600;
+                                  final crossAxisCount = isDesktop ? 5 : (isTablet ? 4 : 3);
+                                  final itemCount = _foodImages.length;
+
+                                  return OverflowBox(
+                                    maxHeight: screenHeight + 160,
+                                    alignment: Alignment.topCenter,
+                                    child: Transform.translate(
+                                      offset: Offset(0, -80),
+                                      child: MasonryGridView.builder(
+                                        physics: const NeverScrollableScrollPhysics(),
+                                        gridDelegate:
+                                            SliverSimpleGridDelegateWithFixedCrossAxisCount(
+                                          crossAxisCount: crossAxisCount,
+                                        ),
+                                        crossAxisSpacing: 8.0,
+                                        mainAxisSpacing: 8.0,
+                                        itemCount: itemCount,
+                                        padding: EdgeInsets.zero,
+                                        itemBuilder: (context, index) {
+                                          final imageWidth = (screenWidth - (crossAxisCount - 1) * 8.0) / crossAxisCount;
+                                          final heightRatio = _heightRatios[index % _heightRatios.length];
+                                          final imageHeight = imageWidth * heightRatio;
+
+                                          return ClipRRect(
+                                            borderRadius: BorderRadius.circular(12.0),
+                                            child: Image.asset(
+                                              _foodImages[index],
+                                              width: imageWidth,
+                                              height: imageHeight,
+                                              fit: BoxFit.cover,
+                                            ),
+                                          );
+                                        },
+                                      ),
                                     ),
-                                    crossAxisSpacing: 10.0,
-                                    mainAxisSpacing: 10.0,
-                                    itemCount: 13,
-                                    itemBuilder: (context, index) {
-                                      return [
-                                        () => Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 10.0, 0.0, 0.0),
-                                              child: ClipRRect(
-                                                borderRadius: BorderRadius.only(
-                                                  bottomLeft:
-                                                      Radius.circular(16.0),
-                                                  bottomRight:
-                                                      Radius.circular(16.0),
-                                                  topLeft:
-                                                      Radius.circular(16.0),
-                                                  topRight:
-                                                      Radius.circular(16.0),
-                                                ),
-                                                child: Image.asset(
-                                                  'assets/images/spaghetti-with-clams-and-braised-greens-XL-RECIPE0918-9b1076f105534dfd80e5f83060dce561.jpg',
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                        () => Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(0.0, 5.0, 0.0, 0.0),
-                                              child: ClipRRect(
-                                                borderRadius:
-                                                    BorderRadius.circular(16.0),
-                                                child: Image.asset(
-                                                  'assets/images/Authentic-Swedish-Cinnamon-Rolls-Kanelbullar_2.jpg',
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
-                                            ),
-                                        () => ClipRRect(
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(0.0),
-                                                bottomRight:
-                                                    Radius.circular(16.0),
-                                                topLeft: Radius.circular(0.0),
-                                                topRight: Radius.circular(16.0),
-                                              ),
-                                              child: Image.network(
-                                                'https://picsum.photos/seed/32/600',
-                                                width: 100.0,
-                                                height: 0.0,
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                        () => ClipRRect(
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(16.0),
-                                                bottomRight:
-                                                    Radius.circular(16.0),
-                                                topLeft: Radius.circular(16.0),
-                                                topRight: Radius.circular(16.0),
-                                              ),
-                                              child: Image.asset(
-                                                'assets/images/Matcha-Chocolate-Chip-Cookies-2-4886.jpg',
-                                                fit: BoxFit.cover,
-                                                alignment: Alignment(0.0, 0.0),
-                                              ),
-                                            ),
-                                        () => ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(16.0),
-                                              child: Image.asset(
-                                                'assets/images/pasta.jpg',
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                        () => ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(16.0),
-                                              child: Image.asset(
-                                                'assets/images/ultimate-chocolate-mousse-XL-RECIPE0918-979cde297b8b43e7a189aebafee40b3e.jpg',
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                        () => ClipRRect(
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(16.0),
-                                                bottomRight:
-                                                    Radius.circular(16.0),
-                                                topLeft: Radius.circular(16.0),
-                                                topRight: Radius.circular(16.0),
-                                              ),
-                                              child: Image.asset(
-                                                'assets/images/20792-b-and-ls-strawberry-smoothie-ddmfs-0321-3x4-hero-f9aad20d876448a49a3561bec1da6363.jpg',
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                        () => ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(16.0),
-                                              child: Image.asset(
-                                                'assets/images/Crepese-1.jpg.webp',
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                        () => ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(16.0),
-                                              child: Image.asset(
-                                                'assets/images/_0IN2a9Y7.jpg.webp',
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                        () => ClipRRect(
-                                              borderRadius: BorderRadius.only(
-                                                bottomLeft:
-                                                    Radius.circular(16.0),
-                                                bottomRight:
-                                                    Radius.circular(16.0),
-                                                topLeft: Radius.circular(16.0),
-                                                topRight: Radius.circular(16.0),
-                                              ),
-                                              child: Image.asset(
-                                                'assets/images/14FD-most-popular-French-Lentil-Salad--fzbk-superJumbo.jpg-2.webp',
-                                                fit: BoxFit.fitHeight,
-                                              ),
-                                            ),
-                                        () => ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(16.0),
-                                              child: Image.asset(
-                                                'assets/images/__opt__aboutcom__coeus__resources__content_migration__simply_recipes__uploads__2018__02__Creme-Brulee-LEAD-VERTICAL-c99fa6c67f20441c9430df056b6e9d6a.jpg',
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                        () => ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              child: Image.asset(
-                                                'assets/images/Artisan-Bread-square-FS-46.jpg',
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                        () => ClipRRect(
-                                              borderRadius:
-                                                  BorderRadius.circular(8.0),
-                                              child: Image.asset(
-                                                'assets/images/14FD-most-popular-hoisin-garlic-noodles-zbwp-superJumbo.jpg.webp',
-                                                fit: BoxFit.cover,
-                                              ),
-                                            ),
-                                      ][index]();
-                                    },
-                                  ),
-                                ),
+                                  );
+                                },
                               ),
                             ).animateOnPageLoad(
                                 animationsMap['containerOnPageLoadAnimation']!),
@@ -445,6 +344,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                       ],
                     ),
                   ),
+                  // Bottom panel (mobile/tablet)
                   if (responsiveVisibility(
                     context: context,
                     desktop: false,
@@ -453,7 +353,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                       alignment: AlignmentDirectional(0.0, 1.0),
                       child: Container(
                         width: double.infinity,
-                        height: 280.0,
+                        height: 300.0,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -465,10 +365,10 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                           children: [
                             Expanded(
                               child: Align(
-                                alignment: AlignmentDirectional(0.0, 0.0),
+                                alignment: AlignmentDirectional(0.0, -1.0),
                                 child: Container(
                                   width: double.infinity,
-                                  height: 100.0,
+                                  height: 110.0,
                                   child: Stack(
                                     children: [
                                       Padding(
@@ -490,7 +390,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    'Sign up to save recipes and create your cookbook !',
+                                                    'Save recipes from anywhere, write your own, and build your personal cookbook!',
                                                     textAlign: TextAlign.center,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -502,8 +402,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                                   .displaySmallFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .accent3,
-                                                          fontSize: 20.0,
+                                                              .primary,
+                                                          fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -527,7 +427,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    'Share your personal recipes with your friends and family & discover theirs!',
+                                                    'Share recipes you love with friends and family',
                                                     textAlign: TextAlign.center,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -539,8 +439,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                                   .displaySmallFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .accent3,
-                                                          fontSize: 20.0,
+                                                              .primary,
+                                                          fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -557,14 +457,14 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      48.0, 500.0, 48.0, 0.0),
+                                                      48.0, 10.0, 48.0, 0.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    'Get inspired and start cooking with Bite today!',
+                                                    'Follow friends, explore their cookbooks, and get inspired by what everyone is making!',
                                                     textAlign: TextAlign.center,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -576,8 +476,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                                   .displaySmallFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .accent3,
-                                                          fontSize: 20.0,
+                                                              .primary,
+                                                          fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -643,7 +543,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 12.0, 24.0, 12.0),
+                                  24.0, 0.0, 24.0, 12.0),
                               child: ConstrainedBox(
                                 constraints: BoxConstraints(maxWidth: 400.0),
                                 child: FFButtonWidget(
@@ -692,7 +592,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                   onPressed: () async {
                                     context.pushNamed(LoginWidget.routeName);
                                   },
-                                  text: 'I already have an account',
+                                  text: 'Already have an account',
                                   options: FFButtonOptions(
                                     width: double.infinity,
                                     height: 51.7,
@@ -727,7 +627,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                             ),
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  24.0, 12.0, 24.0, 24.0),
+                                  24.0, 12.0, 24.0, 18.0),
                               child: FFButtonWidget(
                                 onPressed: () async {
                                   context.safePop();
@@ -767,6 +667,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                         ),
                       ),
                     ),
+                  // Bottom panel (desktop)
                   if (responsiveVisibility(
                     context: context,
                     phone: false,
@@ -777,7 +678,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                       alignment: AlignmentDirectional(0.0, 1.0),
                       child: Container(
                         width: double.infinity,
-                        height: 280.0,
+                        height: 310.0,
                         decoration: BoxDecoration(
                           color:
                               FlutterFlowTheme.of(context).secondaryBackground,
@@ -795,7 +696,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                 alignment: AlignmentDirectional(0.0, 0.0),
                                 child: Container(
                                   width: double.infinity,
-                                  height: 100.0,
+                                  height: 110.0,
                                   child: Stack(
                                     children: [
                                       Padding(
@@ -817,7 +718,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    'Sign up to save recipes and create your cookbook !',
+                                                    'Save recipes from anywhere, write your own, and build your personal cookbook!',
                                                     textAlign: TextAlign.center,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -829,8 +730,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                                   .displaySmallFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .accent3,
-                                                          fontSize: 20.0,
+                                                              .primary,
+                                                          fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -854,7 +755,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    'Share your personal recipes with your friends and family & discover theirs!',
+                                                    'Share recipes you love with friends and family',
                                                     textAlign: TextAlign.center,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -866,8 +767,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                                   .displaySmallFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .accent3,
-                                                          fontSize: 20.0,
+                                                              .primary,
+                                                          fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -884,14 +785,14 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                             Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      48.0, 500.0, 48.0, 0.0),
+                                                      48.0, 10.0, 48.0, 0.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.max,
                                                 mainAxisAlignment:
                                                     MainAxisAlignment.center,
                                                 children: [
                                                   Text(
-                                                    'Get inspired and start cooking with Bite today!',
+                                                    'Follow friends, explore their cookbooks, and get inspired by what everyone is making!',
                                                     textAlign: TextAlign.center,
                                                     style: FlutterFlowTheme.of(
                                                             context)
@@ -903,8 +804,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                                                   .displaySmallFamily,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .accent3,
-                                                          fontSize: 20.0,
+                                                              .primary,
+                                                          fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -1014,7 +915,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                 onPressed: () async {
                                   context.pushNamed(LoginWidget.routeName);
                                 },
-                                text: 'I already have an account',
+                                text: 'Already have an account',
                                 options: FFButtonOptions(
                                   width: double.infinity,
                                   height: 51.7,
