@@ -658,8 +658,8 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                     width: 1.0,
                                   ),
                                   borderRadius: BorderRadius.circular(0.0),
-                                  hoverColor:
-                                      FlutterFlowTheme.of(context).alternate,
+                                  //hoverColor:
+                                  //    FlutterFlowTheme.of(context).alternate,
                                 ),
                               ),
                             ),
@@ -979,9 +979,7 @@ class _OnboardingWidgetState extends State<OnboardingWidget>
                                     color: Colors.transparent,
                                     width: 1.0,
                                   ),
-                                  borderRadius: BorderRadius.circular(0.0),
-                                  hoverColor:
-                                      FlutterFlowTheme.of(context).alternate,
+                                  borderRadius: BorderRadius.circular(0.0)
                                 ),
                               ),
                             ),

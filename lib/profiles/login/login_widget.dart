@@ -94,10 +94,12 @@ class _LoginWidgetState extends State<LoginWidget> {
                                     Align(
                                       alignment:
                                           AlignmentDirectional(0.0, -1.0),
-                                      child: Container(
+                                      child: Transform.translate(
+                                        offset: const Offset(0.0, -0.0),
+                                        child: Container(
                                         height:
                                             MediaQuery.sizeOf(context).height *
-                                                0.141,
+                                                0.17,
                                         child: Stack(
                                           children: [
                                             Align(
@@ -120,6 +122,7 @@ class _LoginWidgetState extends State<LoginWidget> {
                                             ),
                                           ],
                                         ),
+                                      ),
                                       ),
                                     ),
                                   ],

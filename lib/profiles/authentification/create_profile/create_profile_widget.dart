@@ -45,6 +45,12 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
     _model.textController2 ??= TextEditingController();
     _model.textFieldFocusNode2 ??= FocusNode();
 
+    _model.bioController ??= TextEditingController();
+    _model.bioFocusNode ??= FocusNode();
+
+    _model.locationController ??= TextEditingController();
+    _model.locationFocusNode ??= FocusNode();
+
     _model.switchValue = true;
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
   }
@@ -474,6 +480,87 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
                           ],
                         ),
                       ),
+                      Container(
+                        width: 370.0,
+                        child: TextFormField(
+                          controller: _model.locationController,
+                          focusNode: _model.locationFocusNode,
+                          textCapitalization: TextCapitalization.words,
+                          textInputAction: TextInputAction.done,
+                          decoration: InputDecoration(
+                            labelText: 'location (optional)',
+                            labelStyle: FlutterFlowTheme.of(context)
+                                .labelLarge
+                                .override(
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .labelLargeFamily,
+                                  color: FlutterFlowTheme.of(context).alternate,
+                                  letterSpacing: 0.0,
+                                  useGoogleFonts: !FlutterFlowTheme.of(context)
+                                      .labelLargeIsCustom,
+                                ),
+                            hintStyle: FlutterFlowTheme.of(context)
+                                .bodyMedium
+                                .override(
+                                  fontFamily: FlutterFlowTheme.of(context)
+                                      .bodyMediumFamily,
+                                  color: FlutterFlowTheme.of(context)
+                                      .secondaryText,
+                                  letterSpacing: 0.0,
+                                  useGoogleFonts: !FlutterFlowTheme.of(context)
+                                      .bodyMediumIsCustom,
+                                ),
+                            prefixIcon: Icon(
+                              Icons.location_on_outlined,
+                              color: FlutterFlowTheme.of(context).secondaryText,
+                              size: 20.0,
+                            ),
+                            enabledBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).tertiary,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            focusedBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).primary,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            errorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            focusedErrorBorder: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                color: FlutterFlowTheme.of(context).error,
+                                width: 2.0,
+                              ),
+                              borderRadius: BorderRadius.circular(12.0),
+                            ),
+                            filled: true,
+                            fillColor: FlutterFlowTheme.of(context)
+                                .secondaryBackground,
+                            contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                16.0, 16.0, 16.0, 16.0),
+                          ),
+                          style: FlutterFlowTheme.of(context)
+                              .labelLarge
+                              .override(
+                                fontFamily: FlutterFlowTheme.of(context)
+                                    .labelLargeFamily,
+                                color: FlutterFlowTheme.of(context).primary,
+                                letterSpacing: 0.0,
+                                useGoogleFonts: !FlutterFlowTheme.of(context)
+                                    .labelLargeIsCustom,
+                              ),
+                        ),
+                      ),
                       Align(
                         alignment: AlignmentDirectional(0.0, -1.0),
                         child: Container(
@@ -638,6 +725,7 @@ class _CreateProfileWidgetState extends State<CreateProfileWidget> {
                                     username: _model.textController2.text,
                                     photoUrl:
                                         _model.uploadedFileUrl_uploadDataIo7,
+                                    location: _model.locationController!.text.trim(),
                                     isPrivate: _model.switchValue,
                                     unseenNotifications: 0,
                                     profileComplete: true,

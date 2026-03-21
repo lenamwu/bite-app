@@ -178,7 +178,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                           if (loggedIn)
                             Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  0.0, 190.0, 0.0, 0.0),
+                                  0.0, 178.0, 0.0, 0.0),
                               child: AuthUserStreamWidget(
                                 builder: (context) => Padding(
                                           padding:
@@ -410,7 +410,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                           ),
                                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                 fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                                color: FlutterFlowTheme.of(context).customColor4,
+                                                                                                color: FlutterFlowTheme.of(context).tertiary,
                                                                                                 fontSize: 10.0,
                                                                                                 letterSpacing: 0.0,
                                                                                                 fontWeight: FontWeight.bold,
@@ -1074,7 +1074,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                             ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                5.0, 170.0, 0.0, 0.0),
+                                5.0, 156.0, 0.0, 0.0),
                             child: Text(
                               'feed',
                               style: FlutterFlowTheme.of(context)
@@ -1098,7 +1098,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(5.0, 15.0, 5.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(5.0, 9.0, 5.0, 0.0),
                       child: Container(
                         width: double.infinity,
                         height: 49.3,
@@ -1179,7 +1179,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 95.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 92.0, 0.0, 0.0),
                       child: StreamBuilder<List<FeaturedListsRecord>>(
                         stream: queryFeaturedListsRecord(),
                         builder: (context, snapshot) {
@@ -1297,13 +1297,13 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                     ),
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 75.0, 0.0, 0.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 70.0, 0.0, 0.0),
                       child: Row(
                         mainAxisSize: MainAxisSize.max,
                         children: [
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                5.0, 0.0, 0.0, 0.0),
+                                5.0, 0.0, 0.0, 5.0),
                             child: Text(
                               'featured lists',
                               style: FlutterFlowTheme.of(context)

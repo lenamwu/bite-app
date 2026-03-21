@@ -9,8 +9,8 @@ class AddToCookbookModel extends FlutterFlowModel<AddToCookbookWidget> {
 
   // Image upload state
   bool isDataUploading = false;
-  FFUploadedFile uploadedLocalFile = FFUploadedFile(bytes: null);
-  String uploadedFileUrl = '';
+  List<FFUploadedFile> uploadedLocalFiles = [];
+  List<String> uploadedFileUrls = [];
 
   // Submitting state
   bool isSubmitting = false;

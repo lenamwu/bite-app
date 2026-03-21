@@ -778,6 +778,10 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                                                 Colors.transparent,
                                                                             onTap:
                                                                                 () async {
+                                                                              if (!loggedIn) {
+                                                                                context.pushNamed(OnboardingWidget.routeName);
+                                                                                return;
+                                                                              }
                                                                               await showModalBottomSheet(
                                                                                 isScrollControlled: true,
                                                                                 backgroundColor: Colors.transparent,

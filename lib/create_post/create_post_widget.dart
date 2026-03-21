@@ -251,7 +251,9 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
           FocusScope.of(context).unfocus();
           FocusManager.instance.primaryFocus?.unfocus();
         },
-        child: Scaffold(
+        child: Stack(
+          children: [
+            Scaffold(
           key: scaffoldKey,
           backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
           appBar: AppBar(
@@ -1666,6 +1668,18 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
               ),
             ),
           ),
+        ),
+            if (!loggedIn)
+              GestureDetector(
+                behavior: HitTestBehavior.opaque,
+                onTap: () {
+                  context.pushNamed(OnboardingWidget.routeName);
+                },
+                child: Container(
+                  color: Colors.transparent,
+                ),
+              ),
+          ],
         ),
       ),
     );

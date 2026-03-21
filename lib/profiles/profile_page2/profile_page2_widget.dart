@@ -17,6 +17,7 @@ import 'package:provider/provider.dart';
 import 'profile_page2_model.dart';
 export 'profile_page2_model.dart';
 import '/components/bite_logo.dart';
+import '/admin/admin_featured_lists_widget.dart';
 
 class ProfilePage2Widget extends StatefulWidget {
   const ProfilePage2Widget({super.key});
@@ -95,6 +96,22 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
           automaticallyImplyLeading: false,
           title: BiteLogo(),
           actions: [
+            if (currentUserUid == 'fr9vHykDXdT0jBuL3xUGIGy6u3F3')
+              IconButton(
+                icon: Icon(
+                  Icons.admin_panel_settings,
+                  color: FlutterFlowTheme.of(context).tertiary,
+                  size: 24.0,
+                ),
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const AdminFeaturedListsWidget(),
+                    ),
+                  );
+                },
+              ),
             Align(
               alignment: AlignmentDirectional(0.94, 0.29),
               child: Padding(
@@ -207,242 +224,149 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                105.0, 65.0, 0.0, 0.0),
-                            child: Container(
-                              width: 157.5,
-                              height: 58.15,
-                              decoration: BoxDecoration(
-                                color: FlutterFlowTheme.of(context)
-                                    .secondaryBackground,
-                              ),
-                              child: Padding(
-                                padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 5.0, 0.0, 0.0),
-                                child: Column(
-                                  mainAxisSize: MainAxisSize.max,
+                                115.0, 65.0, 0.0, 0.0),
+                            child: AuthUserStreamWidget(
+                              builder: (context) {
+                                final location = valueOrDefault(currentUserDocument?.location, '');
+                                return Column(
+                                  crossAxisAlignment: CrossAxisAlignment.start,
+                                  mainAxisSize: MainAxisSize.min,
                                   children: [
-                                    Align(
-                                      alignment:
-                                          AlignmentDirectional(0.0, -1.0),
-                                      child: Row(
-                                        mainAxisSize: MainAxisSize.max,
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.spaceBetween,
-                                        children: [
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      12.0, 0.0, 0.0, 0.0),
-                                              child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  if ((currentUserDocument
-                                                                  ?.usersFollowingMe
-                                                                  ?.toList() ??
-                                                              [])
-                                                          .length >
-                                                      0) {
-                                                    context.pushNamed(
-                                                      FollowerslistWidget
-                                                          .routeName,
-                                                      queryParameters: {
-                                                        'followerslist':
-                                                            serializeParam(
-                                                          (currentUserDocument
-                                                                  ?.usersFollowingMe
-                                                                  ?.toList() ??
-                                                              []),
-                                                          ParamType
-                                                              .DocumentReference,
-                                                          isList: true,
-                                                        ),
-                                                      }.withoutNulls,
-                                                    );
-                                                  }
-                                                },
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    AuthUserStreamWidget(
-                                                      builder: (context) =>
-                                                          Text(
-                                                        valueOrDefault<String>(
-                                                          formatNumber(
-                                                            (currentUserDocument
-                                                                        ?.usersFollowingMe
-                                                                        ?.toList() ??
-                                                                    [])
-                                                                .length,
-                                                            formatType:
-                                                                FormatType
-                                                                    .compact,
-                                                          ),
-                                                          '0',
-                                                        ),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .override(
-                                                                  fontFamily: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleLargeFamily,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .tertiary,
-                                                                  fontSize: 18.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  useGoogleFonts:
-                                                                      !FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleLargeIsCustom,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'followers',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .labelMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMediumFamily,
-                                                            letterSpacing: 0.0,
-                                                            useGoogleFonts:
-                                                                !FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMediumIsCustom,
-                                                          ),
-                                                    ),
-                                                  ],
+                                    Row(
+                                      mainAxisSize: MainAxisSize.min,
+                                      children: [
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            if ((currentUserDocument?.usersFollowingMe?.toList() ?? []).isNotEmpty) {
+                                              context.pushNamed(
+                                                FollowerslistWidget.routeName,
+                                                queryParameters: {
+                                                  'followerslist': serializeParam(
+                                                    (currentUserDocument?.usersFollowingMe?.toList() ?? []),
+                                                    ParamType.DocumentReference,
+                                                    isList: true,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
+                                            }
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                formatNumber(
+                                                  (currentUserDocument?.usersFollowingMe?.toList() ?? []).length,
+                                                  formatType: FormatType.compact,
                                                 ),
+                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                      fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                      color: FlutterFlowTheme.of(context).tertiary,
+                                                      fontSize: 16.0,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight: FontWeight.bold,
+                                                      useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                    ),
                                               ),
-                                            ),
+                                              const SizedBox(width: 4.0),
+                                              Text(
+                                                'followers',
+                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                      fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                      color: FlutterFlowTheme.of(context).secondaryText,
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.0,
+                                                      useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                    ),
+                                              ),
+                                            ],
                                           ),
-                                          Expanded(
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 0.0, 16.0, 0.0),
-                                              child: InkWell(
-                                                splashColor: Colors.transparent,
-                                                focusColor: Colors.transparent,
-                                                hoverColor: Colors.transparent,
-                                                highlightColor:
-                                                    Colors.transparent,
-                                                onTap: () async {
-                                                  if ((currentUserDocument
-                                                                  ?.followingUsers
-                                                                  ?.toList() ??
-                                                              [])
-                                                          .length >
-                                                      0) {
-                                                    context.pushNamed(
-                                                      FollowinglistWidget
-                                                          .routeName,
-                                                      queryParameters: {
-                                                        'followinglist':
-                                                            serializeParam(
-                                                          (currentUserDocument
-                                                                  ?.followingUsers
-                                                                  ?.toList() ??
-                                                              []),
-                                                          ParamType
-                                                              .DocumentReference,
-                                                          isList: true,
-                                                        ),
-                                                      }.withoutNulls,
-                                                    );
-                                                  }
-                                                },
-                                                child: Column(
-                                                  mainAxisSize:
-                                                      MainAxisSize.max,
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    AuthUserStreamWidget(
-                                                      builder: (context) =>
-                                                          Text(
-                                                        valueOrDefault<String>(
-                                                          formatNumber(
-                                                            (currentUserDocument
-                                                                        ?.followingUsers
-                                                                        ?.toList() ??
-                                                                    [])
-                                                                .length,
-                                                            formatType:
-                                                                FormatType
-                                                                    .compact,
-                                                          ),
-                                                          '0',
-                                                        ),
-                                                        style:
-                                                            FlutterFlowTheme.of(
-                                                                    context)
-                                                                .titleLarge
-                                                                .override(
-                                                                  fontFamily: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .titleLargeFamily,
-                                                                  color: FlutterFlowTheme.of(
-                                                                          context)
-                                                                      .tertiary,
-                                                                  fontSize: 18.0,
-                                                                  letterSpacing:
-                                                                      0.0,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  useGoogleFonts:
-                                                                      !FlutterFlowTheme.of(
-                                                                              context)
-                                                                          .titleLargeIsCustom,
-                                                                ),
-                                                      ),
-                                                    ),
-                                                    Text(
-                                                      'following',
-                                                      style: FlutterFlowTheme
-                                                              .of(context)
-                                                          .labelMedium
-                                                          .override(
-                                                            fontFamily:
-                                                                FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMediumFamily,
-                                                            letterSpacing: 0.0,
-                                                            useGoogleFonts:
-                                                                !FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .labelMediumIsCustom,
-                                                          ),
-                                                    ),
-                                                  ],
+                                        ),
+                                        const SizedBox(width: 12.0),
+                                        InkWell(
+                                          splashColor: Colors.transparent,
+                                          focusColor: Colors.transparent,
+                                          hoverColor: Colors.transparent,
+                                          highlightColor: Colors.transparent,
+                                          onTap: () async {
+                                            if ((currentUserDocument?.followingUsers?.toList() ?? []).isNotEmpty) {
+                                              context.pushNamed(
+                                                FollowinglistWidget.routeName,
+                                                queryParameters: {
+                                                  'followinglist': serializeParam(
+                                                    (currentUserDocument?.followingUsers?.toList() ?? []),
+                                                    ParamType.DocumentReference,
+                                                    isList: true,
+                                                  ),
+                                                }.withoutNulls,
+                                              );
+                                            }
+                                          },
+                                          child: Row(
+                                            mainAxisSize: MainAxisSize.min,
+                                            children: [
+                                              Text(
+                                                formatNumber(
+                                                  (currentUserDocument?.followingUsers?.toList() ?? []).length,
+                                                  formatType: FormatType.compact,
                                                 ),
+                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                      fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                      color: FlutterFlowTheme.of(context).tertiary,
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.0,
+                                                      fontWeight: FontWeight.bold,
+                                                      useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                    ),
                                               ),
-                                            ),
+                                              const SizedBox(width: 4.0),
+                                              Text(
+                                                'following',
+                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                      fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                      color: FlutterFlowTheme.of(context).secondaryText,
+                                                      fontSize: 14.0,
+                                                      letterSpacing: 0.0,
+                                                      useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                    ),
+                                              ),
+                                            ],
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
+                                    if (location.isNotEmpty)
+                                      Padding(
+                                        padding: const EdgeInsets.only(top: 4.0),
+                                        child: Row(
+                                          mainAxisSize: MainAxisSize.min,
+                                          children: [
+                                            Icon(
+                                              Icons.location_on_outlined,
+                                              size: 16.0,
+                                              color: FlutterFlowTheme.of(context).secondaryText,
+                                            ),
+                                            const SizedBox(width: 2.0),
+                                            Text(
+                                              location,
+                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                    fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                    color: FlutterFlowTheme.of(context).customColor4,
+                                                    fontSize: 12.0,
+                                                    fontWeight: FontWeight.w600,
+                                                    letterSpacing: 0.0,
+                                                    useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                  ),
+                                            ),
+                                          ],
+                                        ),
+                                      ),
                                   ],
-                                ),
-                              ),
+                                );
+                              },
                             ),
                           ),
                           Padding(
@@ -683,12 +607,12 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                             );
                                           }
                                           final recipeRecord = recipeSnapshot.data!;
-                                          // Determine which image to show: post photo first, then recipe image
+                                          // Only show user's own photos, not the public recipe image
                                           final postHasPhoto = listViewPostsRecord.postMultPhotos.isNotEmpty &&
                                               listViewPostsRecord.postMultPhotos.first.isNotEmpty;
                                           final imageUrl = postHasPhoto
                                               ? listViewPostsRecord.postMultPhotos.first
-                                              : recipeRecord.publicrecipeimage;
+                                              : '';
                                           return InkWell(
                                             splashColor: Colors.transparent,
                                             focusColor: Colors.transparent,

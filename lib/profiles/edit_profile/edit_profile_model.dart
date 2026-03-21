@@ -63,6 +63,14 @@ class EditProfileModel extends FlutterFlowModel<EditProfileWidget> {
     return null;
   }
 
+  // State field(s) for bio TextField widget.
+  FocusNode? bioFocusNode;
+  TextEditingController? bioController;
+
+  // State field(s) for location TextField widget.
+  FocusNode? locationFocusNode;
+  TextEditingController? locationController;
+
   // State field(s) for Switch widget.
   bool? switchValue;
   // Stores action output result for [Validate Form] action in Button widget.
@@ -81,5 +89,11 @@ class EditProfileModel extends FlutterFlowModel<EditProfileWidget> {
 
     textFieldFocusNode2?.dispose();
     textController2?.dispose();
+
+    bioFocusNode?.dispose();
+    bioController?.dispose();
+
+    locationFocusNode?.dispose();
+    locationController?.dispose();
   }
 }

@@ -95,151 +95,225 @@ class _AddToCookbookWidgetState extends State<AddToCookbookWidget> {
             ),
             SizedBox(height: 16.0),
             // Photo upload area
-            GestureDetector(
-              onTap: () async {
-                final selectedMedia =
-                    await selectMediaWithSourceBottomSheet(
-                  context: context,
-                  maxWidth: 500.00,
-                  maxHeight: 500.00,
-                  allowPhoto: true,
-                );
-                if (selectedMedia != null &&
-                    selectedMedia.every((m) =>
-                        validateFileFormat(m.storagePath, context))) {
-                  safeSetState(
-                      () => _model.isDataUploading = true);
-
-                  var selectedUploadedFiles = <FFUploadedFile>[];
-                  var downloadUrls = <String>[];
-
-                  try {
-                    selectedUploadedFiles = selectedMedia
-                        .map((m) => FFUploadedFile(
-                              name: m.storagePath.split('/').last,
-                              bytes: m.bytes,
-                              height: m.dimensions?.height,
-                              width: m.dimensions?.width,
-                              blurHash: m.blurHash,
-                              originalFilename: m.originalFilename,
-                            ))
-                        .toList();
-
-                    downloadUrls = (await Future.wait(
-                      selectedMedia.map(
-                        (m) async =>
-                            await uploadData(m.storagePath, m.bytes),
-                      ),
-                    ))
-                        .where((u) => u != null)
-                        .map((u) => u!)
-                        .toList();
-                  } finally {
-                    _model.isDataUploading = false;
-                  }
-                  if (selectedUploadedFiles.length ==
-                          selectedMedia.length &&
-                      downloadUrls.length == selectedMedia.length) {
-                    safeSetState(() {
-                      _model.uploadedLocalFile =
-                          selectedUploadedFiles.first;
-                      _model.uploadedFileUrl = downloadUrls.first;
-                    });
-                  }
-                }
-              },
-              child: Container(
-                width: double.infinity,
-                height: 180.0,
-                decoration: BoxDecoration(
-                  color:
-                      FlutterFlowTheme.of(context).secondaryBackground,
-                  borderRadius: BorderRadius.circular(12.0),
-                  border: Border.all(
-                    color: FlutterFlowTheme.of(context).tertiary,
-                    width: 1.5,
-                  ),
-                ),
-                child: _model.uploadedFileUrl.isNotEmpty
-                    ? ClipRRect(
-                        borderRadius: BorderRadius.circular(11.0),
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
-                            Image.network(
-                              _model.uploadedFileUrl,
-                              fit: BoxFit.cover,
-                            ),
-                            Positioned(
-                              top: 8.0,
-                              right: 8.0,
-                              child: GestureDetector(
-                                onTap: () {
-                                  safeSetState(() {
-                                    _model.uploadedFileUrl = '';
-                                    _model.uploadedLocalFile =
-                                        FFUploadedFile(bytes: null);
-                                  });
-                                },
-                                child: Container(
-                                  padding: EdgeInsets.all(4.0),
-                                  decoration: BoxDecoration(
-                                    color: Colors.black54,
-                                    shape: BoxShape.circle,
+            _model.uploadedFileUrls.isNotEmpty
+                ? Column(
+                    children: [
+                      SizedBox(
+                        height: 180.0,
+                        child: ListView.separated(
+                          scrollDirection: Axis.horizontal,
+                          itemCount: _model.uploadedFileUrls.length,
+                          separatorBuilder: (_, __) => SizedBox(width: 8.0),
+                          itemBuilder: (context, index) {
+                            return ClipRRect(
+                              borderRadius: BorderRadius.circular(12.0),
+                              child: Stack(
+                                children: [
+                                  Image.network(
+                                    _model.uploadedFileUrls[index],
+                                    width: 180.0,
+                                    height: 180.0,
+                                    fit: BoxFit.cover,
                                   ),
-                                  child: Icon(
-                                    Icons.close,
-                                    color: Colors.white,
-                                    size: 18.0,
+                                  Positioned(
+                                    top: 6.0,
+                                    right: 6.0,
+                                    child: GestureDetector(
+                                      onTap: () {
+                                        safeSetState(() {
+                                          _model.uploadedFileUrls.removeAt(index);
+                                          _model.uploadedLocalFiles.removeAt(index);
+                                        });
+                                      },
+                                      child: Container(
+                                        padding: EdgeInsets.all(4.0),
+                                        decoration: BoxDecoration(
+                                          color: Colors.black54,
+                                          shape: BoxShape.circle,
+                                        ),
+                                        child: Icon(
+                                          Icons.close,
+                                          color: Colors.white,
+                                          size: 16.0,
+                                        ),
+                                      ),
+                                    ),
                                   ),
-                                ),
+                                ],
                               ),
+                            );
+                          },
+                        ),
+                      ),
+                      SizedBox(height: 8.0),
+                      GestureDetector(
+                        onTap: () async {
+                          final selectedMedia =
+                              await selectMediaWithSourceBottomSheet(
+                            context: context,
+                            maxWidth: 500.00,
+                            maxHeight: 500.00,
+                            allowPhoto: true,
+                          );
+                          if (selectedMedia != null &&
+                              selectedMedia.every((m) =>
+                                  validateFileFormat(m.storagePath, context))) {
+                            safeSetState(() => _model.isDataUploading = true);
+                            try {
+                              final newFiles = selectedMedia
+                                  .map((m) => FFUploadedFile(
+                                        name: m.storagePath.split('/').last,
+                                        bytes: m.bytes,
+                                        height: m.dimensions?.height,
+                                        width: m.dimensions?.width,
+                                        blurHash: m.blurHash,
+                                        originalFilename: m.originalFilename,
+                                      ))
+                                  .toList();
+                              final newUrls = (await Future.wait(
+                                selectedMedia.map(
+                                  (m) async =>
+                                      await uploadData(m.storagePath, m.bytes),
+                                ),
+                              ))
+                                  .where((u) => u != null)
+                                  .map((u) => u!)
+                                  .toList();
+                              if (newFiles.length == selectedMedia.length &&
+                                  newUrls.length == selectedMedia.length) {
+                                safeSetState(() {
+                                  _model.uploadedLocalFiles.addAll(newFiles);
+                                  _model.uploadedFileUrls.addAll(newUrls);
+                                });
+                              }
+                            } finally {
+                              safeSetState(() => _model.isDataUploading = false);
+                            }
+                          }
+                        },
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Icon(
+                              Icons.add_photo_alternate_outlined,
+                              color: FlutterFlowTheme.of(context).secondary,
+                              size: 20.0,
+                            ),
+                            SizedBox(width: 4.0),
+                            Text(
+                              'add more photos',
+                              style: FlutterFlowTheme.of(context)
+                                  .bodySmall
+                                  .override(
+                                    fontFamily: FlutterFlowTheme.of(context)
+                                        .bodySmallFamily,
+                                    color: FlutterFlowTheme.of(context).secondary,
+                                    letterSpacing: 0.0,
+                                    useGoogleFonts: !FlutterFlowTheme.of(context)
+                                        .bodySmallIsCustom,
+                                  ),
                             ),
                           ],
                         ),
-                      )
-                    : _model.isDataUploading
-                        ? Center(
-                            child: SizedBox(
-                              width: 24.0,
-                              height: 24.0,
-                              child: CircularProgressIndicator(
-                                color:
-                                    FlutterFlowTheme.of(context).tertiary,
-                                strokeWidth: 2.0,
-                              ),
+                      ),
+                    ],
+                  )
+                : GestureDetector(
+                    onTap: () async {
+                      final selectedMedia =
+                          await selectMediaWithSourceBottomSheet(
+                        context: context,
+                        maxWidth: 500.00,
+                        maxHeight: 500.00,
+                        allowPhoto: true,
+                      );
+                      if (selectedMedia != null &&
+                          selectedMedia.every((m) =>
+                              validateFileFormat(m.storagePath, context))) {
+                        safeSetState(() => _model.isDataUploading = true);
+                        try {
+                          final newFiles = selectedMedia
+                              .map((m) => FFUploadedFile(
+                                    name: m.storagePath.split('/').last,
+                                    bytes: m.bytes,
+                                    height: m.dimensions?.height,
+                                    width: m.dimensions?.width,
+                                    blurHash: m.blurHash,
+                                    originalFilename: m.originalFilename,
+                                  ))
+                              .toList();
+                          final newUrls = (await Future.wait(
+                            selectedMedia.map(
+                              (m) async =>
+                                  await uploadData(m.storagePath, m.bytes),
                             ),
-                          )
-                        : Column(
-                            mainAxisAlignment: MainAxisAlignment.center,
-                            children: [
-                              Icon(
-                                Icons.add_a_photo_outlined,
-                                color: FlutterFlowTheme.of(context)
-                                    .secondary,
-                                size: 36.0,
+                          ))
+                              .where((u) => u != null)
+                              .map((u) => u!)
+                              .toList();
+                          if (newFiles.length == selectedMedia.length &&
+                              newUrls.length == selectedMedia.length) {
+                            safeSetState(() {
+                              _model.uploadedLocalFiles = newFiles;
+                              _model.uploadedFileUrls = newUrls;
+                            });
+                          }
+                        } finally {
+                          safeSetState(() => _model.isDataUploading = false);
+                        }
+                      }
+                    },
+                    child: Container(
+                      width: double.infinity,
+                      height: 180.0,
+                      decoration: BoxDecoration(
+                        color: FlutterFlowTheme.of(context).secondaryBackground,
+                        borderRadius: BorderRadius.circular(12.0),
+                        border: Border.all(
+                          color: FlutterFlowTheme.of(context).tertiary,
+                          width: 1.5,
+                        ),
+                      ),
+                      child: _model.isDataUploading
+                          ? Center(
+                              child: SizedBox(
+                                width: 24.0,
+                                height: 24.0,
+                                child: CircularProgressIndicator(
+                                  color: FlutterFlowTheme.of(context).tertiary,
+                                  strokeWidth: 2.0,
+                                ),
                               ),
-                              SizedBox(height: 8.0),
-                              Text(
-                                'add a photo (optional)',
-                                style: FlutterFlowTheme.of(context)
-                                    .bodyMedium
-                                    .override(
-                                      fontFamily:
-                                          FlutterFlowTheme.of(context)
-                                              .bodyMediumFamily,
-                                      color: FlutterFlowTheme.of(context)
-                                          .secondary,
-                                      letterSpacing: 0.0,
-                                      useGoogleFonts:
-                                          !FlutterFlowTheme.of(context)
-                                              .bodyMediumIsCustom,
-                                    ),
-                              ),
-                            ],
-                          ),
-              ),
-            ),
+                            )
+                          : Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              children: [
+                                Icon(
+                                  Icons.add_a_photo_outlined,
+                                  color: FlutterFlowTheme.of(context).secondary,
+                                  size: 36.0,
+                                ),
+                                SizedBox(height: 8.0),
+                                Text(
+                                  'add photos (optional)',
+                                  style: FlutterFlowTheme.of(context)
+                                      .bodyMedium
+                                      .override(
+                                        fontFamily:
+                                            FlutterFlowTheme.of(context)
+                                                .bodyMediumFamily,
+                                        color: FlutterFlowTheme.of(context)
+                                            .secondary,
+                                        letterSpacing: 0.0,
+                                        useGoogleFonts:
+                                            !FlutterFlowTheme.of(context)
+                                                .bodyMediumIsCustom,
+                                      ),
+                                ),
+                              ],
+                            ),
+                    ),
+                  ),
             SizedBox(height: 16.0),
             // Caption text field
             TextFormField(
@@ -317,12 +391,12 @@ class _AddToCookbookWidgetState extends State<AddToCookbookWidget> {
                             uid: currentUserUid,
                           );
 
-                          // Add photo if uploaded
+                          // Add photos if uploaded
                           final dataWithPhoto =
                               <String, dynamic>{...postData};
-                          if (_model.uploadedFileUrl.isNotEmpty) {
+                          if (_model.uploadedFileUrls.isNotEmpty) {
                             dataWithPhoto['postMultPhotos'] =
-                                [_model.uploadedFileUrl];
+                                _model.uploadedFileUrls;
                           }
 
                           await postRef.set(dataWithPhoto);

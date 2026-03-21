@@ -45,6 +45,14 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
         text: valueOrDefault(currentUserDocument?.username, ''));
     _model.textFieldFocusNode2 ??= FocusNode();
 
+    _model.bioController ??= TextEditingController(
+        text: valueOrDefault(currentUserDocument?.shortDescription, ''));
+    _model.bioFocusNode ??= FocusNode();
+
+    _model.locationController ??= TextEditingController(
+        text: valueOrDefault(currentUserDocument?.location, ''));
+    _model.locationFocusNode ??= FocusNode();
+
     _model.switchValue =
         valueOrDefault<bool>(currentUserDocument?.isPrivate, false);
     WidgetsBinding.instance.addPostFrameCallback((_) => safeSetState(() {}));
@@ -487,6 +495,82 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                 ),
                               ),
                               Align(
+                                alignment: AlignmentDirectional(0.0, 0.0),
+                                child: AuthUserStreamWidget(
+                                  builder: (context) => Container(
+                                    width: 370.0,
+                                    child: TextFormField(
+                                      controller: _model.locationController,
+                                      focusNode: _model.locationFocusNode,
+                                      textCapitalization: TextCapitalization.words,
+                                      textInputAction: TextInputAction.done,
+                                      decoration: InputDecoration(
+                                        labelText: 'location',
+                                        labelStyle: FlutterFlowTheme.of(context)
+                                            .labelLarge
+                                            .override(
+                                              fontFamily: FlutterFlowTheme.of(context)
+                                                  .labelLargeFamily,
+                                              color: FlutterFlowTheme.of(context)
+                                                  .secondaryText,
+                                              letterSpacing: 0.0,
+                                              useGoogleFonts: !FlutterFlowTheme.of(context)
+                                                  .labelLargeIsCustom,
+                                            ),
+                                        prefixIcon: Icon(
+                                          Icons.location_on_outlined,
+                                          color: FlutterFlowTheme.of(context).secondaryText,
+                                          size: 20.0,
+                                        ),
+                                        enabledBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context).tertiary,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius: BorderRadius.circular(12.0),
+                                        ),
+                                        focusedBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context).primary,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius: BorderRadius.circular(12.0),
+                                        ),
+                                        errorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context).error,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius: BorderRadius.circular(12.0),
+                                        ),
+                                        focusedErrorBorder: OutlineInputBorder(
+                                          borderSide: BorderSide(
+                                            color: FlutterFlowTheme.of(context).error,
+                                            width: 2.0,
+                                          ),
+                                          borderRadius: BorderRadius.circular(12.0),
+                                        ),
+                                        filled: true,
+                                        fillColor: FlutterFlowTheme.of(context)
+                                            .secondaryBackground,
+                                        contentPadding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 16.0, 16.0, 16.0),
+                                      ),
+                                      style: FlutterFlowTheme.of(context)
+                                          .labelLarge
+                                          .override(
+                                            fontFamily: FlutterFlowTheme.of(context)
+                                                .labelLargeFamily,
+                                            color: FlutterFlowTheme.of(context).alternate,
+                                            letterSpacing: 0.0,
+                                            useGoogleFonts: !FlutterFlowTheme.of(context)
+                                                .labelLargeIsCustom,
+                                          ),
+                                    ),
+                                  ),
+                                ),
+                              ),
+                              Align(
                                 alignment: AlignmentDirectional(0.0, -1.0),
                                 child: Container(
                                   width: 370.0,
@@ -633,6 +717,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                 .update(createUsersRecordData(
                                               displayName:
                                                   _model.textController1.text,
+                                              location:
+                                                  _model.locationController!.text.trim(),
                                               isPrivate: _model.switchValue,
                                             ));
 
@@ -688,6 +774,8 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                       .textController1.text,
                                                   username: _model
                                                       .textController2.text,
+                                                  location:
+                                                      _model.locationController!.text.trim(),
                                                   isPrivate: _model.switchValue,
                                                 ),
                                                 ...mapToFirestore(

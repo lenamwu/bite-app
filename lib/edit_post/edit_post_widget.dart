@@ -1429,7 +1429,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                               _model.addCaptionTextController.text,
                                         ));
                                         if (editPostPostsRecord.postMultPhotos.length >=
-                                            1) {
+                                            1 || editPostPostsRecord.hasRecipe == true) {
                                           if (editPostPostsRecord.recipeRef != null) {
                                             if (FFAppState().editedRecipe == true) {
                                               await editPostPostsRecord.recipeRef!
@@ -1529,7 +1529,7 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                             }
                                           }
 
-                                          context.pushNamed(FoodFeedWidget.routeName);
+                                          context.pop();
                                         } else {
                                           await showDialog(
                                             context: context,

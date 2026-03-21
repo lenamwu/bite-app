@@ -54,14 +54,14 @@ class _PreparationFieldWidgetState extends State<PreparationFieldWidget> {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 5.0),
+      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 2.0),
       child: Container(
-        height: 90.0,
+        height: 72.0,
         child: Stack(
           alignment: AlignmentDirectional(0.0, -1.0),
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 23.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 18.0, 0.0, 0.0),
               child: Container(
                 width: double.infinity,
                 child: TextFormField(

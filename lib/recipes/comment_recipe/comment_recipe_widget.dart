@@ -1186,6 +1186,8 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                     Flexible(
                                                                       child: Text(
                                                                         columnRecipesRecord.notes,
+                                                                        maxLines: 6,
+                                                                        overflow: TextOverflow.ellipsis,
                                                                         style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                           fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
                                                                           color: FlutterFlowTheme.of(context).accent1,
@@ -1423,6 +1425,10 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                                   hoverColor: Colors.transparent,
                                                                                   highlightColor: Colors.transparent,
                                                                                   onTap: () async {
+                                                                                    if (!loggedIn) {
+                                                                                      context.pushNamed(OnboardingWidget.routeName);
+                                                                                      return;
+                                                                                    }
                                                                                     await showModalBottomSheet(
                                                                                       isScrollControlled: true,
                                                                                       backgroundColor: Colors.transparent,

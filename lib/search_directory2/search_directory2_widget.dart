@@ -1545,7 +1545,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                           blurRadius: 0.0,
                                                           color: FlutterFlowTheme
                                                                   .of(context)
-                                                              .alternate,
+                                                              .secondaryText,
                                                           offset: Offset(
                                                             0.0,
                                                             1.0,
@@ -1650,7 +1650,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                             fontFamily:
                                                                                 FlutterFlowTheme.of(context).bodyLargeFamily,
                                                                             color:
-                                                                                FlutterFlowTheme.of(context).accent3,
+                                                                                FlutterFlowTheme.of(context).primary,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -1683,7 +1683,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                             listViewUsersRecord.username,
                                                                             style: FlutterFlowTheme.of(context).labelMedium.override(
                                                                                   fontFamily: FlutterFlowTheme.of(context).labelMediumFamily,
-                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                  color: FlutterFlowTheme.of(context).tertiary,
                                                                                   letterSpacing: 0.0,
                                                                                   useGoogleFonts: !FlutterFlowTheme.of(context).labelMediumIsCustom,
                                                                                 ),

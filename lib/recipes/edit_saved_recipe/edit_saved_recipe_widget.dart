@@ -565,7 +565,7 @@ class _EditSavedRecipeWidgetState extends State<EditSavedRecipeWidget> {
                                     mainAxisSize: MainAxisSize.max,
                                     children: [
                                       Container(
-                                        width: 350.0,
+                                       width: 340.0,
                                         child: Align(
                                           alignment:
                                               AlignmentDirectional(0.0, -1.0),
@@ -691,7 +691,7 @@ class _EditSavedRecipeWidgetState extends State<EditSavedRecipeWidget> {
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
                                   Container(
-                                    width: 350.0,
+                                    width: 340.0,
                                     child: Align(
                                       alignment:
                                           AlignmentDirectional(0.0, -1.0),
