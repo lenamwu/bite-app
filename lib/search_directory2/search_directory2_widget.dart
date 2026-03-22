@@ -1604,25 +1604,25 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                   BorderRadius
                                                                       .circular(
                                                                           40.0),
-                                                              child:
-                                                                  Image.network(
-                                                                listViewUsersRecord
-                                                                    .photoUrl,
-                                                                width: 60.0,
-                                                                height: 60.0,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                errorBuilder: (context,
-                                                                        error,
-                                                                        stackTrace) =>
-                                                                    Image.asset(
-                                                                  'assets/images/error_image.png',
-                                                                  width: 60.0,
-                                                                  height: 60.0,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
+                                                              child: listViewUsersRecord.photoUrl.isNotEmpty
+                                                                  ? Image.network(
+                                                                      listViewUsersRecord.photoUrl,
+                                                                      width: 60.0,
+                                                                      height: 60.0,
+                                                                      fit: BoxFit.cover,
+                                                                      errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                                        'assets/images/prof_pic.jpg',
+                                                                        width: 60.0,
+                                                                        height: 60.0,
+                                                                        fit: BoxFit.cover,
+                                                                      ),
+                                                                    )
+                                                                  : Image.asset(
+                                                                      'assets/images/prof_pic.jpg',
+                                                                      width: 60.0,
+                                                                      height: 60.0,
+                                                                      fit: BoxFit.cover,
+                                                                    ),
                                                             ),
                                                             Expanded(
                                                               child: Column(
@@ -1828,25 +1828,25 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                   BorderRadius
                                                                       .circular(
                                                                           40.0),
-                                                              child:
-                                                                  Image.network(
-                                                                uservariablesItem
-                                                                    .photoUrl,
-                                                                width: 60.0,
-                                                                height: 60.0,
-                                                                fit: BoxFit
-                                                                    .cover,
-                                                                errorBuilder: (context,
-                                                                        error,
-                                                                        stackTrace) =>
-                                                                    Image.asset(
-                                                                  'assets/images/error_image.png',
-                                                                  width: 60.0,
-                                                                  height: 60.0,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                ),
-                                                              ),
+                                                              child: uservariablesItem.photoUrl.isNotEmpty
+                                                                  ? Image.network(
+                                                                      uservariablesItem.photoUrl,
+                                                                      width: 60.0,
+                                                                      height: 60.0,
+                                                                      fit: BoxFit.cover,
+                                                                      errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                                        'assets/images/prof_pic.jpg',
+                                                                        width: 60.0,
+                                                                        height: 60.0,
+                                                                        fit: BoxFit.cover,
+                                                                      ),
+                                                                    )
+                                                                  : Image.asset(
+                                                                      'assets/images/prof_pic.jpg',
+                                                                      width: 60.0,
+                                                                      height: 60.0,
+                                                                      fit: BoxFit.cover,
+                                                                    ),
                                                             ),
                                                             Expanded(
                                                               child: Column(

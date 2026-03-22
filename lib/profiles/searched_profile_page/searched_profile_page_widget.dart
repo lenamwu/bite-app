@@ -242,7 +242,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                   color: FlutterFlowTheme.of(context).secondaryText,
-                                                  fontSize: 16.0,
+                                                  fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                 ),
@@ -296,7 +296,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                   color: FlutterFlowTheme.of(context).secondaryText,
-                                                  fontSize: 16.0,
+                                                  fontSize: 14.0,
                                                   letterSpacing: 0.0,
                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                 ),
@@ -322,8 +322,9 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                           searchedProfilePageUsersRecord.location,
                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                 fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                color: FlutterFlowTheme.of(context).secondaryText,
-                                                fontSize: 16.0,
+                                                color: FlutterFlowTheme.of(context).customColor4,
+                                                fontSize: 12.0,
+                                                fontWeight: FontWeight.w600,
                                                 letterSpacing: 0.0,
                                                 useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                               ),
@@ -338,31 +339,40 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                             alignment: AlignmentDirectional(-1.0, -1.0),
                             child: ClipRRect(
                                 borderRadius: BorderRadius.circular(50.0),
-                                child: CachedNetworkImage(
-                                  fadeInDuration: Duration(milliseconds: 500),
-                                  fadeOutDuration: Duration(milliseconds: 500),
-                                  imageUrl:
-                                      searchedProfilePageUsersRecord.photoUrl,
-                                  width: 72.0,
-                                  height: 72.0,
-                                  fit: BoxFit.cover,
-                                  errorWidget: (context, error, stackTrace) =>
-                                      Image.asset(
-                                    'assets/images/error_image.png',
-                                    width: 72.0,
-                                    height: 72.0,
-                                    fit: BoxFit.cover,
-                                  ),
-                                ),
+                                child: searchedProfilePageUsersRecord.photoUrl.isNotEmpty
+                                    ? CachedNetworkImage(
+                                        fadeInDuration: Duration(milliseconds: 500),
+                                        fadeOutDuration: Duration(milliseconds: 500),
+                                        imageUrl:
+                                            searchedProfilePageUsersRecord.photoUrl,
+                                        width: 72.0,
+                                        height: 72.0,
+                                        fit: BoxFit.cover,
+                                        errorWidget: (context, error, stackTrace) =>
+                                            Image.asset(
+                                          'assets/images/prof_pic.jpg',
+                                          width: 72.0,
+                                          height: 72.0,
+                                          fit: BoxFit.cover,
+                                        ),
+                                      )
+                                    : Image.asset(
+                                        'assets/images/prof_pic.jpg',
+                                        width: 72.0,
+                                        height: 72.0,
+                                        fit: BoxFit.cover,
+                                      ),
                               ),
                           ),
                         ],
                       ),
                     ),
                   ),
-                  Padding(
+                  Transform.translate(
+                    offset: Offset(0, -20),
+                    child: Padding(
                     padding:
-                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 10.0),
+                        EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 0.0),
                     child: StreamBuilder<List<FollowRequestsRecord>>(
                       stream: queryFollowRequestsRecord(
                         parent: searchedProfilePageUsersRecord.reference,
@@ -578,6 +588,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                   child: AuthUserStreamWidget(
                                     builder: (context) => FFButtonWidget(
                                       onPressed: () async {
+                                        // Remove from follow arrays
                                         await searchedProfilePageUsersRecord
                                             .reference
                                             .update({
@@ -601,49 +612,37 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                             },
                                           ),
                                         });
-                                        if (searchedProfilePageUsersRecord
-                                                .isPrivate ==
-                                            true) {
-                                          if (_model.followreqnotification
-                                                  ?.seen ==
-                                              false) {
-                                            await searchedProfilePageUsersRecord
-                                                .reference
-                                                .update({
-                                              ...mapToFirestore(
-                                                {
-                                                  'unseenNotifications':
-                                                      FieldValue.increment(
-                                                          -(1)),
-                                                },
-                                              ),
-                                            });
-                                          }
-                                          await rowFollowRequestsRecord!
-                                              .reference
-                                              .delete();
-                                          await _model
-                                              .followreqnotification!.reference
-                                              .delete();
-                                        } else {
-                                          if (_model.follownotification?.seen ==
-                                              false) {
-                                            await searchedProfilePageUsersRecord
-                                                .reference
-                                                .update({
-                                              ...mapToFirestore(
-                                                {
-                                                  'unseenNotifications':
-                                                      FieldValue.increment(
-                                                          -(1)),
-                                                },
-                                              ),
-                                            });
-                                          }
-                                          await _model
-                                              .follownotification!.reference
-                                              .delete();
+
+                                        // Clean up follow request if private profile
+                                        if (rowFollowRequestsRecord?.reference != null) {
+                                          await rowFollowRequestsRecord!.reference.delete();
                                         }
+
+                                        // Clean up notification by querying Firestore
+                                        final notifType = searchedProfilePageUsersRecord.isPrivate == true
+                                            ? 'followRequest'
+                                            : 'follow';
+                                        final notifQuery = await queryNotificationsRecordOnce(
+                                          parent: searchedProfilePageUsersRecord.reference,
+                                          queryBuilder: (q) => q
+                                              .where('type', isEqualTo: notifType)
+                                              .where('fromUser', isEqualTo: currentUserReference),
+                                        );
+                                        for (final notif in notifQuery) {
+                                          if (notif.seen == false) {
+                                            await searchedProfilePageUsersRecord
+                                                .reference
+                                                .update({
+                                              ...mapToFirestore({
+                                                'unseenNotifications':
+                                                    FieldValue.increment(-1),
+                                              }),
+                                            });
+                                          }
+                                          await notif.reference.delete();
+                                        }
+
+                                        safeSetState(() {});
                                       },
                                       text: 'unfollow',
                                       options: FFButtonOptions(
@@ -692,24 +691,32 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                       10.0, 0.0, 0.0, 0.0),
                                   child: FFButtonWidget(
                                     onPressed: () async {
-                                      if (_model.followreqnotification?.seen ==
-                                          false) {
-                                        await searchedProfilePageUsersRecord
-                                            .reference
-                                            .update({
-                                          ...mapToFirestore(
-                                            {
-                                              'unseenNotifications':
-                                                  FieldValue.increment(-(1)),
-                                            },
-                                          ),
-                                        });
-                                      }
+                                      // Delete follow request document
                                       await rowFollowRequestsRecord!.reference
                                           .delete();
-                                      await _model
-                                          .followreqnotification!.reference
-                                          .delete();
+
+                                      // Clean up notification by querying Firestore
+                                      final notifQuery = await queryNotificationsRecordOnce(
+                                        parent: searchedProfilePageUsersRecord.reference,
+                                        queryBuilder: (q) => q
+                                            .where('type', isEqualTo: 'followRequest')
+                                            .where('fromUser', isEqualTo: currentUserReference),
+                                      );
+                                      for (final notif in notifQuery) {
+                                        if (notif.seen == false) {
+                                          await searchedProfilePageUsersRecord
+                                              .reference
+                                              .update({
+                                            ...mapToFirestore({
+                                              'unseenNotifications':
+                                                  FieldValue.increment(-1),
+                                            }),
+                                          });
+                                        }
+                                        await notif.reference.delete();
+                                      }
+
+                                      safeSetState(() {});
                                     },
                                     text: 'requested',
                                     options: FFButtonOptions(
@@ -750,36 +757,15 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                       },
                     ),
                   ),
-                  if (searchedProfilePageUsersRecord.location.isNotEmpty)
-                    Padding(
-                      padding: const EdgeInsetsDirectional.fromSTEB(20.0, 0.0, 20.0, 4.0),
-                      child: Row(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          Icon(
-                            Icons.location_on_outlined,
-                            size: 14.0,
-                            color: FlutterFlowTheme.of(context).secondaryText,
-                          ),
-                          const SizedBox(width: 2.0),
-                          Text(
-                            searchedProfilePageUsersRecord.location,
-                            style: FlutterFlowTheme.of(context).bodySmall.override(
-                                  fontFamily: FlutterFlowTheme.of(context).bodySmallFamily,
-                                  color: FlutterFlowTheme.of(context).secondaryText,
-                                  letterSpacing: 0.0,
-                                  useGoogleFonts: !FlutterFlowTheme.of(context).bodySmallIsCustom,
-                                ),
-                          ),
-                        ],
-                      ),
-                    ),
+                  ),
                   if ((searchedProfilePageUsersRecord.isPrivate == false) ||
                       ((searchedProfilePageUsersRecord.isPrivate == true) &&
                           searchedProfilePageUsersRecord.usersFollowingMe
                               .contains(currentUserReference)))
                     Expanded(
-                      child: Column(
+                      child: Transform.translate(
+                        offset: Offset(0, -8),
+                        child: Column(
                         children: [
                           Align(
                             alignment: Alignment(0.0, 0),
@@ -1408,6 +1394,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                           ),
                         ],
                       ),
+                    ),
                     ),
                   if ((searchedProfilePageUsersRecord.isPrivate == true) &&
                       (searchedProfilePageUsersRecord.usersFollowingMe

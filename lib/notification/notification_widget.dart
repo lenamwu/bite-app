@@ -377,18 +377,21 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                                                     decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
                                                     ),
-                                                    child: Image.network(
-                                                      columnUsersRecord
-                                                          .photoUrl,
-                                                      fit: BoxFit.cover,
-                                                      errorBuilder: (context,
-                                                              error,
-                                                              stackTrace) =>
-                                                          Image.asset(
-                                                        'assets/images/error_image.png',
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
+                                                    child: columnUsersRecord.photoUrl.isNotEmpty
+                                                        ? Image.network(
+                                                            columnUsersRecord.photoUrl,
+                                                            fit: BoxFit.cover,
+                                                            errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                              'assets/images/prof_pic.jpg',
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          )
+                                                        : Image.asset(
+                                                            'assets/images/prof_pic.jpg',
+                                                            width: 40.0,
+                                                            height: 40.0,
+                                                            fit: BoxFit.cover,
+                                                          ),
                                                   ),
                                                 ),
                                               ),
@@ -750,18 +753,21 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                                                     decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
                                                     ),
-                                                    child: Image.network(
-                                                      columnUsersRecord
-                                                          .photoUrl,
-                                                      fit: BoxFit.cover,
-                                                      errorBuilder: (context,
-                                                              error,
-                                                              stackTrace) =>
-                                                          Image.asset(
-                                                        'assets/images/error_image.png',
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
+                                                    child: columnUsersRecord.photoUrl.isNotEmpty
+                                                        ? Image.network(
+                                                            columnUsersRecord.photoUrl,
+                                                            fit: BoxFit.cover,
+                                                            errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                              'assets/images/prof_pic.jpg',
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          )
+                                                        : Image.asset(
+                                                            'assets/images/prof_pic.jpg',
+                                                            width: 40.0,
+                                                            height: 40.0,
+                                                            fit: BoxFit.cover,
+                                                          ),
                                                   ),
                                                 ),
                                               ),
@@ -1067,18 +1073,21 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                                                     decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
                                                     ),
-                                                    child: Image.network(
-                                                      columnUsersRecord
-                                                          .photoUrl,
-                                                      fit: BoxFit.cover,
-                                                      errorBuilder: (context,
-                                                              error,
-                                                              stackTrace) =>
-                                                          Image.asset(
-                                                        'assets/images/error_image.png',
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
+                                                    child: columnUsersRecord.photoUrl.isNotEmpty
+                                                        ? Image.network(
+                                                            columnUsersRecord.photoUrl,
+                                                            fit: BoxFit.cover,
+                                                            errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                              'assets/images/prof_pic.jpg',
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          )
+                                                        : Image.asset(
+                                                            'assets/images/prof_pic.jpg',
+                                                            width: 40.0,
+                                                            height: 40.0,
+                                                            fit: BoxFit.cover,
+                                                          ),
                                                   ),
                                                 ),
                                               ),
@@ -1376,18 +1385,21 @@ class _NotificationWidgetState extends State<NotificationWidget> {
                                                     decoration: BoxDecoration(
                                                       shape: BoxShape.circle,
                                                     ),
-                                                    child: Image.network(
-                                                      columnUsersRecord
-                                                          .photoUrl,
-                                                      fit: BoxFit.cover,
-                                                      errorBuilder: (context,
-                                                              error,
-                                                              stackTrace) =>
-                                                          Image.asset(
-                                                        'assets/images/error_image.png',
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
+                                                    child: columnUsersRecord.photoUrl.isNotEmpty
+                                                        ? Image.network(
+                                                            columnUsersRecord.photoUrl,
+                                                            fit: BoxFit.cover,
+                                                            errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                              'assets/images/prof_pic.jpg',
+                                                              fit: BoxFit.cover,
+                                                            ),
+                                                          )
+                                                        : Image.asset(
+                                                            'assets/images/prof_pic.jpg',
+                                                            width: 40.0,
+                                                            height: 40.0,
+                                                            fit: BoxFit.cover,
+                                                          ),
                                                   ),
                                                 ),
                                               ),

@@ -5,6 +5,18 @@ admin.initializeApp();
 exports.onUserDeleted = functions.auth.user().onDelete(async (user) => {
   let firestore = admin.firestore();
   let userRef = firestore.doc("users/" + user.uid);
+  let storage = admin.storage().bucket();
+
+  // Delete user's uploaded files from Firebase Storage
+  try {
+    const [files] = await storage.getFiles({ prefix: `users/${user.uid}/uploads/` });
+    for (const file of files) {
+      await file.delete();
+    }
+    console.log(`Deleted ${files.length} storage files for user ${user.uid}`);
+  } catch (error) {
+    console.error("Error deleting storage files:", error);
+  }
   await firestore
     .collectionGroup("followRequests")
     .where("fromUserId", "==", userRef)
@@ -70,6 +82,34 @@ exports.onUserDeleted = functions.auth.user().onDelete(async (user) => {
         await doc.ref.delete();
       }
     });
+
+  // Delete user's drafts
+  await firestore
+    .collection("drafts")
+    .where("user_id", "==", userRef)
+    .get()
+    .then(async (querySnapshot) => {
+      for (var doc of querySnapshot.docs) {
+        console.log(`Deleting document ${doc.id} from collection drafts`);
+        await doc.ref.delete();
+      }
+    });
+
+  // Delete user's own subcollections (notifications TO them, follow requests TO them, grocery list)
+  const subcollections = ["notifications", "followRequests", "grocery_list"];
+  for (const sub of subcollections) {
+    await firestore
+      .collection("users")
+      .doc(user.uid)
+      .collection(sub)
+      .get()
+      .then(async (querySnapshot) => {
+        for (var doc of querySnapshot.docs) {
+          console.log(`Deleting document ${doc.id} from subcollection ${sub}`);
+          await doc.ref.delete();
+        }
+      });
+  }
 });
 
 // Send push notification when a new notification document is created.

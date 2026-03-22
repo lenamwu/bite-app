@@ -476,22 +476,29 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                               BorderRadius
                                                                   .circular(
                                                                       40.0),
-                                                          child: Image.network(
-                                                            columnUsersRecord
-                                                                .photoUrl,
-                                                            width: 40.0,
-                                                            height: 40.0,
-                                                            fit: BoxFit.cover,
-                                                            errorBuilder: (context,
-                                                                    error,
-                                                                    stackTrace) =>
-                                                                Image.asset(
-                                                              'assets/images/error_image.png',
-                                                              width: 40.0,
-                                                              height: 40.0,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
+                                                          child: columnUsersRecord.photoUrl.isNotEmpty
+                                                              ? Image.network(
+                                                                  columnUsersRecord
+                                                                      .photoUrl,
+                                                                  width: 40.0,
+                                                                  height: 40.0,
+                                                                  fit: BoxFit.cover,
+                                                                  errorBuilder: (context,
+                                                                          error,
+                                                                          stackTrace) =>
+                                                                      Image.asset(
+                                                                    'assets/images/prof_pic.jpg',
+                                                                    width: 40.0,
+                                                                    height: 40.0,
+                                                                    fit: BoxFit.cover,
+                                                                  ),
+                                                                )
+                                                              : Image.asset(
+                                                                  'assets/images/prof_pic.jpg',
+                                                                  width: 40.0,
+                                                                  height: 40.0,
+                                                                  fit: BoxFit.cover,
+                                                                ),
                                                         ),
                                                       ),
                                                       Column(

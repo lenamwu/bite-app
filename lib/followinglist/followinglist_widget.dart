@@ -239,20 +239,25 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                                             child: ClipRRect(
                                               borderRadius:
                                                   BorderRadius.circular(46.0),
-                                              child: Image.network(
-                                                containerUsersRecord.photoUrl,
-                                                width: 41.0,
-                                                height: 41.0,
-                                                fit: BoxFit.cover,
-                                                errorBuilder: (context, error,
-                                                        stackTrace) =>
-                                                    Image.asset(
-                                                  'assets/images/error_image.png',
-                                                  width: 41.0,
-                                                  height: 41.0,
-                                                  fit: BoxFit.cover,
-                                                ),
-                                              ),
+                                              child: containerUsersRecord.photoUrl.isNotEmpty
+                                                  ? Image.network(
+                                                      containerUsersRecord.photoUrl,
+                                                      width: 41.0,
+                                                      height: 41.0,
+                                                      fit: BoxFit.cover,
+                                                      errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                        'assets/images/prof_pic.jpg',
+                                                        width: 41.0,
+                                                        height: 41.0,
+                                                        fit: BoxFit.cover,
+                                                      ),
+                                                    )
+                                                  : Image.asset(
+                                                      'assets/images/prof_pic.jpg',
+                                                      width: 41.0,
+                                                      height: 41.0,
+                                                      fit: BoxFit.cover,
+                                                    ),
                                             ),
                                           ),
                                           Expanded(

@@ -55,7 +55,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
       if (loggedIn == true) {
         // Wait for the user document to load from Firestore before checking
         // profileComplete, otherwise it defaults to false and incorrectly
-        // redirects to the create profile page.
+        // signs the user out.
         if (currentUserDocument == null) {
           await authenticatedUserStream
               .firstWhere((user) => user != null)
@@ -64,7 +64,11 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
         if (mounted &&
             !valueOrDefault<bool>(
                 currentUserDocument?.profileComplete, false)) {
-          context.pushNamed(CreateProfileWidget.routeName);
+          // Profile not complete — sign out so the user returns as a guest.
+          // They can go through onboarding again when ready.
+          GoRouter.of(context).prepareAuthEvent();
+          await authManager.signOut();
+          GoRouter.of(context).clearRedirectLocation();
         }
       }
     });
@@ -340,18 +344,25 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                 },
                                                                                 child: ClipRRect(
                                                                                   borderRadius: BorderRadius.circular(40.0),
-                                                                                  child: Image.network(
-                                                                                    rowUsersRecord.photoUrl,
-                                                                                    width: 35.0,
-                                                                                    height: 35.0,
-                                                                                    fit: BoxFit.cover,
-                                                                                    errorBuilder: (context, error, stackTrace) => Image.asset(
-                                                                                      'assets/images/error_image.png',
-                                                                                      width: 35.0,
-                                                                                      height: 35.0,
-                                                                                      fit: BoxFit.cover,
-                                                                                    ),
-                                                                                  ),
+                                                                                  child: rowUsersRecord.photoUrl.isNotEmpty
+                                                                                      ? Image.network(
+                                                                                          rowUsersRecord.photoUrl,
+                                                                                          width: 35.0,
+                                                                                          height: 35.0,
+                                                                                          fit: BoxFit.cover,
+                                                                                          errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                                                            'assets/images/prof_pic.jpg',
+                                                                                            width: 35.0,
+                                                                                            height: 35.0,
+                                                                                            fit: BoxFit.cover,
+                                                                                          ),
+                                                                                        )
+                                                                                      : Image.asset(
+                                                                                          'assets/images/prof_pic.jpg',
+                                                                                          width: 35.0,
+                                                                                          height: 35.0,
+                                                                                          fit: BoxFit.cover,
+                                                                                        ),
                                                                                 ),
                                                                               ),
                                                                               Column(

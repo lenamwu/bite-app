@@ -73,6 +73,9 @@ class EditProfileModel extends FlutterFlowModel<EditProfileWidget> {
 
   // State field(s) for Switch widget.
   bool? switchValue;
+  // Track whether user wants to remove their profile photo
+  bool pendingRemovePhoto = false;
+
   // Stores action output result for [Validate Form] action in Button widget.
   bool? formvalidation;
 

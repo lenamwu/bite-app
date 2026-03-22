@@ -380,24 +380,31 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                 AuthUserStreamWidget(
                                     builder: (context) => ClipRRect(
                                         borderRadius: BorderRadius.circular(50.0),
-                                        child: CachedNetworkImage(
-                                          fadeInDuration:
-                                              Duration(milliseconds: 500),
-                                          fadeOutDuration:
-                                              Duration(milliseconds: 500),
-                                          imageUrl: currentUserPhoto,
-                                          width: 72.0,
-                                          height: 72.0,
-                                          fit: BoxFit.cover,
-                                          errorWidget:
-                                              (context, error, stackTrace) =>
-                                                  Image.asset(
-                                            'assets/images/error_image.png',
-                                            width: 70.0,
-                                            height: 70.0,
-                                            fit: BoxFit.cover,
-                                          ),
-                                        ),
+                                        child: currentUserPhoto.isNotEmpty
+                                            ? CachedNetworkImage(
+                                                fadeInDuration:
+                                                    Duration(milliseconds: 500),
+                                                fadeOutDuration:
+                                                    Duration(milliseconds: 500),
+                                                imageUrl: currentUserPhoto,
+                                                width: 72.0,
+                                                height: 72.0,
+                                                fit: BoxFit.cover,
+                                                errorWidget:
+                                                    (context, error, stackTrace) =>
+                                                        Image.asset(
+                                                  'assets/images/prof_pic.jpg',
+                                                  width: 70.0,
+                                                  height: 70.0,
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              )
+                                            : Image.asset(
+                                                'assets/images/prof_pic.jpg',
+                                                width: 72.0,
+                                                height: 72.0,
+                                                fit: BoxFit.cover,
+                                              ),
                                       ),
                                     ),
                                 Padding(

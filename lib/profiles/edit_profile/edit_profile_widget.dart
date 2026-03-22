@@ -1,6 +1,7 @@
 import '/auth/firebase_auth/auth_util.dart';
 import '/backend/backend.dart';
 import '/backend/firebase_storage/storage.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import '/flutter_flow/flutter_flow_icon_button.dart';
 import '/flutter_flow/flutter_flow_theme.dart';
 import '/flutter_flow/flutter_flow_util.dart';
@@ -132,129 +133,179 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                   padding: EdgeInsetsDirectional.fromSTEB(
                                       2.0, 20.0, 2.0, 2.0),
                                   child: AuthUserStreamWidget(
-                                    builder: (context) => Container(
-                                      width: 150.0,
-                                      height: 150.0,
-                                      clipBehavior: Clip.antiAlias,
-                                      decoration: BoxDecoration(
-                                        shape: BoxShape.circle,
-                                      ),
-                                      child: Image.network(
-                                        currentUserPhoto,
-                                        fit: BoxFit.fitWidth,
-                                        errorBuilder:
-                                            (context, error, stackTrace) =>
-                                                Image.asset(
-                                          'assets/images/error_image.png',
-                                          fit: BoxFit.fitWidth,
+                                    builder: (context) {
+                                      // Show pending image if user selected a new one, otherwise current
+                                      final displayUrl = _model.uploadedFileUrl_uploadDataF1a.isNotEmpty
+                                          ? _model.uploadedFileUrl_uploadDataF1a
+                                          : (_model.pendingRemovePhoto
+                                              ? ''
+                                              : currentUserPhoto);
+                                      return Container(
+                                        width: 150.0,
+                                        height: 150.0,
+                                        clipBehavior: Clip.antiAlias,
+                                        decoration: BoxDecoration(
+                                          shape: BoxShape.circle,
+                                          color: FlutterFlowTheme.of(context).primaryBackground,
                                         ),
-                                      ),
-                                    ),
+                                        child: displayUrl.isNotEmpty
+                                            ? Image.network(
+                                                displayUrl,
+                                                fit: BoxFit.fitWidth,
+                                                errorBuilder:
+                                                    (context, error, stackTrace) =>
+                                                        Image.asset(
+                                                  'assets/images/error_image.png',
+                                                  fit: BoxFit.fitWidth,
+                                                ),
+                                              )
+                                            : Image.asset(
+                                                'assets/images/prof_pic.jpg',
+                                                width: 150.0,
+                                                height: 150.0,
+                                                fit: BoxFit.cover,
+                                              ),
+                                      );
+                                    },
                                   ),
                                 ),
                               ),
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     0.0, 0.0, 0.0, 20.0),
-                                child: FFButtonWidget(
-                                  onPressed: () async {
-                                    final selectedMedia =
-                                        await selectMediaWithSourceBottomSheet(
-                                      context: context,
-                                      maxWidth: 200.00,
-                                      maxHeight: 200.00,
-                                      allowPhoto: true,
-                                    );
-                                    if (selectedMedia != null &&
-                                        selectedMedia.every((m) =>
-                                            validateFileFormat(
-                                                m.storagePath, context))) {
-                                      safeSetState(() =>
-                                          _model.isDataUploading_uploadDataF1a =
-                                              true);
-                                      var selectedUploadedFiles =
-                                          <FFUploadedFile>[];
-
-                                      var downloadUrls = <String>[];
-                                      try {
-                                        selectedUploadedFiles = selectedMedia
-                                            .map((m) => FFUploadedFile(
-                                                  name: m.storagePath
-                                                      .split('/')
-                                                      .last,
-                                                  bytes: m.bytes,
-                                                  height: m.dimensions?.height,
-                                                  width: m.dimensions?.width,
-                                                  blurHash: m.blurHash,
-                                                  originalFilename:
-                                                      m.originalFilename,
-                                                ))
-                                            .toList();
-
-                                        downloadUrls = (await Future.wait(
-                                          selectedMedia.map(
-                                            (m) async => await uploadData(
-                                                m.storagePath, m.bytes),
-                                          ),
-                                        ))
-                                            .where((u) => u != null)
-                                            .map((u) => u!)
-                                            .toList();
-                                      } finally {
-                                        _model.isDataUploading_uploadDataF1a =
-                                            false;
-                                      }
-                                      if (selectedUploadedFiles.length ==
-                                              selectedMedia.length &&
-                                          downloadUrls.length ==
-                                              selectedMedia.length) {
-                                        safeSetState(() {
-                                          _model.uploadedLocalFile_uploadDataF1a =
-                                              selectedUploadedFiles.first;
-                                          _model.uploadedFileUrl_uploadDataF1a =
-                                              downloadUrls.first;
-                                        });
-                                      } else {
-                                        safeSetState(() {});
-                                        return;
-                                      }
-                                    }
-
-                                    await currentUserReference!
-                                        .update(createUsersRecordData(
-                                      photoUrl:
-                                          _model.uploadedFileUrl_uploadDataF1a,
-                                    ));
-                                  },
-                                  text: 'edit picture',
-                                  options: FFButtonOptions(
-                                    height: 50.0,
-                                    padding: EdgeInsetsDirectional.fromSTEB(
-                                        16.0, 0.0, 16.0, 0.0),
-                                    iconPadding: EdgeInsetsDirectional.fromSTEB(
-                                        0.0, 0.0, 0.0, 0.0),
-                                    color: FlutterFlowTheme.of(context)
-                                        .primaryBackground,
-                                    textStyle: FlutterFlowTheme.of(context)
-                                        .titleSmall
-                                        .override(
-                                          fontFamily:
-                                              FlutterFlowTheme.of(context)
-                                                  .titleSmallFamily,
-                                          letterSpacing: 0.0,
-                                          fontWeight: FontWeight.bold,
-                                          useGoogleFonts:
-                                              !FlutterFlowTheme.of(context)
-                                                  .titleSmallIsCustom,
+                                child: Row(
+                                  mainAxisSize: MainAxisSize.min,
+                                  children: [
+                                    FFButtonWidget(
+                                      onPressed: () async {
+                                        final selectedMedia =
+                                            await selectMediaWithSourceBottomSheet(
+                                          context: context,
+                                          maxWidth: 200.00,
+                                          maxHeight: 200.00,
+                                          allowPhoto: true,
+                                        );
+                                        if (selectedMedia != null &&
+                                            selectedMedia.every((m) =>
+                                                validateFileFormat(
+                                                    m.storagePath, context))) {
+                                          safeSetState(() =>
+                                              _model.isDataUploading_uploadDataF1a =
+                                                  true);
+                                          var selectedUploadedFiles =
+                                              <FFUploadedFile>[];
+                                          var downloadUrls = <String>[];
+                                          try {
+                                            selectedUploadedFiles = selectedMedia
+                                                .map((m) => FFUploadedFile(
+                                                      name: m.storagePath
+                                                          .split('/')
+                                                          .last,
+                                                      bytes: m.bytes,
+                                                      height: m.dimensions?.height,
+                                                      width: m.dimensions?.width,
+                                                      blurHash: m.blurHash,
+                                                      originalFilename:
+                                                          m.originalFilename,
+                                                    ))
+                                                .toList();
+                                            downloadUrls = (await Future.wait(
+                                              selectedMedia.map(
+                                                (m) async => await uploadData(
+                                                    m.storagePath, m.bytes),
+                                              ),
+                                            ))
+                                                .where((u) => u != null)
+                                                .map((u) => u!)
+                                                .toList();
+                                          } finally {
+                                            _model.isDataUploading_uploadDataF1a =
+                                                false;
+                                          }
+                                          if (selectedUploadedFiles.length ==
+                                                  selectedMedia.length &&
+                                              downloadUrls.length ==
+                                                  selectedMedia.length) {
+                                            safeSetState(() {
+                                              _model.uploadedLocalFile_uploadDataF1a =
+                                                  selectedUploadedFiles.first;
+                                              _model.uploadedFileUrl_uploadDataF1a =
+                                                  downloadUrls.first;
+                                              _model.pendingRemovePhoto = false;
+                                            });
+                                          }
+                                        }
+                                      },
+                                      text: 'edit picture',
+                                      options: FFButtonOptions(
+                                        height: 50.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmallFamily,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.bold,
+                                              useGoogleFonts:
+                                                  !FlutterFlowTheme.of(context)
+                                                      .titleSmallIsCustom,
+                                            ),
+                                        elevation: 0.0,
+                                        borderSide: BorderSide(
+                                          color:
+                                              FlutterFlowTheme.of(context).primary,
+                                          width: 2.0,
                                         ),
-                                    elevation: 0.0,
-                                    borderSide: BorderSide(
-                                      color:
-                                          FlutterFlowTheme.of(context).primary,
-                                      width: 2.0,
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
                                     ),
-                                    borderRadius: BorderRadius.circular(12.0),
-                                  ),
+                                    SizedBox(width: 8.0),
+                                    FFButtonWidget(
+                                      onPressed: () {
+                                        safeSetState(() {
+                                          _model.pendingRemovePhoto = true;
+                                          _model.uploadedFileUrl_uploadDataF1a = '';
+                                        });
+                                      },
+                                      text: 'remove',
+                                      options: FFButtonOptions(
+                                        height: 50.0,
+                                        padding: EdgeInsetsDirectional.fromSTEB(
+                                            16.0, 0.0, 16.0, 0.0),
+                                        iconPadding: EdgeInsetsDirectional.fromSTEB(
+                                            0.0, 0.0, 0.0, 0.0),
+                                        color: FlutterFlowTheme.of(context)
+                                            .primaryBackground,
+                                        textStyle: FlutterFlowTheme.of(context)
+                                            .titleSmall
+                                            .override(
+                                              fontFamily:
+                                                  FlutterFlowTheme.of(context)
+                                                      .titleSmallFamily,
+                                              color: FlutterFlowTheme.of(context)
+                                                  .error,
+                                              letterSpacing: 0.0,
+                                              fontWeight: FontWeight.bold,
+                                              useGoogleFonts:
+                                                  !FlutterFlowTheme.of(context)
+                                                      .titleSmallIsCustom,
+                                            ),
+                                        elevation: 0.0,
+                                        borderSide: BorderSide(
+                                          color: FlutterFlowTheme.of(context).error,
+                                          width: 2.0,
+                                        ),
+                                        borderRadius: BorderRadius.circular(12.0),
+                                      ),
+                                    ),
+                                  ],
                                 ),
                               ),
                               Align(
@@ -505,7 +556,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                       textCapitalization: TextCapitalization.words,
                                       textInputAction: TextInputAction.done,
                                       decoration: InputDecoration(
-                                        labelText: 'location',
+                                        labelText: 'location(optional)',
                                         labelStyle: FlutterFlowTheme.of(context)
                                             .labelLarge
                                             .override(
@@ -709,18 +760,47 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                 _model.formvalidation = false);
                                             return;
                                           }
+                                          // Handle profile photo changes
+                                          String? newPhotoUrl;
+                                          final oldPhotoUrl = currentUserPhoto;
+                                          if (_model.uploadedFileUrl_uploadDataF1a.isNotEmpty) {
+                                            // User selected a new photo — use it and delete old from Storage
+                                            newPhotoUrl = _model.uploadedFileUrl_uploadDataF1a;
+                                            if (oldPhotoUrl.isNotEmpty) {
+                                              try {
+                                                await FirebaseStorage.instance
+                                                    .refFromURL(oldPhotoUrl)
+                                                    .delete();
+                                              } catch (_) {}
+                                            }
+                                          } else if (_model.pendingRemovePhoto) {
+                                            // User chose to remove photo — set empty and delete old from Storage
+                                            newPhotoUrl = '';
+                                            if (oldPhotoUrl.isNotEmpty) {
+                                              try {
+                                                await FirebaseStorage.instance
+                                                    .refFromURL(oldPhotoUrl)
+                                                    .delete();
+                                              } catch (_) {}
+                                            }
+                                          }
+
                                           if (_model.textController2.text ==
                                               valueOrDefault(
                                                   currentUserDocument?.username,
                                                   '')) {
-                                            await currentUserReference!
-                                                .update(createUsersRecordData(
+                                            final updateData = createUsersRecordData(
                                               displayName:
                                                   _model.textController1.text,
                                               location:
                                                   _model.locationController!.text.trim(),
                                               isPrivate: _model.switchValue,
-                                            ));
+                                            );
+                                            if (newPhotoUrl != null) {
+                                              updateData['photo_url'] = newPhotoUrl;
+                                            }
+                                            await currentUserReference!
+                                                .update(updateData);
 
                                             context.pushNamed(
                                                 ProfilePage2Widget.routeName);
@@ -767,8 +847,7 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                 ),
                                               });
 
-                                              await currentUserReference!
-                                                  .update({
+                                              final userUpdateData = {
                                                 ...createUsersRecordData(
                                                   displayName: _model
                                                       .textController1.text,
@@ -786,7 +865,12 @@ class _EditProfileWidgetState extends State<EditProfileWidget> {
                                                     ]),
                                                   },
                                                 ),
-                                              });
+                                              };
+                                              if (newPhotoUrl != null) {
+                                                userUpdateData['photo_url'] = newPhotoUrl;
+                                              }
+                                              await currentUserReference!
+                                                  .update(userUpdateData);
 
                                               await buttonUsernamesRecord!
                                                   .reference

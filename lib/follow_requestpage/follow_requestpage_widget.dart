@@ -281,22 +281,21 @@ class _FollowRequestpageWidgetState extends State<FollowRequestpageWidget> {
                                                                   shape: BoxShape
                                                                       .circle,
                                                                 ),
-                                                                child: Image
-                                                                    .network(
-                                                                  columnUsersRecord
-                                                                      .photoUrl,
-                                                                  fit: BoxFit
-                                                                      .cover,
-                                                                  errorBuilder: (context,
-                                                                          error,
-                                                                          stackTrace) =>
-                                                                      Image
-                                                                          .asset(
-                                                                    'assets/images/error_image.png',
-                                                                    fit: BoxFit
-                                                                        .cover,
-                                                                  ),
-                                                                ),
+                                                                child: columnUsersRecord.photoUrl.isNotEmpty
+                                                                    ? Image.network(
+                                                                        columnUsersRecord.photoUrl,
+                                                                        fit: BoxFit.cover,
+                                                                        errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                                          'assets/images/prof_pic.jpg',
+                                                                          fit: BoxFit.cover,
+                                                                        ),
+                                                                      )
+                                                                    : Image.asset(
+                                                                        'assets/images/prof_pic.jpg',
+                                                                        width: 200.0,
+                                                                        height: 200.0,
+                                                                        fit: BoxFit.cover,
+                                                                      ),
                                                               ),
                                                             ),
                                                           ),

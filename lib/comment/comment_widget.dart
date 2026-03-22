@@ -272,22 +272,25 @@ class _CommentWidgetState extends State<CommentWidget>
                                                       borderRadius:
                                                           BorderRadius.circular(
                                                               40.0),
-                                                      child: Image.network(
-                                                        commentUsersRecord
-                                                            .photoUrl,
-                                                        width: 40.0,
-                                                        height: 40.0,
-                                                        fit: BoxFit.cover,
-                                                        errorBuilder: (context,
-                                                                error,
-                                                                stackTrace) =>
-                                                            Image.asset(
-                                                          'assets/images/error_image.png',
-                                                          width: 40.0,
-                                                          height: 40.0,
-                                                          fit: BoxFit.cover,
-                                                        ),
-                                                      ),
+                                                      child: commentUsersRecord.photoUrl.isNotEmpty
+                                                          ? Image.network(
+                                                              commentUsersRecord.photoUrl,
+                                                              width: 40.0,
+                                                              height: 40.0,
+                                                              fit: BoxFit.cover,
+                                                              errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                                'assets/images/prof_pic.jpg',
+                                                                width: 40.0,
+                                                                height: 40.0,
+                                                                fit: BoxFit.cover,
+                                                              ),
+                                                            )
+                                                          : Image.asset(
+                                                              'assets/images/prof_pic.jpg',
+                                                              width: 40.0,
+                                                              height: 40.0,
+                                                              fit: BoxFit.cover,
+                                                            ),
                                                     ),
                                                   ),
                                                 ),
@@ -1241,14 +1244,25 @@ class _CommentWidgetState extends State<CommentWidget>
                                                                 BorderRadius
                                                                     .circular(
                                                                         40.0),
-                                                            child:
-                                                                Image.network(
-                                                              listViewCommentsRecord
-                                                                  .profileimage,
-                                                              width: 43.0,
-                                                              height: 43.0,
-                                                              fit: BoxFit.cover,
-                                                            ),
+                                                            child: listViewCommentsRecord.profileimage.isNotEmpty
+                                                                ? Image.network(
+                                                                    listViewCommentsRecord.profileimage,
+                                                                    width: 43.0,
+                                                                    height: 43.0,
+                                                                    fit: BoxFit.cover,
+                                                                    errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                                      'assets/images/prof_pic.jpg',
+                                                                      width: 43.0,
+                                                                      height: 43.0,
+                                                                      fit: BoxFit.cover,
+                                                                    ),
+                                                                  )
+                                                                : Image.asset(
+                                                                    'assets/images/prof_pic.jpg',
+                                                                    width: 43.0,
+                                                                    height: 43.0,
+                                                                    fit: BoxFit.cover,
+                                                                  ),
                                                           ),
                                                         ),
                                                         Expanded(
