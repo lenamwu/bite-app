@@ -638,10 +638,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                     children: [
                                           Stack(
                                             children: [
-                                              Container(
-                                                height: 500.0,
-                                                decoration: BoxDecoration(),
-                                                child: InkWell(
+                                              InkWell(
                                                   splashColor:
                                                       Colors.transparent,
                                                   focusColor:
@@ -656,6 +653,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                     safeSetState(() {});
                                                   },
                                                   child: Column(
+                                                    mainAxisSize: MainAxisSize.min,
                                                     children: [
                                                       Align(
                                                         alignment:
@@ -713,194 +711,106 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                           },
                                                         ),
                                                       ),
-                                                      Expanded(
-                                                        child: TabBarView(
-                                                          controller: _model
-                                                              .tabBarController,
-                                                          children: [
-                                                            Container(
-                                                              width: 100.0,
-                                                              height: double
-                                                                  .infinity,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryBackground,
-                                                              ),
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            20.0),
-                                                                child: Builder(
-                                                                  builder:
-                                                                      (context) {
-                                                                    final ingredients = publicRecipeRecipesRecord
-                                                                        .ingredients
-                                                                        .map((e) =>
-                                                                            e)
-                                                                        .toList();
-
-                                                                    return ListView
-                                                                        .builder(
-                                                                      padding:
-                                                                          EdgeInsets
-                                                                              .zero,
-                                                                      primary:
-                                                                          false,
-                                                                      scrollDirection:
-                                                                          Axis.vertical,
-                                                                      itemCount:
-                                                                          ingredients
-                                                                              .length,
-                                                                      itemBuilder:
-                                                                          (context,
-                                                                              ingredientsIndex) {
-                                                                        final ingredientsItem =
-                                                                            ingredients[ingredientsIndex];
-                                                                        return Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              6.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              InkWell(
-                                                                            splashColor:
-                                                                                Colors.transparent,
-                                                                            focusColor:
-                                                                                Colors.transparent,
-                                                                            hoverColor:
-                                                                                Colors.transparent,
-                                                                            highlightColor:
-                                                                                Colors.transparent,
-                                                                            onTap:
-                                                                                () async {
-                                                                              if (!loggedIn) {
-                                                                                context.pushNamed(OnboardingWidget.routeName);
-                                                                                return;
-                                                                              }
-                                                                              await showModalBottomSheet(
-                                                                                isScrollControlled: true,
-                                                                                backgroundColor: Colors.transparent,
-                                                                                enableDrag: false,
-                                                                                context: context,
-                                                                                builder: (context) {
-                                                                                  return GestureDetector(
-                                                                                    onTap: () {
-                                                                                      FocusScope.of(context).unfocus();
-                                                                                      FocusManager.instance.primaryFocus?.unfocus();
-                                                                                    },
-                                                                                    child: Padding(
-                                                                                      padding: MediaQuery.viewInsetsOf(context),
-                                                                                      child: AddtocartWidget(
-                                                                                        ingredientItem: ingredientsItem,
-                                                                                      ),
-                                                                                    ),
-                                                                                  );
-                                                                                },
-                                                                              ).then((value) => safeSetState(() {}));
-                                                                            },
-                                                                            child:
-                                                                                Text(
-                                                                              ingredientsItem,
-                                                                              style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                    fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                    color: FlutterFlowTheme.of(context).accent1,
-                                                                                    letterSpacing: 0.0,
-                                                                                    fontWeight: FontWeight.bold,
-                                                                                    useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
-                                                                                  ),
-                                                                            ),
-                                                                          ),
-                                                                        );
-                                                                      },
-                                                                    );
-                                                                  },
-                                                                ),
-                                                              ),
-                                                            ),
-                                                            Container(
-                                                              width: 100.0,
-                                                              height: double
-                                                                  .infinity,
-                                                              decoration:
-                                                                  BoxDecoration(
-                                                                color: FlutterFlowTheme.of(
-                                                                        context)
-                                                                    .primaryBackground,
-                                                              ),
-                                                              child: Padding(
-                                                                padding:
-                                                                    EdgeInsetsDirectional
-                                                                        .fromSTEB(
-                                                                            0.0,
-                                                                            0.0,
-                                                                            0.0,
-                                                                            20.0),
-                                                                child: Builder(
-                                                                  builder:
-                                                                      (context) {
-                                                                    final preparation = publicRecipeRecipesRecord
-                                                                        .preparation
-                                                                        .map((e) =>
-                                                                            e)
-                                                                        .toList();
-
-                                                                    return ListView
-                                                                        .builder(
-                                                                      padding:
-                                                                          EdgeInsets
-                                                                              .zero,
-                                                                      primary:
-                                                                          false,
-                                                                      shrinkWrap:
-                                                                          true,
-                                                                      scrollDirection:
-                                                                          Axis.vertical,
-                                                                      itemCount:
-                                                                          preparation
-                                                                              .length,
-                                                                      itemBuilder:
-                                                                          (context,
-                                                                              preparationIndex) {
-                                                                        final preparationItem =
-                                                                            preparation[preparationIndex];
-                                                                        return Padding(
-                                                                          padding: EdgeInsetsDirectional.fromSTEB(
-                                                                              0.0,
-                                                                              6.0,
-                                                                              0.0,
-                                                                              0.0),
-                                                                          child:
-                                                                              Text(
-                                                                            preparationItem,
-                                                                            style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                  color: FlutterFlowTheme.of(context).accent1,
-                                                                                  letterSpacing: 0.0,
-                                                                                  fontWeight: FontWeight.w600,
-                                                                                  useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                      // Conditional content based on selected tab
+                                                      AnimatedBuilder(
+                                                        animation: _model.tabBarController!,
+                                                        builder: (context, _) {
+                                                          if (_model.tabBarController!.index == 0) {
+                                                            // Ingredients tab
+                                                            final ingredients = publicRecipeRecipesRecord.ingredients.map((e) => e).toList();
+                                                            return Padding(
+                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                                                              child: ListView.builder(
+                                                                padding: EdgeInsets.zero,
+                                                                primary: false,
+                                                                shrinkWrap: true,
+                                                                physics: NeverScrollableScrollPhysics(),
+                                                                itemCount: ingredients.length,
+                                                                itemBuilder: (context, ingredientsIndex) {
+                                                                  final ingredientsItem = ingredients[ingredientsIndex];
+                                                                  return Padding(
+                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 6.0, 0.0, 0.0),
+                                                                    child: InkWell(
+                                                                      splashColor: Colors.transparent,
+                                                                      focusColor: Colors.transparent,
+                                                                      hoverColor: Colors.transparent,
+                                                                      highlightColor: Colors.transparent,
+                                                                      onTap: () async {
+                                                                        if (!loggedIn) {
+                                                                          context.pushNamed(OnboardingWidget.routeName);
+                                                                          return;
+                                                                        }
+                                                                        await showModalBottomSheet(
+                                                                          isScrollControlled: true,
+                                                                          backgroundColor: Colors.transparent,
+                                                                          enableDrag: false,
+                                                                          context: context,
+                                                                          builder: (context) {
+                                                                            return GestureDetector(
+                                                                              onTap: () {
+                                                                                FocusScope.of(context).unfocus();
+                                                                                FocusManager.instance.primaryFocus?.unfocus();
+                                                                              },
+                                                                              child: Padding(
+                                                                                padding: MediaQuery.viewInsetsOf(context),
+                                                                                child: AddtocartWidget(
+                                                                                  ingredientItem: ingredientsItem,
                                                                                 ),
-                                                                          ),
-                                                                        );
+                                                                              ),
+                                                                            );
+                                                                          },
+                                                                        ).then((value) => safeSetState(() {}));
                                                                       },
-                                                                    );
-                                                                  },
-                                                                ),
+                                                                      child: Text(
+                                                                        ingredientsItem,
+                                                                        style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                              fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                              color: FlutterFlowTheme.of(context).accent1,
+                                                                              letterSpacing: 0.0,
+                                                                              fontWeight: FontWeight.bold,
+                                                                              useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                                            ),
+                                                                      ),
+                                                                    ),
+                                                                  );
+                                                                },
                                                               ),
-                                                            ),
-                                                          ],
-                                                        ),
+                                                            );
+                                                          } else {
+                                                            // Directions tab
+                                                            final preparation = publicRecipeRecipesRecord.preparation.map((e) => e).toList();
+                                                            return Padding(
+                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                                                              child: ListView.builder(
+                                                                padding: EdgeInsets.zero,
+                                                                primary: false,
+                                                                shrinkWrap: true,
+                                                                physics: NeverScrollableScrollPhysics(),
+                                                                itemCount: preparation.length,
+                                                                itemBuilder: (context, preparationIndex) {
+                                                                  final preparationItem = preparation[preparationIndex];
+                                                                  return Padding(
+                                                                    padding: EdgeInsetsDirectional.fromSTEB(0.0, 6.0, 0.0, 0.0),
+                                                                    child: Text(
+                                                                      preparationItem,
+                                                                      style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                                                            fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                                                            color: FlutterFlowTheme.of(context).accent1,
+                                                                            letterSpacing: 0.0,
+                                                                            fontWeight: FontWeight.w600,
+                                                                            useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                                                          ),
+                                                                    ),
+                                                                  );
+                                                                },
+                                                              ),
+                                                            );
+                                                          }
+                                                        },
                                                       ),
                                                     ],
                                                   ),
                                                 ),
-                                              ),
                                             ],
                                           ),
                                     ],

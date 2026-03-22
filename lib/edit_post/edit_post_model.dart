@@ -57,6 +57,9 @@ class EditPostModel extends FlutterFlowModel<EditPostWidget> {
   String? _addCaptionTextControllerValidator(
       BuildContext context, String? val) {
     if (val == null || val.isEmpty) {
+      if (FFAppState().hasRecipe) {
+        return null; // caption not required when a recipe exists
+      }
       return 'caption is required';
     }
 

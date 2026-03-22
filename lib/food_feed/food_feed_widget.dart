@@ -20,6 +20,7 @@ import 'package:provider/provider.dart';
 import 'food_feed_model.dart';
 export 'food_feed_model.dart';
 import '/components/bite_logo.dart';
+import '/components/comment_bottom_sheet_widget.dart';
 
 class FoodFeedWidget extends StatefulWidget {
   const FoodFeedWidget({super.key});
@@ -494,7 +495,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                             text: '${listViewPostsRecord.displayName} posted a ',
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                                  color: FlutterFlowTheme.of(context).accent1,
+                                                                                                  color: FlutterFlowTheme.of(context).tertiary,
                                                                                                   letterSpacing: 0.0,
                                                                                                   fontSize: 16,
                                                                                                   fontWeight: FontWeight.w600,
@@ -505,7 +506,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                             text: recipeTitle,
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                                  color: FlutterFlowTheme.of(context).tertiary,
+                                                                                                  color: FlutterFlowTheme.of(context).secondaryText,
                                                                                                   letterSpacing: 0.0,
                                                                                                   fontSize: 16,
                                                                                                   fontWeight: FontWeight.w600,
@@ -516,7 +517,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                             text: ' recipe',
                                                                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                                                                  color: FlutterFlowTheme.of(context).accent1,
+                                                                                                  color: FlutterFlowTheme.of(context).tertiary,
                                                                                                   letterSpacing: 0.0,
                                                                                                   fontSize: 16,
                                                                                                   fontWeight: FontWeight.w600,
@@ -649,7 +650,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                 color: FlutterFlowTheme.of(context).accent3,
                                                                                 fontSize: 16.0,
                                                                                 letterSpacing: 0.0,
-                                                                                fontWeight: FontWeight.bold,
+                                                                                fontWeight: FontWeight.w600,
                                                                                 useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                                               ),
                                                                         ),
@@ -852,40 +853,15 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                         ),
                                                                         onPressed:
                                                                             () async {
-                                                                          if (listViewPostsRecord.hasRecipe ==
-                                                                              true) {
-                                                                            context.pushNamed(
-                                                                              CommentRecipeWidget.routeName,
-                                                                              queryParameters: {
-                                                                                'docref': serializeParam(
-                                                                                  listViewPostsRecord.reference,
-                                                                                  ParamType.DocumentReference,
-                                                                                ),
-                                                                                'reciperef': serializeParam(
-                                                                                  listViewPostsRecord.recipeRef,
-                                                                                  ParamType.DocumentReference,
-                                                                                ),
-                                                                                'userref': serializeParam(
-                                                                                  listViewPostsRecord.postUser,
-                                                                                  ParamType.DocumentReference,
-                                                                                ),
-                                                                              }.withoutNulls,
-                                                                            );
-                                                                          } else {
-                                                                            context.pushNamed(
-                                                                              CommentWidget.routeName,
-                                                                              queryParameters: {
-                                                                                'docref': serializeParam(
-                                                                                  listViewPostsRecord.reference,
-                                                                                  ParamType.DocumentReference,
-                                                                                ),
-                                                                                'userref': serializeParam(
-                                                                                  listViewPostsRecord.postUser,
-                                                                                  ParamType.DocumentReference,
-                                                                                ),
-                                                                              }.withoutNulls,
-                                                                            );
-                                                                          }
+                                                                          showModalBottomSheet(
+                                                                            context: context,
+                                                                            isScrollControlled: true,
+                                                                            backgroundColor: Colors.transparent,
+                                                                            builder: (_) => CommentBottomSheetWidget(
+                                                                              postRef: listViewPostsRecord.reference,
+                                                                              postUserRef: listViewPostsRecord.postUser!,
+                                                                            ),
+                                                                          );
                                                                         },
                                                                       ),
                                                                       ToggleIcon(
@@ -1270,6 +1246,12 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                         width: 120.0,
                                                         height: 120.0,
                                                         fit: BoxFit.cover,
+                                                        errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                          'assets/images/error_image.png',
+                                                          width: 120.0,
+                                                          height: 120.0,
+                                                          fit: BoxFit.cover,
+                                                        ),
                                                       );
                                                     }
                                                     return Image.network(
@@ -1277,8 +1259,8 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                       width: 120.0,
                                                       height: 120.0,
                                                       fit: BoxFit.cover,
-                                                      errorBuilder: (context, error, stackTrace) => Image.network(
-                                                        'https://images.weserv.nl/?url=${rowFeaturedListsRecord.image}',
+                                                      errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                        'assets/images/error_image.png',
                                                         width: 120.0,
                                                         height: 120.0,
                                                         fit: BoxFit.cover,
@@ -1291,6 +1273,12 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                   width: 120.0,
                                                   height: 120.0,
                                                   fit: BoxFit.cover,
+                                                  errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                    'assets/images/error_image.png',
+                                                    width: 120.0,
+                                                    height: 120.0,
+                                                    fit: BoxFit.cover,
+                                                  ),
                                                 ),
                                         ),
                                       ),

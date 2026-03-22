@@ -173,7 +173,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                   fontFamily: FlutterFlowTheme.of(context)
                                       .titleMediumFamily,
                                   letterSpacing: 0.0,
-                                  fontSize: 16,
+                                  fontSize: 14,
                                   useGoogleFonts: !FlutterFlowTheme.of(context)
                                       .titleMediumIsCustom,
                                 ),
@@ -1027,6 +1027,12 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                                         width: 120.0,
                                                                                         height: 120.0,
                                                                                         fit: BoxFit.cover,
+                                                                                        errorBuilder: (context, error, stackTrace) => Image.asset(
+                                                                                          'assets/images/error_image.png',
+                                                                                          width: 120.0,
+                                                                                          height: 120.0,
+                                                                                          fit: BoxFit.cover,
+                                                                                        ),
                                                                                       ),
                                                                                     ),
                                                                                   ),

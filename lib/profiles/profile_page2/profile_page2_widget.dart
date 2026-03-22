@@ -785,25 +785,6 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                               ),
                                                           ],
                                                         ),
-                                                        if (listViewPostsRecord.postText.isNotEmpty)
-                                                          Flexible(
-                                                            child: Padding(
-                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 4.0, 0.0, 0.0),
-                                                              child: Text(
-                                                                listViewPostsRecord.postText,
-                                                                maxLines: 1,
-                                                                overflow: TextOverflow.ellipsis,
-                                                                style: FlutterFlowTheme.of(context).bodySmall.override(
-                                                                  fontFamily: FlutterFlowTheme.of(context).bodySmallFamily,
-                                                                  color: FlutterFlowTheme.of(context).tertiary,
-                                                                  letterSpacing: 0.0,
-                                                                  fontWeight: FontWeight.w600,
-                                                                  fontSize: 14,
-                                                                  useGoogleFonts: !FlutterFlowTheme.of(context).bodySmallIsCustom,
-                                                                ),
-                                                              ),
-                                                            ),
-                                                          ),
                                                         if (recipeRecord.notes.isNotEmpty)
                                                           Flexible(
                                                             child: Padding(
