@@ -236,6 +236,11 @@ class _EditPostWidgetState extends State<EditPostWidget> {
 
         final editPostPostsRecord = snapshot.data!;
 
+        // Set hasRecipe early so the caption validator knows a recipe exists
+        if (editPostPostsRecord.hasRecipe == true) {
+          FFAppState().hasRecipe = true;
+        }
+
         return GestureDetector(
           onTap: () {
             FocusScope.of(context).unfocus();

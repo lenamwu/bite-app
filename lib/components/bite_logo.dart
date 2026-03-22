@@ -5,7 +5,7 @@ class BiteLogo extends StatelessWidget {
   const BiteLogo({
     super.key,
     this.fontSize = 22.0,
-    this.fontWeight = FontWeight.w500,
+    this.fontWeight = FontWeight.bold,
     this.opacity = 1.0,
   });
 

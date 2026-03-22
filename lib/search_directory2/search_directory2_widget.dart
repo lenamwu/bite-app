@@ -219,6 +219,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                         12.0, 5.0, 12.0, 0.0),
                                                 child: Container(
                                                   width: double.infinity,
+                                                  height: 49.3,
                                                   child: TextFormField(
                                                     controller:
                                                         _model.textController1,
@@ -267,7 +268,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                     ),
                                                     obscureText: false,
                                                     decoration: InputDecoration(
-                                                      isDense: false,
+                                                      isDense: true,
                                                       labelText:
                                                           'search recipes...',
                                                       labelStyle:
@@ -1302,7 +1303,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                           obscureText: false,
                                                           decoration:
                                                               InputDecoration(
-                                                            isDense: false,
+                                                            isDense: true,
                                                             labelText:
                                                                 'search members...',
                                                             labelStyle:
