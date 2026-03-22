@@ -992,7 +992,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                             width:
                                                                                 125.0,
                                                                             height:
-                                                                                155.0,
+                                                                                163.0,
                                                                             child:
                                                                                 Stack(
                                                                               alignment: AlignmentDirectional(-1.0, -1.0),
@@ -1037,9 +1037,9 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                                           fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                                           color: FlutterFlowTheme.of(context).primary,
-                                                                                          fontSize: 12.0,
+                                                                                          fontSize: 14.0,
                                                                                           letterSpacing: 0.0,
-                                                                                          fontWeight: FontWeight.w600,
+                                                                                          fontWeight: FontWeight.bold,
                                                                                           useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                                                         ),
                                                                                   ),
@@ -1685,6 +1685,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                                   fontFamily: FlutterFlowTheme.of(context).labelMediumFamily,
                                                                                   color: FlutterFlowTheme.of(context).tertiary,
                                                                                   letterSpacing: 0.0,
+                                                                                  fontWeight: FontWeight.w600,
                                                                                   useGoogleFonts: !FlutterFlowTheme.of(context).labelMediumIsCustom,
                                                                                 ),
                                                                           ),
@@ -1874,7 +1875,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                             fontFamily:
                                                                                 FlutterFlowTheme.of(context).bodyLargeFamily,
                                                                             color:
-                                                                                FlutterFlowTheme.of(context).accent3,
+                                                                                FlutterFlowTheme.of(context).primary,
                                                                             letterSpacing:
                                                                                 0.0,
                                                                             fontWeight:
@@ -1907,7 +1908,8 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                             uservariablesItem.username,
                                                                             style: FlutterFlowTheme.of(context).labelMedium.override(
                                                                                   fontFamily: FlutterFlowTheme.of(context).labelMediumFamily,
-                                                                                  color: FlutterFlowTheme.of(context).primary,
+                                                                                  color: FlutterFlowTheme.of(context).tertiary,
+                                                                                  fontWeight: FontWeight.w600,
                                                                                   letterSpacing: 0.0,
                                                                                   useGoogleFonts: !FlutterFlowTheme.of(context).labelMediumIsCustom,
                                                                                 ),

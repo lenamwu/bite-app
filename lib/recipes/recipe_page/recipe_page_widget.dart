@@ -146,7 +146,8 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                                         color:
                                             FlutterFlowTheme.of(context).accent3,
                                         letterSpacing: 0.0,
-                                        fontWeight: FontWeight.w600,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
                                         useGoogleFonts:
                                             !FlutterFlowTheme.of(context)
                                                 .bodyMediumIsCustom,
@@ -181,7 +182,8 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                                     .bodyLargeFamily,
                                 color: FlutterFlowTheme.of(context).primary,
                                 letterSpacing: 0.0,
-                                fontWeight: FontWeight.w600,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold,
                                 useGoogleFonts: !FlutterFlowTheme.of(context)
                                     .bodyLargeIsCustom,
                               ),
@@ -190,7 +192,7 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                       if (loggedIn)
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              120.0, 70.0, 0.0, 0.0),
+                              140.0, 70.0, 0.0, 0.0),
                           child: Text(
                             recipePageRecipesRecordList.length.toString(),
                             style: FlutterFlowTheme.of(context)
@@ -200,7 +202,8 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                                       .bodyLargeFamily,
                                   color: FlutterFlowTheme.of(context).accent3,
                                   letterSpacing: 0.0,
-                                  fontWeight: FontWeight.w600,
+                                  fontSize: 18,
+                                  fontWeight: FontWeight.bold,
                                   useGoogleFonts: !FlutterFlowTheme.of(context)
                                       .bodyLargeIsCustom,
                                 ),
@@ -320,8 +323,8 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                                               color: FlutterFlowTheme.of(context)
                                                   .accent1,
                                               letterSpacing: 0.0,
-                                              fontSize: 12,
-                                              fontWeight: FontWeight.w600,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
                                               useGoogleFonts:
                                                   !FlutterFlowTheme.of(context)
                                                       .bodyMediumIsCustom,
@@ -400,6 +403,7 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                                           color: FlutterFlowTheme.of(context)
                                               .primary,
                                           letterSpacing: 0.0,
+                                          fontSize: 16,
                                           fontWeight: FontWeight.bold,
                                           useGoogleFonts:
                                               !FlutterFlowTheme.of(context)

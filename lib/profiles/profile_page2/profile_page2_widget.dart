@@ -185,7 +185,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                             .bodyLargeFamily,
                                         color: FlutterFlowTheme.of(context)
                                             .primary,
-                                        fontSize: 18.0,
+                                        fontSize: 20.0,
                                         letterSpacing: 0.0,
                                         fontWeight: FontWeight.bold,
                                         useGoogleFonts:
@@ -213,7 +213,8 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                         color: FlutterFlowTheme.of(context)
                                             .accent1,
                                         letterSpacing: 0.0,
-                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.w600,
                                         useGoogleFonts:
                                             !FlutterFlowTheme.of(context)
                                                 .bodyMediumIsCustom,
@@ -265,7 +266,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                       fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                       color: FlutterFlowTheme.of(context).tertiary,
-                                                      fontSize: 16.0,
+                                                      fontSize: 18.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight: FontWeight.bold,
                                                       useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -278,6 +279,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                       fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                       color: FlutterFlowTheme.of(context).secondaryText,
                                                       fontSize: 14.0,
+                                                      fontWeight: FontWeight.w600,
                                                       letterSpacing: 0.0,
                                                       useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                     ),
@@ -316,7 +318,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                 style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                       fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                       color: FlutterFlowTheme.of(context).tertiary,
-                                                      fontSize: 14.0,
+                                                      fontSize: 18.0,
                                                       letterSpacing: 0.0,
                                                       fontWeight: FontWeight.bold,
                                                       useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -329,6 +331,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                       fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                       color: FlutterFlowTheme.of(context).secondaryText,
                                                       fontSize: 14.0,
+                                                      fontWeight: FontWeight.w600,
                                                       letterSpacing: 0.0,
                                                       useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                     ),
@@ -355,7 +358,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                               style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                     fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                     color: FlutterFlowTheme.of(context).customColor4,
-                                                    fontSize: 12.0,
+                                                    fontSize: 14.0,
                                                     fontWeight: FontWeight.w600,
                                                     letterSpacing: 0.0,
                                                     useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -387,22 +390,22 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                 fadeOutDuration:
                                                     Duration(milliseconds: 500),
                                                 imageUrl: currentUserPhoto,
-                                                width: 72.0,
-                                                height: 72.0,
+                                                width: 80.0,
+                                                height: 80.0,
                                                 fit: BoxFit.cover,
                                                 errorWidget:
                                                     (context, error, stackTrace) =>
                                                         Image.asset(
                                                   'assets/images/prof_pic.jpg',
-                                                  width: 70.0,
-                                                  height: 70.0,
+                                                  width: 80.0,
+                                                  height: 80.0,
                                                   fit: BoxFit.cover,
                                                 ),
                                               )
                                             : Image.asset(
                                                 'assets/images/prof_pic.jpg',
-                                                width: 72.0,
-                                                height: 72.0,
+                                                width: 80.0,
+                                                height: 80.0,
                                                 fit: BoxFit.cover,
                                               ),
                                       ),
@@ -435,7 +438,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                               color: FlutterFlowTheme.of(context)
                                                   .accent1,
                                               letterSpacing: 0.0,
-                                              fontWeight: FontWeight.w600,
+                                              fontWeight: FontWeight.bold,
                                               useGoogleFonts:
                                                   !FlutterFlowTheme.of(context)
                                                       .labelLargeIsCustom,
@@ -699,9 +702,9 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                               .override(
                                                                 fontFamily: FlutterFlowTheme.of(context).titleLargeFamily,
                                                                 color: FlutterFlowTheme.of(context).customColor4,
-                                                                fontSize: 14.0,
+                                                                fontSize: 16.0,
                                                                 letterSpacing: 0.0,
-                                                                fontWeight: FontWeight.w600,
+                                                                fontWeight: FontWeight.bold,
                                                                 useGoogleFonts: !FlutterFlowTheme.of(context).titleLargeIsCustom,
                                                               ),
                                                         ),
@@ -724,7 +727,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                       fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                       color: FlutterFlowTheme.of(context).secondaryText,
-                                                                      fontSize: 12.0,
+                                                                      fontSize: 14.0,
                                                                       letterSpacing: 0.0,
                                                                       fontWeight: FontWeight.w600,
                                                                       useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -748,7 +751,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                       fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                       color: FlutterFlowTheme.of(context).tertiary,
-                                                                      fontSize: 12.0,
+                                                                      fontSize: 14.0,
                                                                       letterSpacing: 0.0,
                                                                       fontWeight: FontWeight.w600,
                                                                       useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -772,7 +775,7 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                                     style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                       fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                       color: FlutterFlowTheme.of(context).tertiary,
-                                                                      fontSize: 12.0,
+                                                                      fontSize: 14.0,
                                                                       letterSpacing: 0.0,
                                                                       fontWeight: FontWeight.w600,
                                                                       useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -794,6 +797,8 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                                   fontFamily: FlutterFlowTheme.of(context).bodySmallFamily,
                                                                   color: FlutterFlowTheme.of(context).tertiary,
                                                                   letterSpacing: 0.0,
+                                                                  fontWeight: FontWeight.w600,
+                                                                  fontSize: 14,
                                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodySmallIsCustom,
                                                                 ),
                                                               ),
@@ -811,6 +816,8 @@ class _ProfilePage2WidgetState extends State<ProfilePage2Widget>
                                                                   fontFamily: FlutterFlowTheme.of(context).bodySmallFamily,
                                                                   color: FlutterFlowTheme.of(context).accent1,
                                                                   letterSpacing: 0.0,
+                                                                  fontWeight: FontWeight.w600,
+                                                                  fontSize: 14,
                                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodySmallIsCustom,
                                                                 ),
                                                               ),

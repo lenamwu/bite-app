@@ -227,8 +227,8 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                                             CrossAxisAlignment.start,
                                         children: [
                                           Container(
-                                            width: 46.0,
-                                            height: 46.0,
+                                            width: 55.0,
+                                            height: 55.0,
                                             decoration: BoxDecoration(
                                               shape: BoxShape.circle,
                                               border: Border.all(
@@ -238,24 +238,24 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                                             ),
                                             child: ClipRRect(
                                               borderRadius:
-                                                  BorderRadius.circular(46.0),
+                                                  BorderRadius.circular(55.0),
                                               child: containerUsersRecord.photoUrl.isNotEmpty
                                                   ? Image.network(
                                                       containerUsersRecord.photoUrl,
-                                                      width: 41.0,
-                                                      height: 41.0,
+                                                      width: 55.0,
+                                                      height: 55.0,
                                                       fit: BoxFit.cover,
                                                       errorBuilder: (context, error, stackTrace) => Image.asset(
                                                         'assets/images/prof_pic.jpg',
-                                                        width: 41.0,
-                                                        height: 41.0,
+                                                        width: 55.0,
+                                                        height: 55.0,
                                                         fit: BoxFit.cover,
                                                       ),
                                                     )
                                                   : Image.asset(
                                                       'assets/images/prof_pic.jpg',
-                                                      width: 41.0,
-                                                      height: 41.0,
+                                                      width: 55.0,
+                                                      height: 55.0,
                                                       fit: BoxFit.cover,
                                                     ),
                                             ),
@@ -264,7 +264,7 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                                             child: Padding(
                                               padding: EdgeInsetsDirectional
                                                   .fromSTEB(
-                                                      10.0, 0.0, 0.0, 0.0),
+                                                      10.0, 3.0, 0.0, 0.0),
                                               child: Column(
                                                 mainAxisSize: MainAxisSize.min,
                                                 crossAxisAlignment:
@@ -284,6 +284,7 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                                                           color: FlutterFlowTheme.of(
                                                                   context)
                                                               .tertiary,
+                                                          fontSize: 16.0,
                                                           letterSpacing: 0.0,
                                                           fontWeight:
                                                               FontWeight.bold,
@@ -307,6 +308,7 @@ class _FollowinglistWidgetState extends State<FollowinglistWidget> {
                                                           color: FlutterFlowTheme.of(
                                                                   context)
                                                               .primary,
+                                                          fontSize: 14.0,
                                                           letterSpacing: 0.0,
                                                           useGoogleFonts:
                                                               !FlutterFlowTheme

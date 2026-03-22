@@ -224,8 +224,8 @@ class _FollowerslistWidgetState extends State<FollowerslistWidget> {
                                               CrossAxisAlignment.start,
                                           children: [
                                             Container(
-                                              width: 46.0,
-                                              height: 46.0,
+                                              width: 55.0,
+                                              height: 55.0,
                                               decoration: BoxDecoration(
                                                 shape: BoxShape.circle,
                                                 border: Border.all(
@@ -236,24 +236,24 @@ class _FollowerslistWidgetState extends State<FollowerslistWidget> {
                                               child: ClipRRect(
                                                 borderRadius:
                                                     BorderRadius.circular(
-                                                        46.0),
+                                                        55.0),
                                                 child: containerUsersRecord.photoUrl.isNotEmpty
                                                     ? Image.network(
                                                         containerUsersRecord.photoUrl,
-                                                        width: 41.0,
-                                                        height: 41.0,
+                                                        width: 55.0,
+                                                        height: 55.0,
                                                         fit: BoxFit.cover,
                                                         errorBuilder: (context, error, stackTrace) => Image.asset(
                                                           'assets/images/prof_pic.jpg',
-                                                          width: 41.0,
-                                                          height: 41.0,
+                                                          width: 55.0,
+                                                          height: 55.0,
                                                           fit: BoxFit.cover,
                                                         ),
                                                       )
                                                     : Image.asset(
                                                         'assets/images/prof_pic.jpg',
-                                                        width: 41.0,
-                                                        height: 41.0,
+                                                        width: 55.0,
+                                                        height: 55.0,
                                                         fit: BoxFit.cover,
                                                       ),
                                               ),
@@ -262,7 +262,7 @@ class _FollowerslistWidgetState extends State<FollowerslistWidget> {
                                               child: Padding(
                                                 padding: EdgeInsetsDirectional
                                                     .fromSTEB(
-                                                        10.0, 0.0, 0.0, 0.0),
+                                                        10.0, 3.0, 0.0, 0.0),
                                                 child: Column(
                                                   mainAxisSize:
                                                       MainAxisSize.min,
@@ -287,6 +287,7 @@ class _FollowerslistWidgetState extends State<FollowerslistWidget> {
                                                                     0.0,
                                                                 fontWeight:
                                                                     FontWeight.bold,
+                                                                    fontSize: 16,
                                                                 useGoogleFonts:
                                                                     !FlutterFlowTheme.of(
                                                                             context)
@@ -308,6 +309,8 @@ class _FollowerslistWidgetState extends State<FollowerslistWidget> {
                                                                     context)
                                                                 .primary,
                                                             letterSpacing: 0.0,
+                                                            fontSize:14,
+                                                            fontWeight: FontWeight.w600,
                                                             useGoogleFonts:
                                                                 !FlutterFlowTheme.of(
                                                                         context)

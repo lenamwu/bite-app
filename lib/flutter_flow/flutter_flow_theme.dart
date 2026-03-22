@@ -172,27 +172,27 @@ class LightModeTheme extends FlutterFlowTheme {
   Color get tertiaryColor => tertiary;
 
   late Color primary = const Color.fromARGB(255, 116, 184, 247);
-  late Color secondary = const Color.fromARGB(255, 255, 185, 243);
+  late Color secondary = const Color.fromARGB(255, 255, 177, 242);
   // original lavendary 255, 209, 158, 255
-  late Color tertiary = const Color.fromARGB(255, 209, 158, 255);
-  late Color alternate = const Color.fromARGB(255, 209, 158, 255);
+  late Color tertiary = const Color.fromARGB(255, 197, 139, 247);
+  late Color alternate = const Color.fromARGB(255, 197, 139, 247);
   late Color primaryText = const Color.fromARGB(255, 116, 184, 247);
-  late Color secondaryText = const Color.fromARGB(255, 255, 185, 243);
+  late Color secondaryText = const Color.fromARGB(255, 255, 177, 242);
   late Color primaryBackground = const Color(0xFFFFFFFF);
   late Color secondaryBackground = const Color(0xFFFFFFFF);
-  late Color accent1 = const Color.fromARGB(255, 141, 182, 102);
-  late Color accent2 = const Color.fromARGB(255, 141, 182, 102);
-  late Color accent3 = const Color.fromARGB(255, 141, 182, 102);
-  late Color accent4 = const Color.fromARGB(255, 141, 182, 102);
-  late Color success = const Color.fromARGB(255, 141, 182, 102);
-  late Color warning = const Color.fromARGB(255, 141, 182, 102);
+  late Color accent1 = const Color.fromARGB(255, 130, 169, 94);
+  late Color accent2 = const Color.fromARGB(255, 130, 169, 94);
+  late Color accent3 = const Color.fromARGB(255, 130, 169, 94);
+  late Color accent4 = const Color.fromARGB(255, 130, 169, 94);
+  late Color success = const Color.fromARGB(255, 130, 169, 94);
+  late Color warning = const Color.fromARGB(255, 130, 169, 94);
   late Color error = const Color(0xFFFF5963);
-  late Color info = const Color.fromARGB(255, 141, 182, 102);
+  late Color info = const Color.fromARGB(255, 130, 169, 94);
 
   late Color customColor1 = const Color(0xFF9C175F);
   late Color customColor2 = const Color(0xFF660000);
   late Color customColor3 = const Color(0xFF000000);
-  late Color customColor4 = const Color.fromARGB(137, 0, 0, 0);
+  late Color customColor4 = const Color.fromARGB(162, 0, 0, 0);
 }
 
 abstract class Typography {
