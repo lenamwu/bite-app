@@ -132,9 +132,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
             name: CommentWidget.routeName,
             path: CommentWidget.routePath,
-            builder: (context, params) => NavBarPage(
-                  initialPage: '',
-                  page: CommentWidget(
+            builder: (context, params) => CommentWidget(
                     docref: params.getParam(
                       'docref',
                       ParamType.DocumentReference,
@@ -147,8 +145,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                       isList: false,
                       collectionNamePath: ['users'],
                     ),
-                  ),
-                )),
+                  )),
         FFRoute(
           name: EditProfileWidget.routeName,
           path: EditProfileWidget.routePath,
@@ -223,9 +220,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
         FFRoute(
             name: CommentRecipeWidget.routeName,
             path: CommentRecipeWidget.routePath,
-            builder: (context, params) => NavBarPage(
-                  initialPage: '',
-                  page: CommentRecipeWidget(
+            builder: (context, params) => CommentRecipeWidget(
                     docref: params.getParam(
                       'docref',
                       ParamType.DocumentReference,
@@ -244,8 +239,7 @@ GoRouter createRouter(AppStateNotifier appStateNotifier) => GoRouter(
                       isList: false,
                       collectionNamePath: ['users'],
                     ),
-                  ),
-                )),
+                  )),
         FFRoute(
           name: NotificationWidget.routeName,
           path: NotificationWidget.routePath,
