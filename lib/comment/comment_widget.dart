@@ -1244,9 +1244,15 @@ class _CommentWidgetState extends State<CommentWidget>
                                                                 BorderRadius
                                                                     .circular(
                                                                         40.0),
-                                                            child: listViewCommentsRecord.profileimage.isNotEmpty
-                                                                ? Image.network(
-                                                                    listViewCommentsRecord.profileimage,
+                                                            child: FutureBuilder<UsersRecord>(
+                                                              future: listViewCommentsRecord.userref != null
+                                                                  ? UsersRecord.getDocumentOnce(listViewCommentsRecord.userref!)
+                                                                  : null,
+                                                              builder: (context, userSnap) {
+                                                                final photoUrl = userSnap.data?.photoUrl ?? '';
+                                                                if (photoUrl.isNotEmpty) {
+                                                                  return Image.network(
+                                                                    photoUrl,
                                                                     width: 43.0,
                                                                     height: 43.0,
                                                                     fit: BoxFit.cover,
@@ -1256,13 +1262,16 @@ class _CommentWidgetState extends State<CommentWidget>
                                                                       height: 43.0,
                                                                       fit: BoxFit.cover,
                                                                     ),
-                                                                  )
-                                                                : Image.asset(
-                                                                    'assets/images/prof_pic.jpg',
-                                                                    width: 43.0,
-                                                                    height: 43.0,
-                                                                    fit: BoxFit.cover,
-                                                                  ),
+                                                                  );
+                                                                }
+                                                                return Image.asset(
+                                                                  'assets/images/prof_pic.jpg',
+                                                                  width: 43.0,
+                                                                  height: 43.0,
+                                                                  fit: BoxFit.cover,
+                                                                );
+                                                              },
+                                                            ),
                                                           ),
                                                         ),
                                                         Expanded(
@@ -1411,7 +1420,37 @@ class _CommentWidgetState extends State<CommentWidget>
                                                               hoverColor: Colors.transparent,
                                                               highlightColor: Colors.transparent,
                                                               onTap: () async {
+                                                                // Delete the comment
                                                                 await listViewCommentsRecord.reference.delete();
+
+                                                                // Clean up notification
+                                                                if (listViewCommentsRecord.postref != null) {
+                                                                  try {
+                                                                    final postDoc = await listViewCommentsRecord.postref!.get();
+                                                                    if (postDoc.exists) {
+                                                                      final postUser = (postDoc.data() as Map<String, dynamic>?)?['postUser'] as DocumentReference?;
+                                                                      if (postUser != null) {
+                                                                        final notifQuery = await queryNotificationsRecordOnce(
+                                                                          parent: postUser,
+                                                                          queryBuilder: (q) => q
+                                                                              .where('type', isEqualTo: 'comment')
+                                                                              .where('fromUser', isEqualTo: currentUserReference)
+                                                                              .where('post', isEqualTo: listViewCommentsRecord.postref),
+                                                                        );
+                                                                        for (final notif in notifQuery) {
+                                                                          if (notif.seen == false) {
+                                                                            await postUser.update(mapToFirestore({
+                                                                              'unseenNotifications': FieldValue.increment(-1),
+                                                                            }));
+                                                                          }
+                                                                          await notif.reference.delete();
+                                                                        }
+                                                                      }
+                                                                    }
+                                                                  } catch (e) {
+                                                                    // Silently handle cleanup errors
+                                                                  }
+                                                                }
                                                               },
                                                               child: Padding(
                                                                 padding: EdgeInsetsDirectional.fromSTEB(8.0, 10.0, 0.0, 0.0),

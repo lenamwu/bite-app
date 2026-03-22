@@ -249,6 +249,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                           [currentUserReference]),
                                     },
                                   ),
+                                  'saved_timestamps.$currentUserUid': FieldValue.serverTimestamp(),
                                 });
                               } else {
                                 // If this is a forked copy, delete it entirely
@@ -265,6 +266,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                           [currentUserReference]),
                                     },
                                   ),
+                                  'saved_timestamps.$currentUserUid': FieldValue.delete(),
                                 });
                               }
                             },

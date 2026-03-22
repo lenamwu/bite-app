@@ -101,6 +101,11 @@ class RecipesRecord extends FirestoreRecord {
   DocumentReference? get forkedFrom => _forkedFrom;
   bool hasForkedFrom() => _forkedFrom != null;
 
+  // "saved_timestamps" field.
+  Map<String, DateTime>? _savedTimestamps;
+  Map<String, DateTime> get savedTimestamps => _savedTimestamps ?? const {};
+  bool hasSavedTimestamps() => _savedTimestamps != null;
+
   void _initializeFields() {
     _title = snapshotData['title'] as String?;
     _notes = snapshotData['notes'] as String?;
@@ -119,6 +124,11 @@ class RecipesRecord extends FirestoreRecord {
     _usercreated = snapshotData['usercreated'] as bool?;
     _rating = castToType<double>(snapshotData['rating']);
     _forkedFrom = snapshotData['forked_from'] as DocumentReference?;
+    final savedTimestampsData = snapshotData['saved_timestamps'] as Map<String, dynamic>?;
+    if (savedTimestampsData != null) {
+      _savedTimestamps = savedTimestampsData.map((key, value) =>
+          MapEntry(key, (value as Timestamp).toDate()));
+    }
   }
 
   static CollectionReference get collection =>

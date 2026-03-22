@@ -154,7 +154,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                           .bodyLargeFamily,
                                       color:
                                           FlutterFlowTheme.of(context).primary,
-                                      fontSize: 18.0,
+                                      fontSize: 20.0,
                                       letterSpacing: 0.0,
                                       fontWeight: FontWeight.bold,
                                       useGoogleFonts:
@@ -168,7 +168,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                             alignment: AlignmentDirectional(-1.0, -1.0),
                             child: Padding(
                               padding: EdgeInsetsDirectional.fromSTEB(
-                                  90.0, 22.0, 0.0, 0.0),
+                                  90.0, 24.0, 0.0, 0.0),
                               child: Text(
                                 searchedProfilePageUsersRecord.username,
                                 style: FlutterFlowTheme.of(context)
@@ -179,7 +179,8 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                       color:
                                           FlutterFlowTheme.of(context).accent1,
                                       letterSpacing: 0.0,
-                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                      fontWeight: FontWeight.w600,
                                       useGoogleFonts:
                                           !FlutterFlowTheme.of(context)
                                               .bodyMediumIsCustom,
@@ -189,7 +190,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                           ),
                           Padding(
                             padding: EdgeInsetsDirectional.fromSTEB(
-                                90.0, 44.0, 0.0, 0.0),
+                                90.0, 48.0, 0.0, 0.0),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               mainAxisSize: MainAxisSize.min,
@@ -230,7 +231,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                   color: FlutterFlowTheme.of(context).tertiary,
-                                                  fontSize: 16.0,
+                                                  fontSize: 18.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -243,6 +244,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                   fontSize: 14.0,
+                                                  fontWeight: FontWeight.w600,
                                                   letterSpacing: 0.0,
                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                 ),
@@ -284,7 +286,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                             style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                   color: FlutterFlowTheme.of(context).tertiary,
-                                                  fontSize: 16.0,
+                                                  fontSize: 18.0,
                                                   letterSpacing: 0.0,
                                                   fontWeight: FontWeight.bold,
                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -297,6 +299,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                                   fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                   color: FlutterFlowTheme.of(context).secondaryText,
                                                   fontSize: 14.0,
+                                                  fontWeight: FontWeight.w600,
                                                   letterSpacing: 0.0,
                                                   useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
                                                 ),
@@ -477,63 +480,53 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                           ),
                                         });
                                       } else {
-                                        await searchedProfilePageUsersRecord
-                                            .reference
-                                            .update({
-                                          ...mapToFirestore(
-                                            {
-                                              'users_following_me':
-                                                  FieldValue.arrayUnion(
-                                                      [currentUserReference]),
-                                            },
-                                          ),
-                                        });
+                                        final batch = FirebaseFirestore.instance.batch();
 
-                                        await currentUserReference!.update({
-                                          ...mapToFirestore(
-                                            {
-                                              'following_users':
-                                                  FieldValue.arrayUnion([
-                                                searchedProfilePageUsersRecord
-                                                    .reference
-                                              ]),
-                                            },
-                                          ),
-                                        });
+                                        batch.update(
+                                          searchedProfilePageUsersRecord.reference,
+                                          {
+                                            ...mapToFirestore({
+                                              'users_following_me': FieldValue.arrayUnion([currentUserReference]),
+                                            }),
+                                            ...mapToFirestore({
+                                              'unseenNotifications': FieldValue.increment(1),
+                                            }),
+                                          },
+                                        );
+
+                                        batch.update(
+                                          currentUserReference!,
+                                          mapToFirestore({
+                                            'following_users': FieldValue.arrayUnion([
+                                              searchedProfilePageUsersRecord.reference
+                                            ]),
+                                          }),
+                                        );
 
                                         var notificationsRecordReference2 =
                                             NotificationsRecord.createDoc(
-                                                searchedProfilePageUsersRecord
-                                                    .reference);
-                                        await notificationsRecordReference2
-                                            .set(createNotificationsRecordData(
-                                          type: 'follow',
-                                          fromUser: currentUserReference,
-                                          createdAt: getCurrentTimestamp,
-                                          seen: false,
-                                        ));
+                                                searchedProfilePageUsersRecord.reference);
+                                        batch.set(
+                                          notificationsRecordReference2,
+                                          createNotificationsRecordData(
+                                            type: 'follow',
+                                            fromUser: currentUserReference,
+                                            createdAt: getCurrentTimestamp,
+                                            seen: false,
+                                          ),
+                                        );
+
+                                        await batch.commit();
+
                                         _model.follownotification =
                                             NotificationsRecord.getDocumentFromData(
                                                 createNotificationsRecordData(
                                                   type: 'follow',
-                                                  fromUser:
-                                                      currentUserReference,
-                                                  createdAt:
-                                                      getCurrentTimestamp,
+                                                  fromUser: currentUserReference,
+                                                  createdAt: getCurrentTimestamp,
                                                   seen: false,
                                                 ),
                                                 notificationsRecordReference2);
-
-                                        await searchedProfilePageUsersRecord
-                                            .reference
-                                            .update({
-                                          ...mapToFirestore(
-                                            {
-                                              'unseenNotifications':
-                                                  FieldValue.increment(1),
-                                            },
-                                          ),
-                                        });
                                       }
 
                                       safeSetState(() {});
@@ -588,30 +581,26 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                   child: AuthUserStreamWidget(
                                     builder: (context) => FFButtonWidget(
                                       onPressed: () async {
-                                        // Remove from follow arrays
-                                        await searchedProfilePageUsersRecord
-                                            .reference
-                                            .update({
-                                          ...mapToFirestore(
-                                            {
-                                              'users_following_me':
-                                                  FieldValue.arrayRemove(
-                                                      [currentUserReference]),
-                                            },
-                                          ),
-                                        });
+                                        // Batch the follow array removals
+                                        final batch = FirebaseFirestore.instance.batch();
 
-                                        await currentUserReference!.update({
-                                          ...mapToFirestore(
-                                            {
-                                              'following_users':
-                                                  FieldValue.arrayRemove([
-                                                searchedProfilePageUsersRecord
-                                                    .reference
-                                              ]),
-                                            },
-                                          ),
-                                        });
+                                        batch.update(
+                                          searchedProfilePageUsersRecord.reference,
+                                          mapToFirestore({
+                                            'users_following_me': FieldValue.arrayRemove([currentUserReference]),
+                                          }),
+                                        );
+
+                                        batch.update(
+                                          currentUserReference!,
+                                          mapToFirestore({
+                                            'following_users': FieldValue.arrayRemove([
+                                              searchedProfilePageUsersRecord.reference
+                                            ]),
+                                          }),
+                                        );
+
+                                        await batch.commit();
 
                                         // Clean up follow request if private profile
                                         if (rowFollowRequestsRecord?.reference != null) {
@@ -1013,9 +1002,9 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                                                     .override(
                                                                       fontFamily: FlutterFlowTheme.of(context).titleLargeFamily,
                                                                       color: FlutterFlowTheme.of(context).customColor4,
-                                                                      fontSize: 14.0,
+                                                                      fontSize: 16.0,
                                                                       letterSpacing: 0.0,
-                                                                      fontWeight: FontWeight.w600,
+                                                                      fontWeight: FontWeight.bold,
                                                                       useGoogleFonts: !FlutterFlowTheme.of(context).titleLargeIsCustom,
                                                                     ),
                                                               ),
@@ -1038,7 +1027,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                             fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                             color: FlutterFlowTheme.of(context).secondaryText,
-                                                                            fontSize: 12.0,
+                                                                            fontSize: 14.0,
                                                                             letterSpacing: 0.0,
                                                                             fontWeight: FontWeight.w600,
                                                                             useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -1062,7 +1051,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                             fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                             color: FlutterFlowTheme.of(context).tertiary,
-                                                                            fontSize: 12.0,
+                                                                            fontSize: 14.0,
                                                                             letterSpacing: 0.0,
                                                                             fontWeight: FontWeight.w600,
                                                                             useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -1086,7 +1075,7 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                                                           style: FlutterFlowTheme.of(context).bodyMedium.override(
                                                                             fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
                                                                             color: FlutterFlowTheme.of(context).tertiary,
-                                                                            fontSize: 12.0,
+                                                                            fontSize: 14.0,
                                                                             letterSpacing: 0.0,
                                                                             fontWeight: FontWeight.w600,
                                                                             useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
@@ -1108,6 +1097,8 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                                                         fontFamily: FlutterFlowTheme.of(context).bodySmallFamily,
                                                                         color: FlutterFlowTheme.of(context).tertiary,
                                                                         letterSpacing: 0.0,
+                                                                        fontWeight: FontWeight.w600,
+                                                                        fontSize: 14,
                                                                         useGoogleFonts: !FlutterFlowTheme.of(context).bodySmallIsCustom,
                                                                       ),
                                                                     ),
@@ -1125,6 +1116,8 @@ class _SearchedProfilePageWidgetState extends State<SearchedProfilePageWidget>
                                                                         fontFamily: FlutterFlowTheme.of(context).bodySmallFamily,
                                                                         color: FlutterFlowTheme.of(context).accent1,
                                                                         letterSpacing: 0.0,
+                                                                        fontSize: 14,
+                                                                        fontWeight: FontWeight.w600,
                                                                         useGoogleFonts: !FlutterFlowTheme.of(context).bodySmallIsCustom,
                                                                       ),
                                                                     ),

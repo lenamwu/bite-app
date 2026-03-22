@@ -114,6 +114,12 @@ class _AddToCookbookWidgetState extends State<AddToCookbookWidget> {
                                     width: 180.0,
                                     height: 180.0,
                                     fit: BoxFit.cover,
+                                    errorBuilder: (context, error, stackTrace) => Container(
+                                      width: 180.0,
+                                      height: 180.0,
+                                      color: FlutterFlowTheme.of(context).primaryBackground,
+                                      child: Icon(Icons.broken_image, size: 40.0),
+                                    ),
                                   ),
                                   Positioned(
                                     top: 6.0,

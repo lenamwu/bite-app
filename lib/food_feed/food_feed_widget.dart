@@ -397,6 +397,8 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                                                           },
                                                                                           child: Text(
                                                                                             rowUsersRecord.displayName,
+                                                                                            maxLines: 1,
+                                                                                            overflow: TextOverflow.ellipsis,
                                                                                             style: FlutterFlowTheme.of(context).bodyLarge.override(
                                                                                                   fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
                                                                                                   color: FlutterFlowTheme.of(context).primary,
@@ -1185,7 +1187,7 @@ class _FoodFeedWidgetState extends State<FoodFeedWidget> {
                                                 .primary,
                                             letterSpacing: 0.0,
                                             fontSize: 16,
-                                            fontWeight: FontWeight.w600,
+                                            fontWeight: FontWeight.bold,
                                             useGoogleFonts:
                                                 !FlutterFlowTheme.of(context)
                                                     .bodyLargeIsCustom,

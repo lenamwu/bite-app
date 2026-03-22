@@ -865,6 +865,7 @@ class _EditSavedRecipeWidgetState extends State<EditSavedRecipeWidget> {
                                       'recipe_saved_by': [currentUserReference],
                                       'time_generated': FieldValue.serverTimestamp(),
                                     }),
+                                    'saved_timestamps.$currentUserUid': FieldValue.serverTimestamp(),
                                   });
 
                                   // Remove user from original recipe's saved_by
@@ -873,6 +874,7 @@ class _EditSavedRecipeWidgetState extends State<EditSavedRecipeWidget> {
                                       'recipe_saved_by': FieldValue.arrayRemove(
                                           [currentUserReference]),
                                     }),
+                                    'saved_timestamps.$currentUserUid': FieldValue.delete(),
                                   });
 
                                   if (!context.mounted) return;

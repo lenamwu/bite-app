@@ -17,6 +17,9 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 class RecipePageModel extends FlutterFlowModel<RecipePageWidget> {
+  /// Number of recipes currently visible (pagination)
+  int visibleCount = 12;
+
   /// Query cache managers for this widget.
 
   final _recipesavedManager = StreamRequestManager<List<RecipesRecord>>();

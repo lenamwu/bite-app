@@ -86,7 +86,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
     return StreamBuilder<List<UsersRecord>>(
       stream: queryUsersRecord(
         queryBuilder: (usersRecord) =>
-            usersRecord.orderBy('username', descending: true),
+            usersRecord.orderBy('username', descending: true).limit(15),
       ),
       builder: (context, snapshot) {
         // Customize what your widget looks like when it's loading.
@@ -173,6 +173,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                   fontFamily: FlutterFlowTheme.of(context)
                                       .titleMediumFamily,
                                   letterSpacing: 0.0,
+                                  fontSize: 16,
                                   useGoogleFonts: !FlutterFlowTheme.of(context)
                                       .titleMediumIsCustom,
                                 ),
@@ -279,7 +280,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                     .bodyLargeFamily,
                                                                 letterSpacing:
                                                                     0.0,
-                                                                fontWeight: FontWeight.w600,
+                                                                fontWeight: FontWeight.bold,
                                                                 useGoogleFonts:
                                                                     !FlutterFlowTheme.of(
                                                                             context)
@@ -1309,9 +1310,10 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                                       color: FlutterFlowTheme.of(
                                                                               context)
                                                                           .primary,
+                                                                      fontSize: 16,
                                                                       letterSpacing:
                                                                           0.0,
-                                                                      fontWeight: FontWeight.w600,
+                                                                      fontWeight: FontWeight.bold,
                                                                       useGoogleFonts:
                                                                           !FlutterFlowTheme.of(context)
                                                                               .labelLargeIsCustom,
@@ -1470,7 +1472,7 @@ class _SearchDirectory2WidgetState extends State<SearchDirectory2Widget>
                                                           .labelMediumFamily,
                                                   fontSize: 16.0,
                                                   letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
+                                                  fontWeight: FontWeight.bold,
                                                   useGoogleFonts:
                                                       !FlutterFlowTheme.of(
                                                               context)

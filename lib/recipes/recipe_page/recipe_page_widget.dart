@@ -92,7 +92,16 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
             ),
           );
         }
-        List<RecipesRecord> recipePageRecipesRecordList = snapshot.data!;
+        List<RecipesRecord> recipePageRecipesRecordList = List.from(snapshot.data!);
+        // Sort by saved timestamp (most recently saved first), fall back to time_generated
+        recipePageRecipesRecordList.sort((a, b) {
+          final aTime = a.savedTimestamps[currentUserUid] ?? a.timeGenerated;
+          final bTime = b.savedTimestamps[currentUserUid] ?? b.timeGenerated;
+          if (aTime == null && bTime == null) return 0;
+          if (aTime == null) return 1;
+          if (bTime == null) return -1;
+          return bTime.compareTo(aTime);
+        });
 
         return GestureDetector(
           onTap: () {
@@ -180,9 +189,9 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                               .override(
                                 fontFamily: FlutterFlowTheme.of(context)
                                     .bodyLargeFamily,
-                                color: FlutterFlowTheme.of(context).primary,
+                                color: FlutterFlowTheme.of(context).tertiary,
                                 letterSpacing: 0.0,
-                                fontSize: 18,
+                                fontSize: 16,
                                 fontWeight: FontWeight.bold,
                                 useGoogleFonts: !FlutterFlowTheme.of(context)
                                     .bodyLargeIsCustom,
@@ -192,7 +201,7 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                       if (loggedIn)
                         Padding(
                           padding: EdgeInsetsDirectional.fromSTEB(
-                              140.0, 70.0, 0.0, 0.0),
+                              125.0, 70.0, 0.0, 0.0),
                           child: Text(
                             recipePageRecipesRecordList.length.toString(),
                             style: FlutterFlowTheme.of(context)
@@ -202,7 +211,7 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                                       .bodyLargeFamily,
                                   color: FlutterFlowTheme.of(context).accent3,
                                   letterSpacing: 0.0,
-                                  fontSize: 18,
+                                  fontSize: 16,
                                   fontWeight: FontWeight.bold,
                                   useGoogleFonts: !FlutterFlowTheme.of(context)
                                       .bodyLargeIsCustom,
@@ -214,7 +223,7 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                   if (loggedIn && (recipePageRecipesRecordList.isNotEmpty))
                     Padding(
                       padding:
-                          EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 90.0),
+                          EdgeInsetsDirectional.fromSTEB(0.0, 100.0, 0.0, 0.0),
                       child: GridView.builder(
                             padding: EdgeInsets.zero,
                             gridDelegate:
@@ -223,7 +232,7 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                               childAspectRatio: 0.76,
                             ),
                             scrollDirection: Axis.vertical,
-                            itemCount: recipePageRecipesRecordList.length,
+                            itemCount: recipePageRecipesRecordList.length.clamp(0, _model.visibleCount),
                             itemBuilder: (context, gridViewIndex) {
                               final gridViewRecipesRecord =
                                   recipePageRecipesRecordList[gridViewIndex];
@@ -337,6 +346,29 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
                               );
                             },
                           ),
+                    ),
+                  if (loggedIn && recipePageRecipesRecordList.length > _model.visibleCount)
+                    Padding(
+                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 90.0),
+                      child: Center(
+                        child: TextButton(
+                          onPressed: () {
+                            safeSetState(() {
+                              _model.visibleCount += 12;
+                            });
+                          },
+                          child: Text(
+                            'Load More',
+                            style: FlutterFlowTheme.of(context).bodyMedium.override(
+                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
+                                  color: FlutterFlowTheme.of(context).tertiary,
+                                  fontSize: 14.0,
+                                  fontWeight: FontWeight.w600,
+                                  useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
+                                ),
+                          ),
+                        ),
+                      ),
                     ),
                   Padding(
                     padding:
