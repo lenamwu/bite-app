@@ -1445,7 +1445,9 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                   if (_model.tabBarController!.index == 0) {
                                                                     // Ingredients tab
                                                                     final ingredients = columnRecipesRecord.ingredients.map((e) => e).toList();
-                                                                    return ListView.builder(
+                                                                    return Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
+                                                                      child: ListView.builder(
                                                                       padding: EdgeInsets.zero,
                                                                       primary: false,
                                                                       shrinkWrap: true,
@@ -1500,11 +1502,14 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                           ),
                                                                         );
                                                                       },
+                                                                    ),
                                                                     );
                                                                   } else {
                                                                     // Directions tab
                                                                     final preparation = columnRecipesRecord.preparation.toList();
-                                                                    return ListView.builder(
+                                                                    return Padding(
+                                                                      padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
+                                                                      child: ListView.builder(
                                                                       padding: EdgeInsets.zero,
                                                                       primary: false,
                                                                       shrinkWrap: true,
@@ -1527,6 +1532,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                                           ),
                                                                         );
                                                                       },
+                                                                    ),
                                                                     );
                                                                   }
                                                                 },

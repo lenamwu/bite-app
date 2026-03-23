@@ -126,8 +126,16 @@ class RecipesRecord extends FirestoreRecord {
     _forkedFrom = snapshotData['forked_from'] as DocumentReference?;
     final savedTimestampsData = snapshotData['saved_timestamps'] as Map<String, dynamic>?;
     if (savedTimestampsData != null) {
-      _savedTimestamps = savedTimestampsData.map((key, value) =>
-          MapEntry(key, (value as Timestamp).toDate()));
+      final map = <String, DateTime>{};
+      savedTimestampsData.forEach((key, value) {
+        if (value is Timestamp) {
+          map[key] = value.toDate();
+        } else if (value is DateTime) {
+          map[key] = value;
+        }
+        // skip null values
+      });
+      _savedTimestamps = map;
     }
   }
 

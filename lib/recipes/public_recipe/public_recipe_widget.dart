@@ -719,7 +719,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                             // Ingredients tab
                                                             final ingredients = publicRecipeRecipesRecord.ingredients.map((e) => e).toList();
                                                             return Padding(
-                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
                                                               child: ListView.builder(
                                                                 padding: EdgeInsets.zero,
                                                                 primary: false,
@@ -780,7 +780,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                                             // Directions tab
                                                             final preparation = publicRecipeRecipesRecord.preparation.map((e) => e).toList();
                                                             return Padding(
-                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 20.0),
+                                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 50.0),
                                                               child: ListView.builder(
                                                                 padding: EdgeInsets.zero,
                                                                 primary: false,
