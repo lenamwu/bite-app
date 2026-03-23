@@ -1481,6 +1481,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                           publicrecipeimage: _model.uploadedFileUrls_uploadDatanewpics2.firstOrNull,
                                           userId: currentUserReference,
                                           usercreated: true,
+                                          postOnly: true,
                                         ),
                                         ...mapToFirestore({
                                           'ingredients': FFAppState().ingredientsList,
@@ -1500,6 +1501,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                                           publicrecipeimage: _model.uploadedFileUrls_uploadDatanewpics2.firstOrNull,
                                           userId: currentUserReference,
                                           usercreated: true,
+                                          postOnly: true,
                                         ),
                                         ...mapToFirestore({
                                           'ingredients': FFAppState().ingredientsList,
@@ -1751,6 +1753,7 @@ class _CreatePostWidgetState extends State<CreatePostWidget> {
                               fontFamily: FlutterFlowTheme.of(context).bodyLargeFamily,
                               color: FlutterFlowTheme.of(context).secondaryText,
                               letterSpacing: 0.0,
+                              fontSize: 16,
                               useGoogleFonts: !FlutterFlowTheme.of(context).bodyLargeIsCustom,
                             ),
                           ),

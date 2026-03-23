@@ -650,7 +650,7 @@ class _EditSavedRecipeWidgetState extends State<EditSavedRecipeWidget> {
                                         .override(
                                           fontFamily: FlutterFlowTheme.of(context)
                                               .titleSmallFamily,
-                                          color: FlutterFlowTheme.of(context).accent3,
+                                          color: FlutterFlowTheme.of(context).customColor4,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.bold,
                                           useGoogleFonts: !FlutterFlowTheme.of(context)
@@ -752,7 +752,7 @@ class _EditSavedRecipeWidgetState extends State<EditSavedRecipeWidget> {
                               alignment: AlignmentDirectional(-1.0, -1.0),
                               child: Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
-                                    0.0, 0.0, 0.0, 16.0),
+                                    0.0, 5.0, 0.0, 16.0),
                                 child: FFButtonWidget(
                                   onPressed: () async {
                                     FFAppState().addToPreparationList('');
@@ -773,7 +773,7 @@ class _EditSavedRecipeWidgetState extends State<EditSavedRecipeWidget> {
                                         .override(
                                           fontFamily: FlutterFlowTheme.of(context)
                                               .titleSmallFamily,
-                                          color: FlutterFlowTheme.of(context).accent3,
+                                          color: FlutterFlowTheme.of(context).customColor4,
                                           letterSpacing: 0.0,
                                           fontWeight: FontWeight.bold,
                                           useGoogleFonts: !FlutterFlowTheme.of(context)
@@ -818,8 +818,8 @@ class _EditSavedRecipeWidgetState extends State<EditSavedRecipeWidget> {
                                   return;
                                 }
 
-                                if (recipe.hasForkedFrom()) {
-                                  // Already a user copy — just update it in place
+                                if (recipe.userId == currentUserReference) {
+                                  // User owns this recipe — update in place
                                   await widget.recipeRef!.update({
                                     ...createRecipesRecordData(
                                       title: title,
@@ -838,12 +838,12 @@ class _EditSavedRecipeWidgetState extends State<EditSavedRecipeWidget> {
                                   context.pop();
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('Recipe updated!'),
+                                      content: Text('recipe updated!'),
                                       duration: Duration(seconds: 2),
                                     ),
                                   );
                                 } else {
-                                  // Original recipe — create a personal copy
+                                  // Editing someone else's recipe — create a personal copy
                                   final copyRef = RecipesRecord.collection.doc();
                                   await copyRef.set({
                                     ...createRecipesRecordData(
@@ -865,20 +865,17 @@ class _EditSavedRecipeWidgetState extends State<EditSavedRecipeWidget> {
                                       'recipe_saved_by': [currentUserReference],
                                       'time_generated': FieldValue.serverTimestamp(),
                                     }),
-                                    'saved_timestamps.$currentUserUid': FieldValue.serverTimestamp(),
                                   });
 
-                                  // Remove user from original recipe's saved_by
+                                  // Move bookmark from original to fork
                                   await widget.recipeRef!.update({
                                     ...mapToFirestore({
                                       'recipe_saved_by': FieldValue.arrayRemove(
                                           [currentUserReference]),
                                     }),
-                                    'saved_timestamps.$currentUserUid': FieldValue.delete(),
                                   });
 
                                   if (!context.mounted) return;
-                                  // Navigate to the copy's recipe page so it shows as saved
                                   context.pop();
                                   context.pushNamed(
                                     PublicRecipeWidget.routeName,
@@ -895,7 +892,7 @@ class _EditSavedRecipeWidgetState extends State<EditSavedRecipeWidget> {
                                   );
                                   ScaffoldMessenger.of(context).showSnackBar(
                                     SnackBar(
-                                      content: Text('Recipe saved as your personal copy!'),
+                                      content: Text('recipe saved as your personal copy!'),
                                       duration: Duration(seconds: 2),
                                     ),
                                   );

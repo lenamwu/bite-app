@@ -377,6 +377,80 @@ class _AddToCookbookWidgetState extends State<AddToCookbookWidget> {
                         safeSetState(() => _model.isSubmitting = true);
 
                         try {
+                          // Fetch the recipe to check ownership
+                          final originalRecipe =
+                              await RecipesRecord.getDocumentOnce(
+                                  widget.recipeRef);
+
+                          DocumentReference recipeRefForPost;
+
+                          if (originalRecipe.userId ==
+                              currentUserReference) {
+                            // User already owns this recipe
+                            recipeRefForPost = widget.recipeRef;
+                          } else {
+                            // Check if user already has a copy
+                            final existingCopies =
+                                await queryRecipesRecordOnce(
+                              queryBuilder: (r) => r
+                                  .where('user_id',
+                                      isEqualTo: currentUserReference)
+                                  .where('forked_from',
+                                      isEqualTo: widget.recipeRef),
+                              singleRecord: true,
+                            );
+                            if (existingCopies.isNotEmpty) {
+                              recipeRefForPost =
+                                  existingCopies.first.reference;
+                            } else {
+                              // Create a personal copy
+                              final copyRef =
+                                  RecipesRecord.collection.doc();
+                              await copyRef.set({
+                                ...createRecipesRecordData(
+                                  title: originalRecipe.title,
+                                  notes: originalRecipe.notes,
+                                  difficulty: originalRecipe.difficulty,
+                                  cookingtime:
+                                      originalRecipe.cookingtime,
+                                  servings: originalRecipe.servings,
+                                  url: originalRecipe.url,
+                                  publicrecipeimage:
+                                      originalRecipe.publicrecipeimage,
+                                  usercreated:
+                                      originalRecipe.usercreated,
+                                  rating: originalRecipe.rating,
+                                  userId: currentUserReference,
+                                  forkedFrom: widget.recipeRef,
+                                ),
+                                ...mapToFirestore({
+                                  'ingredients':
+                                      originalRecipe.ingredients,
+                                  'preparation':
+                                      originalRecipe.preparation,
+                                  'recipe_images':
+                                      originalRecipe.recipeImages,
+                                  'recipe_saved_by': [
+                                    currentUserReference
+                                  ],
+                                  'time_generated':
+                                      FieldValue.serverTimestamp(),
+                                }),
+                              });
+
+                              // Move bookmark from original to fork
+                              await widget.recipeRef.update({
+                                ...mapToFirestore({
+                                  'recipe_saved_by':
+                                      FieldValue.arrayRemove([
+                                    currentUserReference
+                                  ]),
+                                }),
+                              });
+                              recipeRefForPost = copyRef;
+                            }
+                          }
+
                           // Create the post
                           final postRef =
                               PostsRecord.collection.doc();
@@ -391,7 +465,7 @@ class _AddToCookbookWidgetState extends State<AddToCookbookWidget> {
                                 : null,
                             createdTime: getCurrentTimestamp,
                             hasRecipe: true,
-                            recipeRef: widget.recipeRef,
+                            recipeRef: recipeRefForPost,
                             displayName: currentUserDisplayName,
                             photoUrl: currentUserPhoto,
                             uid: currentUserUid,

@@ -186,24 +186,6 @@ exports.onUserDeleted = functions.auth.user().onDelete(async (user) => {
     console.error("Error deleting user recipes and related data:", error);
   }
 
-  // Remove this user from recipe_saved_by arrays and saved_timestamps maps
-  try {
-    const savedRecipesSnapshot = await firestore
-      .collection("recipes")
-      .where("recipe_saved_by", "array-contains", userRef)
-      .get();
-
-    for (const recipeDoc of savedRecipesSnapshot.docs) {
-      await recipeDoc.ref.update({
-        recipe_saved_by: admin.firestore.FieldValue.arrayRemove(userRef),
-        [`saved_timestamps.${user.uid}`]: admin.firestore.FieldValue.delete(),
-      });
-      console.log(`Removed user ${user.uid} from saved_by on recipe ${recipeDoc.id}`);
-    }
-  } catch (error) {
-    console.error("Error cleaning up saved recipes:", error);
-  }
-
   // Remove deleted user from other users' following_users and users_following_me arrays
   try {
     const followingSnapshot = await firestore
@@ -323,22 +305,26 @@ exports.onPostDeleted = functions.firestore
       console.error("Error deleting post images:", error);
     }
 
-    // If the post has a linked recipe, delete it and its images
+    // If the post has a linked recipe, only delete it if it was created inline (post_only)
     if (postData.recipeRef) {
       try {
         const recipeDoc = await postData.recipeRef.get();
         if (recipeDoc.exists) {
           const recipeData = recipeDoc.data();
 
-          // Delete recipe images from Storage
-          if (recipeData.recipe_images && Array.isArray(recipeData.recipe_images)) {
-            await deleteStorageFiles(storage, recipeData.recipe_images);
-            console.log(`Deleted ${recipeData.recipe_images.length} recipe images`);
-          }
+          if (recipeData.post_only === true) {
+            // Delete recipe images from Storage
+            if (recipeData.recipe_images && Array.isArray(recipeData.recipe_images)) {
+              await deleteStorageFiles(storage, recipeData.recipe_images);
+              console.log(`Deleted ${recipeData.recipe_images.length} recipe images`);
+            }
 
-          // Delete the recipe document
-          await postData.recipeRef.delete();
-          console.log(`Deleted linked recipe ${postData.recipeRef.id}`);
+            // Delete the recipe document
+            await postData.recipeRef.delete();
+            console.log(`Deleted linked post_only recipe ${postData.recipeRef.id}`);
+          } else {
+            console.log(`Skipping recipe ${postData.recipeRef.id} — not post_only, belongs to user's cookbook`);
+          }
         }
       } catch (error) {
         console.error("Error deleting linked recipe:", error);

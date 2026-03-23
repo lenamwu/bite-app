@@ -1600,7 +1600,12 @@ class _EditPostWidgetState extends State<EditPostWidget> {
                                       onPressed: () async {
                                         await editPostPostsRecord.reference.delete();
                                         if (editPostPostsRecord.hasRecipe == true) {
-                                          await editPostPostsRecord.recipeRef!.delete();
+                                          final recipe = await RecipesRecord.getDocumentOnce(
+                                              editPostPostsRecord.recipeRef!);
+                                          if (recipe.postOnly) {
+                                            // Only delete recipes created inline with this post
+                                            await editPostPostsRecord.recipeRef!.delete();
+                                          }
                                         }
 
                                         context.pushNamed(FoodFeedWidget.routeName);

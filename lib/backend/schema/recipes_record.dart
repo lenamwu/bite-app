@@ -101,6 +101,11 @@ class RecipesRecord extends FirestoreRecord {
   DocumentReference? get forkedFrom => _forkedFrom;
   bool hasForkedFrom() => _forkedFrom != null;
 
+  // "post_only" field.
+  bool? _postOnly;
+  bool get postOnly => _postOnly ?? false;
+  bool hasPostOnly() => _postOnly != null;
+
   // "saved_timestamps" field.
   Map<String, DateTime>? _savedTimestamps;
   Map<String, DateTime> get savedTimestamps => _savedTimestamps ?? const {};
@@ -124,6 +129,7 @@ class RecipesRecord extends FirestoreRecord {
     _usercreated = snapshotData['usercreated'] as bool?;
     _rating = castToType<double>(snapshotData['rating']);
     _forkedFrom = snapshotData['forked_from'] as DocumentReference?;
+    _postOnly = snapshotData['post_only'] as bool?;
     final savedTimestampsData = snapshotData['saved_timestamps'] as Map<String, dynamic>?;
     if (savedTimestampsData != null) {
       final map = <String, DateTime>{};
@@ -187,6 +193,7 @@ Map<String, dynamic> createRecipesRecordData({
   bool? usercreated,
   double? rating,
   DocumentReference? forkedFrom,
+  bool? postOnly,
 }) {
   final firestoreData = mapToFirestore(
     <String, dynamic>{
@@ -203,6 +210,7 @@ Map<String, dynamic> createRecipesRecordData({
       'usercreated': usercreated,
       'rating': rating,
       'forked_from': forkedFrom,
+      'post_only': postOnly,
     }.withoutNulls,
   );
 
@@ -231,7 +239,8 @@ class RecipesRecordDocumentEquality implements Equality<RecipesRecord> {
         e1?.publicrecipeimage == e2?.publicrecipeimage &&
         e1?.usercreated == e2?.usercreated &&
         e1?.rating == e2?.rating &&
-        e1?.forkedFrom == e2?.forkedFrom;
+        e1?.forkedFrom == e2?.forkedFrom &&
+        e1?.postOnly == e2?.postOnly;
   }
 
   @override
@@ -252,7 +261,8 @@ class RecipesRecordDocumentEquality implements Equality<RecipesRecord> {
         e?.publicrecipeimage,
         e?.usercreated,
         e?.rating,
-        e?.forkedFrom
+        e?.forkedFrom,
+        e?.postOnly
       ]);
 
   @override

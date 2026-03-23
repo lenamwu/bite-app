@@ -183,9 +183,8 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                         return Row(
                           mainAxisSize: MainAxisSize.min,
                           children: [
-                            if (toggleIconRecipesRecord.recipeSavedBy
-                                    .contains(currentUserReference) ==
-                                false)
+                            if (!toggleIconRecipesRecord.recipeSavedBy
+                                    .contains(currentUserReference))
                               Text(
                                 'save recipe',
                                 style: FlutterFlowTheme.of(context)
@@ -202,8 +201,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                     ),
                               ),
                             if (toggleIconRecipesRecord.recipeSavedBy
-                                    .contains(currentUserReference) ==
-                                true)
+                                    .contains(currentUserReference))
                               Text(
                                 'recipe saved!',
                                 style: FlutterFlowTheme.of(context)
@@ -222,30 +220,20 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                               onPressed: () async {
                                 if (toggleIconRecipesRecord.recipeSavedBy
                                     .contains(currentUserReference)) {
-                                  // Unsaving — check if forked copy
-                                  if (toggleIconRecipesRecord.hasForkedFrom()) {
-                                    await toggleIconRecipesRecord.reference.delete();
-                                    if (context.mounted) context.pop();
-                                    return;
-                                  }
+                                  // Unsave
                                   await toggleIconRecipesRecord.reference.update({
-                                    ...mapToFirestore(
-                                      {
-                                        'recipe_saved_by': FieldValue.arrayRemove(
-                                            [currentUserReference]),
-                                      },
-                                    ),
-                                    'saved_timestamps.$currentUserUid': FieldValue.delete(),
+                                    ...mapToFirestore({
+                                      'recipe_saved_by': FieldValue.arrayRemove(
+                                          [currentUserReference]),
+                                    }),
                                   });
                                 } else {
+                                  // Save (bookmark only)
                                   await toggleIconRecipesRecord.reference.update({
-                                    ...mapToFirestore(
-                                      {
-                                        'recipe_saved_by': FieldValue.arrayUnion(
-                                            [currentUserReference]),
-                                      },
-                                    ),
-                                    'saved_timestamps.$currentUserUid': FieldValue.serverTimestamp(),
+                                    ...mapToFirestore({
+                                      'recipe_saved_by': FieldValue.arrayUnion(
+                                          [currentUserReference]),
+                                    }),
                                   });
                                 }
                               },
@@ -688,38 +676,40 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                             ),
                                           ],
                                         ),
-                                        ClipRRect(
-                                          child: Container(
-                                            decoration: BoxDecoration(),
-                                            child: Padding(
-                                              padding: EdgeInsetsDirectional
-                                                  .fromSTEB(
-                                                      0.0, 10.0, 0.0, 0.0),
-                                              child: AutoSizeText(
-                                                scrollableContentPostsRecord
-                                                    .postText,
-                                                maxLines: 3,
-                                                style:
-                                                    FlutterFlowTheme.of(context)
-                                                        .bodyMedium
-                                                        .override(
-                                                          fontFamily:
-                                                              FlutterFlowTheme.of(
-                                                                      context)
-                                                                  .bodyMediumFamily,
-                                                          letterSpacing: 0.0,
-                                                          fontSize: 16,
-                                                          fontWeight:
-                                                              FontWeight.w600,
-                                                          useGoogleFonts:
-                                                              !FlutterFlowTheme
-                                                                      .of(context)
-                                                                  .bodyMediumIsCustom,
-                                                        ),
+                                        if (scrollableContentPostsRecord
+                                                .postText.isNotEmpty)
+                                          ClipRRect(
+                                            child: Container(
+                                              decoration: BoxDecoration(),
+                                              child: Padding(
+                                                padding: EdgeInsetsDirectional
+                                                    .fromSTEB(
+                                                        0.0, 10.0, 0.0, 0.0),
+                                                child: AutoSizeText(
+                                                  scrollableContentPostsRecord
+                                                      .postText,
+                                                  maxLines: 3,
+                                                  style:
+                                                      FlutterFlowTheme.of(context)
+                                                          .bodyMedium
+                                                          .override(
+                                                            fontFamily:
+                                                                FlutterFlowTheme.of(
+                                                                        context)
+                                                                    .bodyMediumFamily,
+                                                            letterSpacing: 0.0,
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.w600,
+                                                            useGoogleFonts:
+                                                                !FlutterFlowTheme
+                                                                        .of(context)
+                                                                    .bodyMediumIsCustom,
+                                                          ),
+                                                ),
                                               ),
                                             ),
                                           ),
-                                        ),
                                         Stack(
                                           children: [
                                             Padding(
@@ -937,7 +927,9 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                       ),
                                                     ],
                                                   ),
-                                                  FlutterFlowIconButton(
+                                                  Padding(
+                                                    padding: EdgeInsetsDirectional.fromSTEB(3.0, 0.0, 0.0, 0.0),
+                                                    child: FlutterFlowIconButton(
                                                     borderRadius: 8.0,
                                                     buttonSize: 40.0,
                                                     fillColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -957,6 +949,7 @@ class _CommentRecipeWidgetState extends State<CommentRecipeWidget>
                                                         ),
                                                       );
                                                     },
+                                                  ),
                                                   ),
                                                   StreamBuilder<List<CommentsRecord>>(
                                                     stream: queryCommentsRecord(

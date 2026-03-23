@@ -706,7 +706,9 @@ class _CommentWidgetState extends State<CommentWidget>
                                                 ),
                                               ],
                                             ),
-                                            FlutterFlowIconButton(
+                                            Padding(
+                                              padding: EdgeInsetsDirectional.fromSTEB(3.0, 0.0, 0.0, 0.0),
+                                              child: FlutterFlowIconButton(
                                               borderRadius: 8.0,
                                               buttonSize: 40.0,
                                               fillColor: FlutterFlowTheme.of(context).secondaryBackground,
@@ -726,6 +728,7 @@ class _CommentWidgetState extends State<CommentWidget>
                                                   ),
                                                 );
                                               },
+                                            ),
                                             ),
                                             StreamBuilder<List<CommentsRecord>>(
                                               stream: queryCommentsRecord(

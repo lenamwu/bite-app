@@ -65,18 +65,12 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
     context.watch<FFAppState>();
 
     return StreamBuilder<List<RecipesRecord>>(
-      stream: _model.recipesaved(
-        requestFn: () => queryRecipesRecord(
-          queryBuilder: (recipesRecord) => recipesRecord
-              .where(
-                'recipe_saved_by',
-                arrayContains: currentUserReference,
-              )
-              .orderBy('time_generated', descending: true),
-        ),
+      stream: queryRecipesRecord(
+        queryBuilder: (recipesRecord) => recipesRecord
+            .where('recipe_saved_by', arrayContains: currentUserReference)
+            .orderBy('time_generated', descending: true),
       ),
       builder: (context, snapshot) {
-        // Customize what your widget looks like when it's loading.
         if (!snapshot.hasData) {
           return Scaffold(
             backgroundColor: FlutterFlowTheme.of(context).primaryBackground,
@@ -92,16 +86,7 @@ class _RecipePageWidgetState extends State<RecipePageWidget> {
             ),
           );
         }
-        List<RecipesRecord> recipePageRecipesRecordList = List.from(snapshot.data!);
-        // Sort by saved timestamp (most recently saved first), fall back to time_generated
-        recipePageRecipesRecordList.sort((a, b) {
-          final aTime = a.savedTimestamps[currentUserUid] ?? a.timeGenerated;
-          final bTime = b.savedTimestamps[currentUserUid] ?? b.timeGenerated;
-          if (aTime == null && bTime == null) return 0;
-          if (aTime == null) return 1;
-          if (bTime == null) return -1;
-          return bTime.compareTo(aTime);
-        });
+        List<RecipesRecord> recipePageRecipesRecordList = snapshot.data!;
 
         return GestureDetector(
           onTap: () {

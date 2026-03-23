@@ -61,7 +61,7 @@ class _PreparationFieldWidgetState extends State<PreparationFieldWidget> {
           alignment: AlignmentDirectional(0.0, -1.0),
           children: [
             Padding(
-              padding: EdgeInsetsDirectional.fromSTEB(0.0, 18.0, 0.0, 0.0),
+              padding: EdgeInsetsDirectional.fromSTEB(0.0, 20.0, 0.0, 0.0),
               child: Container(
                 width: double.infinity,
                 child: TextFormField(
@@ -143,7 +143,7 @@ class _PreparationFieldWidgetState extends State<PreparationFieldWidget> {
                   style: FlutterFlowTheme.of(context).bodyMedium.override(
                         fontFamily:
                             FlutterFlowTheme.of(context).bodyMediumFamily,
-                        color: FlutterFlowTheme.of(context).accent3,
+                        color: FlutterFlowTheme.of(context).secondaryText,
                         letterSpacing: 0.0,
                         fontWeight: FontWeight.bold,
                         useGoogleFonts:

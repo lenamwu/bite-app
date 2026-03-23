@@ -176,9 +176,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                           mainAxisSize: MainAxisSize.max,
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            if (publicRecipeRecipesRecord.recipeSavedBy
-                                    .contains(currentUserReference) ==
-                                false)
+                            if (!publicRecipeRecipesRecord.recipeSavedBy.contains(currentUserReference))
                               Align(
                                 alignment: AlignmentDirectional(0.0, 0.0),
                                 child: Padding(
@@ -204,9 +202,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                   ),
                                 ),
                               ),
-                            if (publicRecipeRecipesRecord.recipeSavedBy
-                                    .contains(currentUserReference) ==
-                                true)
+                            if (publicRecipeRecipesRecord.recipeSavedBy.contains(currentUserReference))
                               Padding(
                                 padding: EdgeInsetsDirectional.fromSTEB(
                                     10.0, 0.0, 0.0, 0.0),
@@ -241,37 +237,62 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                               if (publicRecipeRecipesRecord.recipeSavedBy
                                       .contains(currentUserReference) ==
                                   false) {
+                                // Save (bookmark)
                                 await publicRecipeRecipesRecord.reference
                                     .update({
-                                  ...mapToFirestore(
-                                    {
-                                      'recipe_saved_by': FieldValue.arrayUnion(
-                                          [currentUserReference]),
-                                    },
-                                  ),
-                                  'saved_timestamps.$currentUserUid': FieldValue.serverTimestamp(),
+                                  ...mapToFirestore({
+                                    'recipe_saved_by': FieldValue.arrayUnion(
+                                        [currentUserReference]),
+                                  }),
                                 });
                               } else {
-                                // If this is a forked copy, delete it entirely
-                                if (publicRecipeRecipesRecord.hasForkedFrom()) {
-                                  await publicRecipeRecipesRecord.reference.delete();
+                                // Unsave — remove bookmark
+                                await publicRecipeRecipesRecord.reference
+                                    .update({
+                                  ...mapToFirestore({
+                                    'recipe_saved_by': FieldValue.arrayRemove(
+                                        [currentUserReference]),
+                                  }),
+                                });
+
+                                // If viewing a fork, delete it and go back
+                                if (publicRecipeRecipesRecord.userId == currentUserReference &&
+                                    publicRecipeRecipesRecord.hasForkedFrom()) {
+                                  // Check no posts reference this fork
+                                  final linkedPosts = await queryPostsRecordOnce(
+                                    queryBuilder: (p) => p
+                                        .where('recipe_ref', isEqualTo: publicRecipeRecipesRecord.reference),
+                                    singleRecord: true,
+                                  );
+                                  if (linkedPosts.isEmpty) {
+                                    await publicRecipeRecipesRecord.reference.delete();
+                                  }
                                   if (context.mounted) context.pop();
                                   return;
                                 }
-                                await publicRecipeRecipesRecord.reference
-                                    .update({
-                                  ...mapToFirestore(
-                                    {
-                                      'recipe_saved_by': FieldValue.arrayRemove(
-                                          [currentUserReference]),
-                                    },
-                                  ),
-                                  'saved_timestamps.$currentUserUid': FieldValue.delete(),
-                                });
+
+                                // If viewing the original, check for and clean up any fork
+                                final forks = await queryRecipesRecordOnce(
+                                  queryBuilder: (r) => r
+                                      .where('user_id', isEqualTo: currentUserReference)
+                                      .where('forked_from', isEqualTo: publicRecipeRecipesRecord.reference),
+                                  singleRecord: true,
+                                );
+                                if (forks.isNotEmpty) {
+                                  final fork = forks.first;
+                                  // Only delete if no posts reference it
+                                  final linkedPosts = await queryPostsRecordOnce(
+                                    queryBuilder: (p) => p
+                                        .where('recipe_ref', isEqualTo: fork.reference),
+                                    singleRecord: true,
+                                  );
+                                  if (linkedPosts.isEmpty) {
+                                    await fork.reference.delete();
+                                  }
+                                }
                               }
                             },
-                            value: publicRecipeRecipesRecord.recipeSavedBy
-                                .contains(currentUserReference),
+                            value: publicRecipeRecipesRecord.recipeSavedBy.contains(currentUserReference),
                             onIcon: Icon(
                               Icons.bookmark_rounded,
                               color: FlutterFlowTheme.of(context).accent1,
@@ -440,28 +461,7 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                               ],
                                             ),
                                           ),
-                                        Builder(
-                                          builder: (context) {
-                                            final otherSaves = publicRecipeRecipesRecord.recipeSavedBy
-                                                .where((ref) => ref != currentUserReference)
-                                                .length;
-                                            if (otherSaves < 1) return SizedBox.shrink();
-                                            return Padding(
-                                              padding: EdgeInsetsDirectional.fromSTEB(0.0, 0.0, 0.0, 6.0),
-                                              child: Text(
-                                                'saved by $otherSaves other user${otherSaves == 1 ? '' : 's'}',
-                                                style: FlutterFlowTheme.of(context).bodyMedium.override(
-                                                  fontFamily: FlutterFlowTheme.of(context).bodyMediumFamily,
-                                                  color: FlutterFlowTheme.of(context).secondaryText,
-                                                  fontSize: 13.0,
-                                                  letterSpacing: 0.0,
-                                                  fontWeight: FontWeight.w600,
-                                                  useGoogleFonts: !FlutterFlowTheme.of(context).bodyMediumIsCustom,
-                                                ),
-                                              ),
-                                            );
-                                          },
-                                        ),
+                                        SizedBox.shrink(),
                                         if (publicRecipeRecipesRecord.url.isNotEmpty)
                                           if (publicRecipeRecipesRecord.url.isNotEmpty)
                                           Padding(
@@ -486,8 +486,8 @@ class _PublicRecipeWidgetState extends State<PublicRecipeWidget>
                                             ),
                                           ),
                                         if (loggedIn &&
-                                            publicRecipeRecipesRecord.recipeSavedBy
-                                                .contains(currentUserReference))
+                                            publicRecipeRecipesRecord.usercreated != true &&
+                                            publicRecipeRecipesRecord.recipeSavedBy.contains(currentUserReference))
                                           Padding(
                                             padding: EdgeInsetsDirectional.fromSTEB(0.0, 8.0, 0.0, 0.0),
                                             child: Row(
